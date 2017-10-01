@@ -5,7 +5,7 @@ using System.Text;
 
 using Xamarin.Forms;
 
-namespace Collector2.Application
+namespace Collector2.Program
 {
 	public partial class App : Application
 	{
