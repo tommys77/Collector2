@@ -41,6 +41,31 @@ namespace Collector2.Android
 			}
 		}
 		
+		public partial class Id
+		{
+			
+			// aapt resource value: 0x7f040001
+			public const int main_btn_camera = 2130968577;
+			
+			// aapt resource value: 0x7f040003
+			public const int main_btn_gallery = 2130968579;
+			
+			// aapt resource value: 0x7f040000
+			public const int main_tv_camera = 2130968576;
+			
+			// aapt resource value: 0x7f040002
+			public const int main_tv_gallery = 2130968578;
+			
+			static Id()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Id()
+			{
+			}
+		}
+		
 		public partial class Layout
 		{
 			

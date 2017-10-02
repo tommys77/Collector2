@@ -3,5 +3,32 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:gravity="center_vertical">
+    <TextView
+        android:text="Use camera to..."
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/main_tv_camera"
+        android:textStyle="italic"
+        android:gravity="center_horizontal" />
+    <Button
+        android:text="Take a picture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/main_btn_camera"
+        android:layout_marginBottom="30dp" />
+    <TextView
+        android:text="or select a..."
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/main_tv_gallery"
+        android:textStyle="italic"
+        android:gravity="center_horizontal" />
+    <Button
+        android:text="Picture from gallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/main_btn_gallery" />
 </LinearLayout>
