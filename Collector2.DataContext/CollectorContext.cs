@@ -23,6 +23,7 @@ namespace Collector2.DataContext
 
         public CollectorContext() : base("CollectorDB")
         {
+            Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
         }
 

@@ -24,7 +24,8 @@
             android:layout_height="300dp"
             android:scaleType="fitCenter"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/picture_iv_picture" />
+            android:id="@+id/picture_iv_picture"
+            android:layout_marginTop="20dp" />
         <Button
             android:text="Encode and upload"
             android:layout_width="match_parent"
@@ -39,5 +40,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_below="@id/linearlayout"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:id="@+id/picture_tv_status"/>
 </RelativeLayout>

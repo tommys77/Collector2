@@ -71,6 +71,9 @@ namespace Collector2.Android
 			// aapt resource value: 0x7f050005
 			public const int picture_tv_description = 2131034117;
 			
+			// aapt resource value: 0x7f050009
+			public const int picture_tv_status = 2131034121;
+			
 			static Id()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();

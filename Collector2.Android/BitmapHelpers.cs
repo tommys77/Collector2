@@ -10,6 +10,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Graphics;
+using Android.Media;
+using Orientation = Android.Media.Orientation;
 
 namespace Collector2.Android
 {
@@ -40,6 +42,36 @@ namespace Collector2.Android
             Bitmap resizedBitmap = BitmapFactory.DecodeFile(fileName, options);
 
             return resizedBitmap;
+        }
+
+        public static Bitmap ExifRotateBitmap(this string filepath, Bitmap bitmap)
+        {
+            GC.Collect();
+            var exif = new ExifInterface(filepath);
+            var rotation = exif.GetAttributeInt(ExifInterface.TagOrientation, (int)Orientation.Normal);
+            var rotationInDegrees = ExifToDegrees(rotation);
+            if (rotationInDegrees == 0)
+                return bitmap;
+
+            using (var matrix = new Matrix())
+            {
+                matrix.PreRotate(rotationInDegrees);
+                return Bitmap.CreateBitmap(bitmap, 0, 0, bitmap.Width, bitmap.Height, matrix, true);
+            }
+        }
+        public static int ExifToDegrees(int exifOrientation)
+        {
+            switch (exifOrientation)
+            {
+                case (int)Orientation.Rotate90:
+                    return 90;
+                case (int)Orientation.Rotate180:
+                    return 180;
+                case (int)Orientation.Rotate270:
+                    return 270;
+                default:
+                    return 0;
+            }
         }
     }
 }

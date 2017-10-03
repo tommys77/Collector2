@@ -80,8 +80,25 @@ namespace Collector2.DataService.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (db.Item.FirstOrDefault(i => i.ImageString == item.ImageString) != null)
+            {
+                return Conflict();
+            }
+
+            if (item.OwnerId == 99 && db.Owner.Find(99) == null)
+            {
+                var johnDoe = new Owner
+                {
+                    OwnerId = 99,
+                    FirstName = "John",
+                    LastName = "Doe"
+                };
+
+                db.Owner.Add(johnDoe);
+            }
             db.Item.Add(item);
             db.SaveChanges();
+
 
             return CreatedAtRoute("DefaultApi", new { id = item.ItemId }, item);
         }
