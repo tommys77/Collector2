@@ -16,8 +16,9 @@ namespace Collector2.Model
         public string ItemDescription { get; set; }
         [Required, ForeignKey("Owner")]
         public int OwnerId { get; set; }
-        public string ImageString { get; set; }
-
+        [Required, ForeignKey("ItemImage")]
+        public int ItemImageId { get; set; }
         public virtual Owner Owner { get; set; }
+        public virtual ItemImage ItemImage { get; set; }
     }
 }

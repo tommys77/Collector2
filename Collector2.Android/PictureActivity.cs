@@ -46,53 +46,65 @@ namespace Collector2.Android
             mEncodeBtn.Click += EncodeAndUpload;
 
             var path = Intent.GetStringExtra("path");
-            picture = BitmapFactory.DecodeFile(path);
-            //var height = Resources.DisplayMetrics.HeightPixels;
-            //var width = mPicture.Height;
+            //picture = BitmapFactory.DecodeFile(path);
+
+            var height = Resources.DisplayMetrics.HeightPixels;
+            var width = mPicture.Height;
+            picture = path.LoadAndResizeBitmap(width, height);
             //mBitmap = path.LoadAndResizeBitmap(width, height);
             mPicture.SetImageBitmap(path.ExifRotateBitmap(picture));
         }
-        
-        private async void EncodeAndUpload (object sender, EventArgs e)
+
+        private async void EncodeAndUpload(object sender, EventArgs e)
         {
-            var imageString = BitmapToBase64(picture);
-            
+            //var imageString = BitmapToBase64(picture);
+            mStatus.SetTextColor(Color.Black);
+            mStatus.Text = "Working...";
             mDescription = FindViewById<EditText>(Resource.Id.picture_et_description);
+            //var height = Resources.DisplayMetrics.HeightPixels;
+            //var width = mPicture.Height;
+            //mBitmap = path.LoadAndResizeBitmap(width, height);
             var itemDescription = mDescription.Text;
-            if(itemDescription == "")
+            if (itemDescription == "" || itemDescription == null)
             {
                 itemDescription = "None";
             }
 
             var ownerId = 99;
-            Item item = new Item()
+            var newItemMobile = new NewItemMobileViewModel()
             {
                 OwnerId = ownerId,
-                ItemDescription = itemDescription,
-                ImageString = imageString
+                ImageData = picture.BitmapToByteArray(),
+                Description = itemDescription
             };
-            var client = new HttpClient();
 
             var uri = new System.Uri(URL);
-
+            var client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var json = JsonConvert.SerializeObject(item);
+            var json = JsonConvert.SerializeObject(newItemMobile);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await client.PostAsync(uri, content);
-            
+
             if (response.StatusCode == System.Net.HttpStatusCode.Created)
             {
                 mStatus.Text = "Success!";
                 mStatus.SetTextColor(Color.Green);
             }
-            if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
+            else if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
             {
                 mStatus.Text = "Already exists";
-                mStatus.SetTextColor(Color.Red);
+                mStatus.SetTextColor(Color.Blue);
             }
-            
-            
+            else
+            {
+                mStatus.SetTextColor(Color.Red);
+                mStatus.Text = response.StatusCode.ToString();
+            }
+
+
         }
+
+
 
         private string BitmapToBase64(Bitmap bitmap)
         {

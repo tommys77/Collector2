@@ -72,20 +72,27 @@ namespace Collector2.DataService.Controllers
         }
 
         // POST: api/Items
-        [ResponseType(typeof(Item))]
-        public IHttpActionResult PostItem(Item item)
+        [ResponseType(typeof(NewItemMobileViewModel))]
+        public IHttpActionResult PostItem(NewItemMobileViewModel newItemMobile)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (db.Item.FirstOrDefault(i => i.ImageString == item.ImageString) != null)
+            var existingImage = db.ItemImage.FirstOrDefault(i => i.Image == newItemMobile.ImageData);
+
+            if (existingImage != null)
             {
                 return Conflict();
             }
 
-            if (item.OwnerId == 99 && db.Owner.Find(99) == null)
+            var itemImage = new ItemImage()
+            {
+                Image = newItemMobile.ImageData
+            };
+
+            if (newItemMobile.OwnerId == 99 && db.Owner.Find(99) == null)
             {
                 var johnDoe = new Owner
                 {
@@ -93,12 +100,19 @@ namespace Collector2.DataService.Controllers
                     FirstName = "John",
                     LastName = "Doe"
                 };
-
                 db.Owner.Add(johnDoe);
             }
+
+            var item = new Item()
+            {
+                ItemDescription = newItemMobile.Description,
+                OwnerId = newItemMobile.OwnerId,
+                ItemImageId = itemImage.ItemImageId
+            };
+
+            db.ItemImage.Add(itemImage);
             db.Item.Add(item);
             db.SaveChanges();
-
 
             return CreatedAtRoute("DefaultApi", new { id = item.ItemId }, item);
         }

@@ -12,6 +12,7 @@ namespace Collector2.DataContext
     public class CollectorContext : DbContext
     {
         public DbSet<Item> Item { get; set; }
+        public DbSet<ItemImage> ItemImage {get;set; }
         public DbSet<Owner> Owner { get; set; }
         public DbSet<Software> Software { get; set; }
         public DbSet<Hardware> Hardware { get; set; }
@@ -34,5 +35,7 @@ namespace Collector2.DataContext
             //Don't want pluralized table names
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
+
+       
     }
 }

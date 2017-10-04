@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 using Android.App;
 using Android.Content;
@@ -12,6 +13,7 @@ using Android.Widget;
 using Android.Graphics;
 using Android.Media;
 using Orientation = Android.Media.Orientation;
+using System.IO;
 
 namespace Collector2.Android
 {
@@ -73,5 +75,18 @@ namespace Collector2.Android
                     return 0;
             }
         }
+
+        public static byte[] BitmapToByteArray(this Bitmap bitmap)
+        {
+            byte[] bytes;
+            using (var stream = new MemoryStream())
+            {
+                bitmap.Compress(Bitmap.CompressFormat.Jpeg, 0, stream);
+                bytes = stream.ToArray();
+
+            }
+            return bytes;
+        }
+
     }
 }
