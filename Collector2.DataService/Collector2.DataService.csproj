@@ -188,6 +188,7 @@
     <Compile Include="Controllers\HardwaresController.cs" />
     <Compile Include="Controllers\HardwareSpecsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ItemImagesController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\OwnersController.cs" />
     <Compile Include="Controllers\ReviewsController.cs" />

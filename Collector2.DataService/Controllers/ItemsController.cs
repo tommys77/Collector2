@@ -72,14 +72,45 @@ namespace Collector2.DataService.Controllers
         }
 
         // POST: api/Items
-        [ResponseType(typeof(Item))]
-        public IHttpActionResult PostItem(Item item)
+        [ResponseType(typeof(NewItemMobileViewModel))]
+        public IHttpActionResult PostItem(NewItemMobileViewModel newItemMobile)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            var existingImage = db.ItemImage.FirstOrDefault(i => i.Image == newItemMobile.ImageData);
+
+            if (existingImage != null)
+            {
+                return Conflict();
+            }
+
+            var itemImage = new ItemImage()
+            {
+                Image = newItemMobile.ImageData
+            };
+
+            if (newItemMobile.OwnerId == 99 && db.Owner.Find(99) == null)
+            {
+                var johnDoe = new Owner
+                {
+                    OwnerId = 99,
+                    FirstName = "John",
+                    LastName = "Doe"
+                };
+                db.Owner.Add(johnDoe);
+            }
+
+            var item = new Item()
+            {
+                ItemDescription = newItemMobile.Description,
+                OwnerId = newItemMobile.OwnerId,
+                ItemImageId = itemImage.ItemImageId
+            };
+
+            db.ItemImage.Add(itemImage);
             db.Item.Add(item);
             db.SaveChanges();
 

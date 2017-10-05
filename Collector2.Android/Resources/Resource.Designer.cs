@@ -41,11 +41,57 @@ namespace Collector2.Android
 			}
 		}
 		
+		public partial class Id
+		{
+			
+			// aapt resource value: 0x7f050004
+			public const int linearlayout = 2131034116;
+			
+			// aapt resource value: 0x7f050001
+			public const int main_btn_camera = 2131034113;
+			
+			// aapt resource value: 0x7f050003
+			public const int main_btn_gallery = 2131034115;
+			
+			// aapt resource value: 0x7f050000
+			public const int main_tv_camera = 2131034112;
+			
+			// aapt resource value: 0x7f050002
+			public const int main_tv_gallery = 2131034114;
+			
+			// aapt resource value: 0x7f050008
+			public const int picture_btn_encode_and_upload = 2131034120;
+			
+			// aapt resource value: 0x7f050007
+			public const int picture_et_description = 2131034119;
+			
+			// aapt resource value: 0x7f050005
+			public const int picture_iv_picture = 2131034117;
+			
+			// aapt resource value: 0x7f050006
+			public const int picture_tv_description = 2131034118;
+			
+			// aapt resource value: 0x7f050009
+			public const int picture_tv_status = 2131034121;
+			
+			static Id()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Id()
+			{
+			}
+		}
+		
 		public partial class Layout
 		{
 			
 			// aapt resource value: 0x7f020000
 			public const int Main = 2130837504;
+			
+			// aapt resource value: 0x7f020001
+			public const int Picture = 2130837505;
 			
 			static Layout()
 			{
@@ -60,8 +106,8 @@ namespace Collector2.Android
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f030000
-			public const int app_name = 2130903040;
+			// aapt resource value: 0x7f040000
+			public const int app_name = 2130968576;
 			
 			static String()
 			{
@@ -69,6 +115,22 @@ namespace Collector2.Android
 			}
 			
 			private String()
+			{
+			}
+		}
+		
+		public partial class Xml
+		{
+			
+			// aapt resource value: 0x7f030000
+			public const int provider_paths = 2130903040;
+			
+			static Xml()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Xml()
 			{
 			}
 		}
