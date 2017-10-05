@@ -62,14 +62,14 @@ namespace Collector2.Android
 			// aapt resource value: 0x7f050008
 			public const int picture_btn_encode_and_upload = 2131034120;
 			
-			// aapt resource value: 0x7f050006
-			public const int picture_et_description = 2131034118;
-			
 			// aapt resource value: 0x7f050007
-			public const int picture_iv_picture = 2131034119;
+			public const int picture_et_description = 2131034119;
 			
 			// aapt resource value: 0x7f050005
-			public const int picture_tv_description = 2131034117;
+			public const int picture_iv_picture = 2131034117;
+			
+			// aapt resource value: 0x7f050006
+			public const int picture_tv_description = 2131034118;
 			
 			// aapt resource value: 0x7f050009
 			public const int picture_tv_status = 2131034121;

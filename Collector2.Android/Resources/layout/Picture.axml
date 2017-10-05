@@ -7,6 +7,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linearlayout">
+        <ImageView
+            android:src="@android:drawable/ic_menu_gallery"
+            android:layout_width="225dp"
+            android:layout_height="300dp"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/picture_iv_picture"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp" />
         <TextView
             android:text="Describe the item:"
             android:textStyle="italic"
@@ -18,14 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/picture_et_description" />
-        <ImageView
-            android:src="@android:drawable/ic_menu_gallery"
-            android:layout_width="225dp"
-            android:layout_height="300dp"
-            android:scaleType="fitCenter"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/picture_iv_picture"
-            android:layout_marginTop="20dp" />
         <Button
             android:text="Encode and upload"
             android:layout_width="match_parent"
@@ -34,12 +35,12 @@
             android:layout_marginTop="20dp" />
     </LinearLayout>
     <TextView
-        android:text="Status"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_below="@id/linearlayout"
         android:layout_marginTop="20dp"
-        android:id="@+id/picture_tv_status"/>
+        android:id="@+id/picture_tv_status" />
 </RelativeLayout>

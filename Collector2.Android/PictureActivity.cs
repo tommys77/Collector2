@@ -39,31 +39,26 @@ namespace Collector2.Android
             base.OnCreate(savedInstanceState);
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Picture);
+
             mPicture = FindViewById<ImageView>(Resource.Id.picture_iv_picture);
             mStatus = FindViewById<TextView>(Resource.Id.picture_tv_status);
-
             mEncodeBtn = FindViewById<Button>(Resource.Id.picture_btn_encode_and_upload);
             mEncodeBtn.Click += EncodeAndUpload;
 
             var path = Intent.GetStringExtra("path");
-            //picture = BitmapFactory.DecodeFile(path);
 
             var height = Resources.DisplayMetrics.HeightPixels;
             var width = mPicture.Height;
             picture = path.LoadAndResizeBitmap(width, height);
-            //mBitmap = path.LoadAndResizeBitmap(width, height);
             mPicture.SetImageBitmap(path.ExifRotateBitmap(picture));
         }
 
         private async void EncodeAndUpload(object sender, EventArgs e)
         {
-            //var imageString = BitmapToBase64(picture);
             mStatus.SetTextColor(Color.Black);
             mStatus.Text = "Working...";
             mDescription = FindViewById<EditText>(Resource.Id.picture_et_description);
-            //var height = Resources.DisplayMetrics.HeightPixels;
-            //var width = mPicture.Height;
-            //mBitmap = path.LoadAndResizeBitmap(width, height);
+           
             var itemDescription = mDescription.Text;
             if (itemDescription == "" || itemDescription == null)
             {
@@ -100,23 +95,19 @@ namespace Collector2.Android
                 mStatus.SetTextColor(Color.Red);
                 mStatus.Text = response.StatusCode.ToString();
             }
-
-
         }
 
-
-
-        private string BitmapToBase64(Bitmap bitmap)
-        {
-            string str;
-            using (var stream = new MemoryStream())
-            {
-                bitmap.Compress(Bitmap.CompressFormat.Jpeg, 0, stream);
-                var bytes = stream.ToArray();
-                str = Convert.ToBase64String(bytes);
-            }
-            return str;
-        }
-
+        //NOT USED
+        //private string BitmapToBase64(Bitmap bitmap)
+        //{
+        //    string str;
+        //    using (var stream = new MemoryStream())
+        //    {
+        //        bitmap.Compress(Bitmap.CompressFormat.Jpeg, 0, stream);
+        //        var bytes = stream.ToArray();
+        //        str = Convert.ToBase64String(bytes);
+        //    }
+        //    return str;
+        //}
     }
 }
