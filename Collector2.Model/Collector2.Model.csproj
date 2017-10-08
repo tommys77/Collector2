@@ -54,5 +54,8 @@
     <Compile Include="ScoreSystem.cs" />
     <Compile Include="Software.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
