@@ -13,19 +13,25 @@ namespace Collector2.UWP.ViewModels
 {
     public class ViewModelLocator
     {
-
+        private static bool _isInitialized;
         public const string MainPageKey = "MainPage";
         public const string SoftwarePageKey = "SoftwarePage";
-
+        
         public ViewModelLocator()
         {
+            if(_isInitialized)
+            {
+                return;
+            }
+            _isInitialized = true;
+
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             var nav = new NavigationService();
 
             nav.Configure(MainPageKey, typeof(MainPage));
             nav.Configure(SoftwarePageKey, typeof(SoftwarePage));
-
+            
             if (ViewModelBase.IsInDesignModeStatic)
             {
                 // Create design time view services and models

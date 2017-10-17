@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collector2.DataService", "Collector2.DataService\Collector2.DataService.csproj", "{DA468E92-25FB-48CE-9EA9-0E5EC65D25A2}"
 EndProject
@@ -294,6 +294,8 @@ Global
 		{8D8A39A1-A74B-423A-933C-EF84648CFE0D}.AppStore|x86.Build.0 = Release|x86
 		{8D8A39A1-A74B-423A-933C-EF84648CFE0D}.AppStore|x86.Deploy.0 = Release|x86
 		{8D8A39A1-A74B-423A-933C-EF84648CFE0D}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{8D8A39A1-A74B-423A-933C-EF84648CFE0D}.Debug|Any CPU.Build.0 = Debug|x86
+		{8D8A39A1-A74B-423A-933C-EF84648CFE0D}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{8D8A39A1-A74B-423A-933C-EF84648CFE0D}.Debug|ARM.ActiveCfg = Debug|ARM
 		{8D8A39A1-A74B-423A-933C-EF84648CFE0D}.Debug|ARM.Build.0 = Debug|ARM
 		{8D8A39A1-A74B-423A-933C-EF84648CFE0D}.Debug|ARM.Deploy.0 = Debug|ARM
