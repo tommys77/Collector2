@@ -13,32 +13,59 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <RelativePanel x:Name="TopPanel" Background="LightBlue" BorderBrush="Blue">
+            <Border x:Name="menuBoarder" Width="75" Height="75">
+                <Button x:Name="Main" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Width="50" Height="50" HorizontalAlignment="Center" Command="{Binding OpenPaneCommand}"/>
+            </Border>
+            <Border x:Name="titleBorder" BorderBrush="Blue" Height="75" Width="Auto" RelativePanel.RightOf="menuBoarder" Margin="15, 0, 0, 0">
+                <TextBlock x:Name="Title" Text="Collector 2 - Gamer Edition"   VerticalAlignment="Center" FontSize="22" FontFamily="Razer Header Regular"/>
+            </Border>
+            <StackPanel Orientation="Horizontal" RelativePanel.AlignRightWithPanel="True" Height="75">
+                <TextBlock x:Name="SettingsLabel" Text="Settings" FontSize="20" VerticalAlignment="Center" Margin="0, 0, 15, 0" FontFamily="Razer Header Regular" />
+                <Button x:Name="SettingsBtn" FontFamily="Segoe MDL2 Assets" Content="&#xE713;" Width="50" Height="50" Margin="0, 0, 15, 0"/>
+            </StackPanel>
+        </RelativePanel>
         <SplitView 
-            x:Name="MySplitView" 
-            HorizontalAlignment="Left" 
+            x:Name="MySplitView"
+            HorizontalAlignment="Stretch" 
+            VerticalAlignment="Stretch"
             DisplayMode="CompactOverlay" 
             IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay}"
             Grid.Row="1"
-            CompactPaneLength="50" 
-            OpenPaneLength="150" >
+            CompactPaneLength="75" 
+            OpenPaneLength="200">
             <SplitView.Pane>
-                <Grid Background="LightBlue">
-                    <StackPanel>
-                        <Button x:Name="Main" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Width="50" Height="50" VerticalAlignment="Top" Command="{Binding OpenPaneCommand}"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
-                        <Button x:Name="SettingsBtn" FontFamily="Segoe MDL2 Assets" Content="&#xE713;" Width="50" Height="50" />
-                        <TextBlock x:Name="SettingsLabel" Text="Settings" FontSize="20" VerticalAlignment="Center" Margin="10, 0, 0, 0"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Button x:Name="Software" FontFamily="Segoe MDL2 Assets" Content="&#xE720;" Width="50" Height="50" Command="{Binding NavigateToSoftware}" />
-                        <TextBlock Name="SoftwareLabel" Text="Software" FontSize="20" VerticalAlignment="Center" Margin="10, 0, 0, 0" />
-                    </StackPanel>
-                </Grid>
+                <ListBox Background="LightBlue" SelectionMode="Single">
+                    <ListBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="Software" FontFamily="Razer Header Regular" Content="SW" FontSize="20" Width="50" Height="50" ToolTipService.ToolTip="Software" Command="{Binding NavigateToSoftware}">
+                                <!--<Button.Template>
+                                    <ControlTemplate>
+                                        <Image Source="ms-appx:///Assets/floppy-disk-35.png"></Image>
+                                    </ControlTemplate>
+                                </Button.Template>-->
+                            </Button>
+                            <TextBlock  x:Name="SoftwareLabel" Text="Software" FontSize="20" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Razer Header Regular" />
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="Hardware" FontFamily="Razer Header Regular" Content="HW" FontSize="20"  Width="50" Height="50" ToolTipService.ToolTip="Hardware"/>
+                            <TextBlock  x:Name="HardwareLabel" Text="Hardware" FontSize="20" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Razer Header Regular" />
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem VerticalAlignment="Bottom">
+                        <StackPanel Orientation="Horizontal" >
+                            <Button x:Name="UndefinedBtn" FontFamily="Razer Header Regular" Content="??" FontSize="20"  Width="50" Height="50" ToolTipService.ToolTip="Hardware"/>
+                            <TextBlock  x:Name="UndefinedLabel" Text="Undefined" FontSize="20" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Razer Header Regular" />
+                        </StackPanel>
+                    </ListBoxItem>
+                </ListBox>
             </SplitView.Pane>
             <SplitView.Content>
                 <Frame 
                     x:Name="thisFrame"
+                    HorizontalAlignment="Center"
                     SourcePageType="{Binding CurrentPage, Mode=TwoWay}">
                 </Frame>
             </SplitView.Content>

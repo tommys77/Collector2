@@ -76,21 +76,13 @@ namespace Collector2.UWP.ViewModels
                 return navigateCommand
                     ?? (navigateCommand = new RelayCommand(() =>
                 {
+                    if(IsPaneOpen)
+                    {
+                        IsPaneOpen = !IsPaneOpen;
+                    }
                     CurrentPage = typeof(SoftwarePage);
                 }));
             }
         }
-
-       //public RelayCommand NavigateToSoftware
-        //{
-        //    get
-        //    {
-        //        return navigateCommand
-        //            ?? (navigateCommand = new RelayCommand(() =>
-        //            {
-        //                _navigationService.NavigateTo("SoftwarePage");
-        //            }));
-        //    }
-        //}
     }
 }

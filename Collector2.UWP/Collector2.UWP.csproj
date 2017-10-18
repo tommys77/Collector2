@@ -113,6 +113,8 @@
     <None Include="Collector2.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Amiga_Logo_1985.svg.png" />
+    <Content Include="Assets\floppy-disk-35.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
