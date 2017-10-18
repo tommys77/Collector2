@@ -56,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Collector2.Model\Collector2.Model.csproj">
-      <Project>{78C4EDD9-1DEC-40D0-8727-E9BEA444A509}</Project>
+      <Project>{9fb18af8-2220-4a2e-a756-07144a96a0ea}</Project>
       <Name>Collector2.Model</Name>
     </ProjectReference>
   </ItemGroup>

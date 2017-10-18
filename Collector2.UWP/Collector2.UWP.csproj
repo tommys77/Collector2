@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\SoftwarePageViewModel.cs" />
+    <Compile Include="ViewModels\UndefinedItemsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
@@ -104,6 +105,9 @@
     </Compile>
     <Compile Include="Views\SoftwarePage.xaml.cs">
       <DependentUpon>SoftwarePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UndefinedItemsPage.xaml.cs">
+      <DependentUpon>UndefinedItemsPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +154,16 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\UndefinedItemsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Collector2.Model\Collector2.Model.csproj">
+      <Project>{9fb18af8-2220-4a2e-a756-07144a96a0ea}</Project>
+      <Name>Collector2.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

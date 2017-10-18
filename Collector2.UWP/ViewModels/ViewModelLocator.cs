@@ -16,6 +16,7 @@ namespace Collector2.UWP.ViewModels
         private static bool _isInitialized;
         public const string MainPageKey = "MainPage";
         public const string SoftwarePageKey = "SoftwarePage";
+        public const string UndefinedItemsPageKey = "UndefinedItemsPage";
         
         public ViewModelLocator()
         {
@@ -31,6 +32,7 @@ namespace Collector2.UWP.ViewModels
 
             nav.Configure(MainPageKey, typeof(MainPage));
             nav.Configure(SoftwarePageKey, typeof(SoftwarePage));
+            nav.Configure(UndefinedItemsPageKey, typeof(UndefinedItemsPage));
             
             if (ViewModelBase.IsInDesignModeStatic)
             {
@@ -40,11 +42,12 @@ namespace Collector2.UWP.ViewModels
             {
                 // Create run time view services and models
             }
-
-
+            
             SimpleIoc.Default.Register<INavigationService>(() => nav);
             SimpleIoc.Default.Register<MainPageViewModel>();
             SimpleIoc.Default.Register<SoftwarePageViewModel>();
+            SimpleIoc.Default.Register<UndefinedItemsViewModel>();
+            
         }
 
         public MainPageViewModel MainPageViewInstance
@@ -60,6 +63,14 @@ namespace Collector2.UWP.ViewModels
             get
             {
                 return ServiceLocator.Current.GetInstance<SoftwarePageViewModel>();
+            }
+        }
+
+        public UndefinedItemsViewModel UndefinedItemsViewInstance
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<UndefinedItemsViewModel>();
             }
         }
 

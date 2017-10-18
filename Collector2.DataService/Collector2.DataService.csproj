@@ -259,7 +259,7 @@
       <Name>Collector2.DataContext</Name>
     </ProjectReference>
     <ProjectReference Include="..\Collector2.Model\Collector2.Model.csproj">
-      <Project>{78c4edd9-1dec-40d0-8727-e9bea444a509}</Project>
+      <Project>{9fb18af8-2220-4a2e-a756-07144a96a0ea}</Project>
       <Name>Collector2.Model</Name>
     </ProjectReference>
   </ItemGroup>
