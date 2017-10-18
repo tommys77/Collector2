@@ -12,7 +12,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.15063.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -95,6 +95,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\SoftwarePageViewModel.cs" />
     <Compile Include="ViewModels\UndefinedItemsViewModel.cs" />
@@ -144,6 +145,9 @@
     <PackageReference Include="MvvmLightLibs">
       <Version>5.3.0</Version>
     </PackageReference>
+    <PackageReference Include="newtonsoft.json">
+      <Version>10.0.3</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\MainPage.xaml">
@@ -161,7 +165,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Collector2.Model\Collector2.Model.csproj">
-      <Project>{9fb18af8-2220-4a2e-a756-07144a96a0ea}</Project>
+      <Project>{7c787c57-9f13-44e1-b13d-8616c4308446}</Project>
       <Name>Collector2.Model</Name>
     </ProjectReference>
   </ItemGroup>

@@ -9,7 +9,6 @@ namespace Collector2.Model
 {
     public class ScoreSystem
     {
-        [Key]
         public int ScoreSystemId { get; set; }
         public string ScoreSystemName { get; set; }
     }

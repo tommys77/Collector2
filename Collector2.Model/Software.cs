@@ -10,18 +10,14 @@ namespace Collector2.Model
 {
     public class Software
     {
-        [Key, ForeignKey("Item")]
         public int ItemId { get; set; }
         public string SoftwareType { get; set; }
         public string Title { get; set; }
         public int YearOfRelease { get; set; }
         public string FormatCount { get; set; }
         public string Requirements { get; set; }
-        [ForeignKey("Format")]
         public int FormatId { get; set; }
-        [ForeignKey("Category")]
         public int CategoryId { get; set; }
-        [ForeignKey("HardwareSpec")]
         public int HardwareSpecId { get; set; }
 
         public virtual Item Item { get; set; }

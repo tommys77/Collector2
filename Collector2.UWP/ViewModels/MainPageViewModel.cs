@@ -11,12 +11,15 @@ using GalaSoft.MvvmLight.Command;
 using Windows.UI.Xaml.Controls;
 using Collector2.UWP.Views;
 using System.Net.Http;
+using Collector2.Model;
+using Newtonsoft.Json;
 
 namespace Collector2.UWP.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
         private bool isPaneOpen;
+        private bool undefinedItemsExist;
         private RelayCommand openPaneCommand;
         private RelayCommand navigateCommand;
         private readonly INavigationService _navigationService;
@@ -28,28 +31,41 @@ namespace Collector2.UWP.ViewModels
         public MainPageViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
+            // GetUndefinedItemsCount();
+
+            GetUndefinedItemsCount();
         }
 
 
         public async Task GetUndefinedItemsCount()
         {
-            try
+            using (var client = new HttpClient())
             {
-                using (var client = new HttpClient())
+                client.BaseAddress = new Uri(BaseUri);
+                var json = await client.GetStringAsync("Items");
+                Item[] items = JsonConvert.DeserializeObject<Item[]>(json);
+                if (items.Count() != 0)
                 {
-                    client.BaseAddress = new Uri(BaseUri);
-                    var gameJson = await client.GetStringAsync("Items");
-                    Item[] games = JsonConvert.DeserializeObject<Game[]>(gameJson);
-                    Games.Clear();
-                    foreach (var g in games)
-                    {
-                        Games.Add(g);
-                    }
-
+                    UndefinedItemsExists = true;
                 }
-
             }
+        }
 
+        public bool UndefinedItemsExists
+        {
+            get
+            {
+                return undefinedItemsExist;
+            }
+            set
+            {
+                if (!Equals(UndefinedItemsExists, value))
+                {
+                    undefinedItemsExist = value;
+                    RaisePropertyChanged("UndefinedItemsExists");
+                }
+            }
+        }
 
         public bool IsPaneOpen
         {
@@ -101,7 +117,7 @@ namespace Collector2.UWP.ViewModels
                 return navigateCommand
                     ?? (navigateCommand = new RelayCommand(() =>
                 {
-                    if(IsPaneOpen)
+                    if (IsPaneOpen)
                     {
                         IsPaneOpen = !IsPaneOpen;
                     }

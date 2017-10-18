@@ -5,9 +5,14 @@
     xmlns:local="using:Collector2.UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:conv="using:Collector2.UWP.Converters"
     mc:Ignorable="d"
-    DataContext="{Binding MainPageViewInstance, Source={StaticResource Locator} }">
+    DataContext="{Binding MainPageViewInstance, Source={StaticResource Locator}}">
 
+    <Page.Resources>
+        <conv:BooleanToVisibilityConverter x:Key="BoolToVisibility"></conv:BooleanToVisibilityConverter>
+    </Page.Resources>
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -54,8 +59,8 @@
                             <TextBlock  x:Name="HardwareLabel" Text="Hardware" FontSize="20" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Razer Header Regular" />
                         </StackPanel>
                     </ListBoxItem>
-                    <ListBoxItem VerticalAlignment="Bottom">
-                        <StackPanel Orientation="Horizontal" >
+                    <ListBoxItem x:Name="Undefined" >
+                        <StackPanel Orientation="Horizontal" Visibility="{Binding UndefinedItemsExists, Converter={StaticResource BoolToVisibility}}" >
                             <Button x:Name="UndefinedBtn" FontFamily="Razer Header Regular" Content="??" FontSize="20"  Width="50" Height="50" ToolTipService.ToolTip="Hardware"/>
                             <TextBlock  x:Name="UndefinedLabel" Text="Undefined" FontSize="20" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Razer Header Regular" />
                         </StackPanel>

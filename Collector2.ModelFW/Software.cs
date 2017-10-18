@@ -10,7 +10,8 @@ namespace Collector2.Model
 {
     public class Software
     {
-        [Key, ForeignKey("Item")]
+        [Key]
+        [ForeignKey("Item")]
         public int ItemId { get; set; }
         public string SoftwareType { get; set; }
         public string Title { get; set; }

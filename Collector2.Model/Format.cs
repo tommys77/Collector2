@@ -9,7 +9,6 @@ namespace Collector2.Model
 {
     public class Format
     {
-        [Key]
         public int FormatId { get; set; }
         public string FormatName { get; set; }
 
