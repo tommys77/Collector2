@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Collector2.Model
 {
-    public class NewItemMobileViewModel
+    public class UndefinedItem
     {
         public int ItemId { get; set; }
-        public int OwnerId { get; set; }
-        public byte[] ImageData { get; set; }
-        public string Description { get; set; }
+        public int ItemImageId { get; set; }
+        public string ItemDescription { get; set; }
+        public byte[] Image { get; set; }
     }
 }

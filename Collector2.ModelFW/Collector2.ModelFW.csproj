@@ -47,12 +47,13 @@
     <Compile Include="HardwareSpec.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="ItemImage.cs" />
-    <Compile Include="NewItemMobileViewModel.cs" />
+    <Compile Include="NewItemMobile.cs" />
     <Compile Include="Owner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Review.cs" />
     <Compile Include="ScoreSystem.cs" />
     <Compile Include="Software.cs" />
+    <Compile Include="UndefinedItem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

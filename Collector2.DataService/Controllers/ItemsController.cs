@@ -23,6 +23,32 @@ namespace Collector2.DataService.Controllers
             return db.Item;
         }
 
+        public class UndefinedItem
+        {
+            public int ItemId { get; set; }
+            public int ItemImageId { get; set; }
+            public string ItemDescription { get; set; }
+            public byte[] Image { get; set; }
+        }
+
+        // GET: api/UndefinedItems
+        [Route("api/UndefinedItems")]
+        public IQueryable<UndefinedItem> GetUndefinedItem()
+        {
+            var query = from i in db.Item
+                        join img in db.ItemImage on i.ItemImageId equals img.ItemImageId
+                        where i.IsDefined == false
+                        select new UndefinedItem()
+                        {
+                            ItemId = i.ItemId,
+                            ItemImageId = i.ItemImageId,
+                            ItemDescription = i.ItemDescription,
+                            Image = img.Image
+                        };
+
+            return query;
+        }
+
         // GET: api/Items/5
         [ResponseType(typeof(Item))]
         public IHttpActionResult GetItem(int id)
@@ -72,8 +98,8 @@ namespace Collector2.DataService.Controllers
         }
 
         // POST: api/Items
-        [ResponseType(typeof(NewItemMobileViewModel))]
-        public IHttpActionResult PostItem(NewItemMobileViewModel newItemMobile)
+        [ResponseType(typeof(NewItemMobile))]
+        public IHttpActionResult PostItem(NewItemMobile newItemMobile)
         {
             if (!ModelState.IsValid)
             {
@@ -107,7 +133,8 @@ namespace Collector2.DataService.Controllers
             {
                 ItemDescription = newItemMobile.Description,
                 OwnerId = newItemMobile.OwnerId,
-                ItemImageId = itemImage.ItemImageId
+                ItemImageId = itemImage.ItemImageId,
+                IsDefined = false
             };
 
             db.ItemImage.Add(itemImage);

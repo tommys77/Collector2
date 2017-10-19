@@ -49,6 +49,7 @@
     <Compile Include="Review.cs" />
     <Compile Include="ScoreSystem.cs" />
     <Compile Include="Software.cs" />
+    <Compile Include="UndefinedItem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>
