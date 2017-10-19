@@ -10,8 +10,6 @@ namespace Collector2.Model
 {
     public class Owner
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int OwnerId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

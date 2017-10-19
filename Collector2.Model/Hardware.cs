@@ -10,10 +10,8 @@ namespace Collector2.Model
 {
     public class Hardware
     {
-        [Key, ForeignKey("Item")]
         public int ItemId { get; set; }
         public string Notes { get; set; }
-        [Required, ForeignKey("HardwareSpec")]
         public int HardwareSpecId { get; set; }
 
         public virtual Item Item { get; set; }
