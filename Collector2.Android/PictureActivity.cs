@@ -66,7 +66,7 @@ namespace Collector2.Android
             }
 
             var ownerId = 99;
-            var newItemMobile = new NewItemMobileViewModel()
+            var newItemMobile = new NewItemMobile()
             {
                 OwnerId = ownerId,
                 ImageData = picture.BitmapToByteArray(),

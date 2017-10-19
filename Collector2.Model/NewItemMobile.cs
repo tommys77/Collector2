@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Collector2.Model
 {
-    public class NewItemMobileViewModel
+    public class NewItemMobile
     {
         public int ItemId { get; set; }
         public int OwnerId { get; set; }

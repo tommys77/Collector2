@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,6 +12,5 @@ namespace Collector2.Model
         [Key]
         public int FormatId { get; set; }
         public string FormatName { get; set; }
-
     }
 }
