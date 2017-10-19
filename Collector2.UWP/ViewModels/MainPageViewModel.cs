@@ -32,10 +32,42 @@ namespace Collector2.UWP.ViewModels
         {
             _navigationService = navigationService;
             // GetUndefinedItemsCount();
-
-            GetUndefinedItemsCount();
+            GetUndefinedItems.Execute(undefinedItemsExist);
         }
 
+        private RelayCommand getUndefinedItems;
+        public RelayCommand GetUndefinedItems
+        {
+            get
+            {
+                return getUndefinedItems 
+                    ?? (getUndefinedItems = new RelayCommand( async () =>
+               {
+                   using (var client = new HttpClient())
+                   {
+                       client.BaseAddress = new Uri(BaseUri);
+                       var json = await client.GetStringAsync("Items");
+                       Item[] items = JsonConvert.DeserializeObject<Item[]>(json);
+                       if (items.Count() != 0)
+                       {
+                           UndefinedItemsExists = !UndefinedItemsExists;
+                           NavigateToUndefinedItems.Execute(CurrentPage);
+                       }
+                   }
+               }));
+            }
+        }
+
+        public RelayCommand NavigateToUndefinedItems
+        {
+            get
+            {
+                return navigateCommand = new RelayCommand(() =>
+                    {
+                        CurrentPage = typeof(UndefinedItemsPage);
+                    });
+            }
+        }
 
         public async Task GetUndefinedItemsCount()
         {
@@ -47,6 +79,7 @@ namespace Collector2.UWP.ViewModels
                 if (items.Count() != 0)
                 {
                     UndefinedItemsExists = true;
+                    CurrentPage = typeof(SoftwarePage);
                 }
             }
         }
@@ -95,7 +128,7 @@ namespace Collector2.UWP.ViewModels
             }
         }
 
-        private Type currentPage = null;
+        private Type currentPage;
 
         public Type CurrentPage
         {
@@ -115,7 +148,7 @@ namespace Collector2.UWP.ViewModels
             get
             {
                 return navigateCommand
-                    ?? (navigateCommand = new RelayCommand(() =>
+                    ?? (navigateCommand = new RelayCommand(()  =>
                 {
                     if (IsPaneOpen)
                     {

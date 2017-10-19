@@ -8,6 +8,6 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <TextBlock x:Name="test" Text="Hello, this is the Undefined Items Page!" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Page>
