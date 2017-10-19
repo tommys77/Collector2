@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Collector2.Utilities
+namespace Collector2.UWP.ViewModels
 {
-    public class Class1
+    public class UndefinedItemsViewModel
     {
+
     }
 }

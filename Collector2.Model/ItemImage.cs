@@ -9,7 +9,6 @@ namespace Collector2.Model
 {
     public class ItemImage
     {
-        [Key]
         public int ItemImageId { get; set; }
         public byte[] Image { get; set; }
     }
