@@ -166,7 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Collector2.Model\Collector2.Model.csproj">
-      <Project>{7c787c57-9f13-44e1-b13d-8616c4308446}</Project>
+      <Project>{7C787C57-9F13-44E1-B13D-8616C4308446}</Project>
       <Name>Collector2.Model</Name>
     </ProjectReference>
   </ItemGroup>

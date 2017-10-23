@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Collector2.DataContext;
-using Collector2.Model;
+using Collector2.ModelFW;
 
 namespace Collector2.DataService.Controllers
 {
@@ -21,14 +21,6 @@ namespace Collector2.DataService.Controllers
         public IQueryable<Item> GetItem()
         {
             return db.Item;
-        }
-
-        public class UndefinedItem
-        {
-            public int ItemId { get; set; }
-            public int ItemImageId { get; set; }
-            public string ItemDescription { get; set; }
-            public byte[] Image { get; set; }
         }
 
         // GET: api/UndefinedItems
@@ -43,7 +35,7 @@ namespace Collector2.DataService.Controllers
                             ItemId = i.ItemId,
                             ItemImageId = i.ItemImageId,
                             ItemDescription = i.ItemDescription,
-                            Image = img.Image
+                            ImageBase64 = img.ImageBase64
                         };
 
             return query;
@@ -106,7 +98,7 @@ namespace Collector2.DataService.Controllers
                 return BadRequest(ModelState);
             }
 
-            var existingImage = db.ItemImage.FirstOrDefault(i => i.Image == newItemMobile.ImageData);
+            var existingImage = db.ItemImage.FirstOrDefault(i => i.ImageBase64 == newItemMobile.ImageBase64);
 
             if (existingImage != null)
             {
@@ -115,7 +107,7 @@ namespace Collector2.DataService.Controllers
 
             var itemImage = new ItemImage()
             {
-                Image = newItemMobile.ImageData
+                ImageBase64 = newItemMobile.ImageBase64
             };
 
             if (newItemMobile.OwnerId == 99 && db.Owner.Find(99) == null)

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Collector2.Model
+namespace Collector2.ModelFW
 {
     public class HardwareSpec
     {

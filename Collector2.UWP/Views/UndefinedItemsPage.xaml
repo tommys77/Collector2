@@ -5,9 +5,25 @@
     xmlns:local="using:Collector2.UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    xmlns:converter="using:Collector2.UWP.Converters"
+    mc:Ignorable="d"
+    DataContext="{Binding UndefinedItemsViewInstance, Source={StaticResource Locator}}">
+    <Page.Resources>
+        <converter:ByteArrayToImageConverter x:Key="BytesToImage" />
+    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock x:Name="test" Text="Hello, this is the Undefined Items Page!" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="StatusText" Text="{Binding Status}" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontStyle="Italic"/>
+        <Image x:Name="LastImage" Source="{Binding SelectedItem.ImageBase64, Converter={StaticResource BytesToImage}}" HorizontalAlignment="Center"></Image>
+        <!--<GridView x:Name="ItemsGrid" ItemsSource="{Binding Path=Items}"  >
+            <GridView.ItemTemplate >
+                <DataTemplate >
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left" >
+                        <Image x:Name="ItemImage" Source="{Binding Path=ImageBase64, Converter={StaticResource BytesToImage}}" Height="200" Width="140"></Image>
+                        <TextBlock x:Name="Description" Text="{Binding Path=ItemDescription}" TextAlignment="Center"  />
+                    </StackPanel>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>-->
     </Grid>
 </Page>

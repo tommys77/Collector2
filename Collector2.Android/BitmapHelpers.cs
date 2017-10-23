@@ -33,9 +33,15 @@ namespace Collector2.Android
 
             if (outHeight > height || outWidth > width)
             {
-                inSampleSize = outWidth > outHeight
+                try
+                {
+                    inSampleSize = outWidth > outHeight
                                    ? outHeight / height
                                    : outWidth / width;
+                }
+                catch (DivideByZeroException ex)
+                {
+                }
             }
 
             // Now we will load the image and have BitmapFactory resize it for us.
@@ -48,7 +54,6 @@ namespace Collector2.Android
 
         public static Bitmap ExifRotateBitmap(this string filepath, Bitmap bitmap)
         {
-            GC.Collect();
             var exif = new ExifInterface(filepath);
             var rotation = exif.GetAttributeInt(ExifInterface.TagOrientation, (int)Orientation.Normal);
             var rotationInDegrees = ExifToDegrees(rotation);
@@ -61,6 +66,7 @@ namespace Collector2.Android
                 return Bitmap.CreateBitmap(bitmap, 0, 0, bitmap.Width, bitmap.Height, matrix, true);
             }
         }
+
         public static int ExifToDegrees(int exifOrientation)
         {
             switch (exifOrientation)
@@ -76,16 +82,60 @@ namespace Collector2.Android
             }
         }
 
+        public static Bitmap DecodeSampledBitmapFromResource(this string path,
+                                                             int reqWidth, int reqHeight)
+        {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.InJustDecodeBounds = true;
+            BitmapFactory.DecodeFile(path, options);
+            options.InSampleSize = CalculateInSampleSize(options, reqWidth, reqHeight);
+            options.InJustDecodeBounds = false;
+            options.InPreferredConfig = Bitmap.Config.Rgb565;
+            return BitmapFactory.DecodeFile(path, options);
+        }
+        
+        public static int CalculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight)
+        {
+            // Raw height and width of image
+            float height = options.OutHeight;
+            float width = options.OutWidth;
+            double inSampleSize = 1D;
+
+            if (height > reqHeight || width > reqWidth)
+            {
+                int halfHeight = (int)(height / 2);
+                int halfWidth = (int)(width / 2);
+
+                // Calculate a inSampleSize that is a power of 2 - the decoder will use a value that is a power of two anyway.
+                while ((halfHeight / inSampleSize) > reqHeight && (halfWidth / inSampleSize) > reqWidth)
+                {
+                    inSampleSize *= 2;
+                }
+            }
+
+            return (int)inSampleSize;
+        }
         public static byte[] BitmapToByteArray(this Bitmap bitmap)
         {
             byte[] bytes;
             using (var stream = new MemoryStream())
             {
-                bitmap.Compress(Bitmap.CompressFormat.Jpeg, 0, stream);
+                bitmap.Compress(Bitmap.CompressFormat.Jpeg, 100, stream);
                 bytes = stream.ToArray();
-
             }
             return bytes;
+        }
+
+        public static string BitmapToBase64(this Bitmap bitmap)
+        {
+            string str;
+            using (var stream = new MemoryStream())
+            {
+                bitmap.Compress(Bitmap.CompressFormat.Jpeg, 100, stream);
+                var bytes = stream.ToArray();
+                str = Convert.ToBase64String(bytes);
+            }
+            return str;
         }
 
     }

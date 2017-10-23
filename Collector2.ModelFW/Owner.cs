@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Collector2.Model
+namespace Collector2.ModelFW
 {
     public class Owner
     {

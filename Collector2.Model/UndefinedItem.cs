@@ -11,6 +11,15 @@ namespace Collector2.Model
         public int ItemId { get; set; }
         public int ItemImageId { get; set; }
         public string ItemDescription { get; set; }
-        public byte[] Image { get; set; }
+        public string ImageBase64 { get; set; }
+
+
+        public override string ToString()
+        {
+            return ItemId + ", " +ItemImageId+ ", " + ItemDescription + ", " + ImageBase64;
+        }
     }
+  
+
+  
 }

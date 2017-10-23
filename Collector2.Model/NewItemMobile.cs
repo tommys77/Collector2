@@ -10,7 +10,7 @@ namespace Collector2.Model
     {
         public int ItemId { get; set; }
         public int OwnerId { get; set; }
-        public byte[] ImageData { get; set; }
+        public string ImageBase64 { get; set; }
         public string Description { get; set; }
     }
 }

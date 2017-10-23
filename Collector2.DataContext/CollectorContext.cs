@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using Collector2.Model;
+using Collector2.ModelFW;
 
 namespace Collector2.DataContext
 {
