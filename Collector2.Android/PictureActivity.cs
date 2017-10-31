@@ -49,10 +49,7 @@ namespace Collector2.Android
             mEncodeBtn.Click += EncodeAndUpload;
 
             path = Intent.GetStringExtra("path");
-
-            var height = Resources.DisplayMetrics.HeightPixels;
-            var width = mPicture.Height;
-           // picture = path.LoadAndResizeBitmap(width, height);
+            
             picture = path.LoadAndResizeBitmap(600, 800);
             mPicture.SetImageBitmap(path.ExifRotateBitmap(picture));
         }

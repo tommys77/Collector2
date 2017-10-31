@@ -86,6 +86,11 @@ namespace Collector2.UWP.ViewModels
             }
         }
 
+        public void SelectedItemClick()
+        {
+            Status = "You clicked on " + SelectedItem.ItemId;
+        }
+
         public string Status
         {
             get { return status; }

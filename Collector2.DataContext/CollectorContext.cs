@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using Collector2.ModelFW;
+using Collector2.Model;
 
 namespace Collector2.DataContext
 {
@@ -34,6 +34,17 @@ namespace Collector2.DataContext
 
             //Don't want pluralized table names
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            #region Set Up Keys and Relations
+
+            //Software (Software can have many images).
+
+            modelBuilder.Entity<Software>()
+                .HasMany(s => s.Image)
+                .WithOptional();
+
+                
+            #endregion
         }
 
        

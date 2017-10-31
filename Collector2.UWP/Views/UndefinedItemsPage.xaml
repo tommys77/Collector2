@@ -13,17 +13,17 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock x:Name="StatusText" Text="{Binding Status}" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontStyle="Italic"/>
-        <Image x:Name="LastImage" Source="{Binding SelectedItem.ImageBase64, Converter={StaticResource BytesToImage}}" HorizontalAlignment="Center"></Image>
-        <!--<GridView x:Name="ItemsGrid" ItemsSource="{Binding Path=Items}"  >
+        <TextBlock x:Name="StatusText" Text="{Binding SelectedItem.ItemId}" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontStyle="Italic"/>
+        <!--<Image x:Name="LastImage" Source="{Binding SelectedItem.ImageBase64, Converter={StaticResource BytesToImage}}" HorizontalAlignment="Center"></Image>-->
+        <GridView x:Name="ItemsGrid" ItemsSource="{Binding Path=Items}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" IsItemClickEnabled="True"  >
             <GridView.ItemTemplate >
                 <DataTemplate >
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Left" >
-                        <Image x:Name="ItemImage" Source="{Binding Path=ImageBase64, Converter={StaticResource BytesToImage}}" Height="200" Width="140"></Image>
+                        <Image x:Name="ItemImage" Source="{Binding Path=ImageBase64, Converter={StaticResource BytesToImage}}" Height="180" Width="140"></Image>
                         <TextBlock x:Name="Description" Text="{Binding Path=ItemDescription}" TextAlignment="Center"  />
                     </StackPanel>
                 </DataTemplate>
             </GridView.ItemTemplate>
-        </GridView>-->
+        </GridView>
     </Grid>
 </Page>
