@@ -19,7 +19,7 @@ namespace Collector2.UWP.ViewModels
     public class MainPageViewModel : ViewModelBase
     {
         private bool isPaneOpen;
-        private bool undefinedItemsExist;
+        private bool unattachedImagesExists;
         private RelayCommand openPaneCommand;
         private RelayCommand navigateCommand;
         private readonly INavigationService _navigationService;
@@ -32,22 +32,22 @@ namespace Collector2.UWP.ViewModels
         {
             _navigationService = navigationService;
             // GetUndefinedItemsCount();
-            GetUndefinedItems.Execute(undefinedItemsExist);
+            GetUnattachedImages.Execute(unattachedImagesExists);
         }
         
-        private RelayCommand getUndefinedItems;
-        public RelayCommand GetUndefinedItems
+        private RelayCommand getUnattachedImages;
+        public RelayCommand GetUnattachedImages
         {
             get
             {
-                return getUndefinedItems
-                    ?? (getUndefinedItems = new RelayCommand(async () =>
+                return getUnattachedImages
+                    ?? (getUnattachedImages = new RelayCommand(async () =>
               {
                   using (var client = new HttpClient())
                   {
                       client.BaseAddress = new Uri(BaseUri);
-                      var json = await client.GetStringAsync("Items");
-                      UndefinedItem[] items = JsonConvert.DeserializeObject<UndefinedItem[]>(json);
+                      var json = await client.GetStringAsync("ItemImages");
+                      ItemImage[] items = JsonConvert.DeserializeObject<ItemImage[]>(json);
                       if (items.Count() != 0)
                       {
                           UndefinedItemsExists = !UndefinedItemsExists;
@@ -88,13 +88,13 @@ namespace Collector2.UWP.ViewModels
         {
             get
             {
-                return undefinedItemsExist;
+                return unattachedImagesExists;
             }
             set
             {
                 if (!Equals(UndefinedItemsExists, value))
                 {
-                    undefinedItemsExist = value;
+                    unattachedImagesExists = value;
                     RaisePropertyChanged("UndefinedItemsExists");
                 }
             }

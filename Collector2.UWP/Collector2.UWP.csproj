@@ -99,7 +99,7 @@
     <Compile Include="Converters\ByteArrayToImageConverter.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\SoftwarePageViewModel.cs" />
-    <Compile Include="ViewModels\UndefinedItemsViewModel.cs" />
+    <Compile Include="ViewModels\UndefinedImagesViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
@@ -108,8 +108,8 @@
     <Compile Include="Views\SoftwarePage.xaml.cs">
       <DependentUpon>SoftwarePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UndefinedItemsPage.xaml.cs">
-      <DependentUpon>UndefinedItemsPage.xaml</DependentUpon>
+    <Compile Include="Views\UndefinedImagesPage.xaml.cs">
+      <DependentUpon>UndefinedImagesPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -159,7 +159,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UndefinedItemsPage.xaml">
+    <Page Include="Views\UndefinedImagesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -23,24 +23,24 @@ namespace Collector2.DataService.Controllers
             return db.Item;
         }
 
-        // GET: api/UndefinedItems
-        [Route("api/UndefinedItems")]
-        public IQueryable<UndefinedItem> GetUndefinedItem()
-        {
-            var query = from i in db.Item
-                        join img in db.ItemImage on i.ItemImageId equals img.ItemImageId
-                        where i.IsDefined == false
-                        select new UndefinedItem()
-                        {
-                            ItemId = i.ItemId,
-                            ItemImageId = i.ItemImageId,
-                            ItemDescription = i.ItemDescription,
-                            ImageBase64 = img.ImageBase64
-                        };
+        //// GET: api/UndefinedItems
+        //[Route("api/UndefinedItems")]
+        //public IQueryable<UndefinedItem> GetUndefinedItem()
+        //{
+        //    var query = from i in db.Item
+        //                join img in db.ItemImage on i.ItemImageId equals img.ItemImageId
+        //                where i.IsDefined == false
+        //                select new UndefinedItem()
+        //                {
+        //                    ItemId = i.ItemId,
+        //                    ItemImageId = i.ItemImageId,
+        //                    ItemDescription = i.ItemDescription,
+        //                    ImageBase64 = img.ImageBase64
+        //                };
 
-            return query;
-        }
-
+        //    return query;
+        //}
+        
         // GET: api/Items/5
         [ResponseType(typeof(Item))]
         public IHttpActionResult GetItem(int id)
@@ -89,52 +89,52 @@ namespace Collector2.DataService.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Items
-        [ResponseType(typeof(NewItemMobile))]
-        public IHttpActionResult PostItem(NewItemMobile newItemMobile)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// POST: api/Items
+        //[ResponseType(typeof(NewItemMobile))]
+        //public IHttpActionResult PostItem(NewItemMobile newItemMobile)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            var existingImage = db.ItemImage.FirstOrDefault(i => i.ImageBase64 == newItemMobile.ImageBase64);
+        //    var existingImage = db.ItemImage.FirstOrDefault(i => i.ImageBase64 == newItemMobile.ImageBase64);
 
-            if (existingImage != null)
-            {
-                return Conflict();
-            }
+        //    if (existingImage != null)
+        //    {
+        //        return Conflict();
+        //    }
 
-            var itemImage = new ItemImage()
-            {
-                ImageBase64 = newItemMobile.ImageBase64
-            };
+        //    var itemImage = new ItemImage()
+        //    {
+        //        ImageBase64 = newItemMobile.ImageBase64
+        //    };
 
-            if (newItemMobile.OwnerId == 99 && db.Owner.Find(99) == null)
-            {
-                var johnDoe = new Owner
-                {
-                    OwnerId = 99,
-                    FirstName = "John",
-                    LastName = "Doe"
-                };
-                db.Owner.Add(johnDoe);
-            }
+        //    if (newItemMobile.OwnerId == 99 && db.Owner.Find(99) == null)
+        //    {
+        //        var johnDoe = new Owner
+        //        {
+        //            OwnerId = 99,
+        //            FirstName = "John",
+        //            LastName = "Doe"
+        //        };
+        //        db.Owner.Add(johnDoe);
+        //    }
 
-            var item = new Item()
-            {
-                ItemDescription = newItemMobile.Description,
-                OwnerId = newItemMobile.OwnerId,
-                ItemImageId = itemImage.ItemImageId,
-                IsDefined = false
-            };
+        //    var item = new Item()
+        //    {
+        //        ItemDescription = newItemMobile.Description,
+        //        OwnerId = newItemMobile.OwnerId,
+        //        ItemImageId = itemImage.ItemImageId,
+        //        IsDefined = false
+        //    };
 
-            db.ItemImage.Add(itemImage);
-            db.Item.Add(item);
-            db.SaveChanges();
+        //    db.ItemImage.Add(itemImage);
+        //    db.Item.Add(item);
+        //    db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = item.ItemId }, item);
-        }
+        //    return CreatedAtRoute("DefaultApi", new { id = item.ItemId }, item);
+        //}
 
         // DELETE: api/Items/5
         [ResponseType(typeof(Item))]

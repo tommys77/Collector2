@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace Collector2.UWP.ViewModels
 {
-    public class UndefinedItemsViewModel : ViewModelBase
+    public class UndefinedImagesViewModel : ViewModelBase
     {
 
         private RelayCommand getUndefinedItems;
@@ -23,24 +23,24 @@ namespace Collector2.UWP.ViewModels
 
         private const string BaseUri = "http://collectorv2.azurewebsites.net/api/";
 
-        public UndefinedItemsViewModel()
+        public UndefinedImagesViewModel()
         {
-            Items = new ObservableCollection<UndefinedItem>();
+            Images = new ObservableCollection<ItemImage>();
             Status = "Loading page, please be patient";
-            GetUndefinedItems.Execute(getUndefinedItems);
+            GetUnattachedImages.Execute(getUndefinedItems);
         }
 
-        private ObservableCollection<UndefinedItem> _items;
-        public List<UndefinedItem> UndefinedItemsList = new List<UndefinedItem>();
+        private ObservableCollection<ItemImage> _images;
+        public List<ItemImage> UndefinedItemsList = new List<ItemImage>();
         public string bindingTest = "Undefined";
 
-        public ObservableCollection<UndefinedItem> Items
+        public ObservableCollection<ItemImage> Images
         {
-            get { return _items; }
-            set { _items = value; }
+            get { return _images; }
+            set { _images = value; }
         }
 
-        public RelayCommand GetUndefinedItems
+        public RelayCommand GetUnattachedImages
         {
             get
             {
@@ -52,15 +52,18 @@ namespace Collector2.UWP.ViewModels
                  {
                      UndefinedItemsList.Clear();
                      client.BaseAddress = new Uri(BaseUri);
-                     
-                     var json = await client.GetStringAsync("UndefinedItems");
-                     UndefinedItem[] items = JsonConvert.DeserializeObject<UndefinedItem[]>(json);
-                    // Status = items.ElementAt(0).ToString();
-                     foreach (var i in items)
+
+                     var json = await client.GetStringAsync("UnattachedImages");
+                     ItemImage[] images = JsonConvert.DeserializeObject<ItemImage[]>(json);
+                     // Status = items.ElementAt(0).ToString();
+                     foreach (var i in images)
                      {
-                         Items.Add(i);
+                         if (i.IsAttached == false)
+                         {
+                             Images.Add(i);
+                         }
                      }
-                     SelectedItem = Items.ElementAt(Items.Count() - 1);
+                     SelectedItem = Images.ElementAt(Images.Count() - 1);
                  }
              }
              catch (Exception ex)
@@ -71,9 +74,9 @@ namespace Collector2.UWP.ViewModels
             }
         }
 
-        private UndefinedItem selectedItem;
+        private ItemImage selectedItem;
 
-        public UndefinedItem SelectedItem
+        public ItemImage SelectedItem
         {
             get { return selectedItem; }
             set
@@ -88,7 +91,7 @@ namespace Collector2.UWP.ViewModels
 
         public void SelectedItemClick()
         {
-            Status = "You clicked on " + SelectedItem.ItemId;
+            Status = "You clicked on " + SelectedItem.ItemImageId;
         }
 
         public string Status

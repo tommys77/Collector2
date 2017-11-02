@@ -34,7 +34,7 @@ namespace Collector2.Android
         private Bitmap picture;
         private string path;
 
-        private const string URL = "http://collectorv2.azurewebsites.net/api/Items/";
+        private const string URL = "http://collectorv2.azurewebsites.net/api/ItemImages/";
 
         //private Bitmap mBitmap;
         protected override void OnCreate(Bundle savedInstanceState)
@@ -65,19 +65,25 @@ namespace Collector2.Android
             {
                 itemDescription = "None";
             }
-            Bitmap img = BitmapFactory.DecodeFile(path);
-            var ownerId = 99;
-            var newItemMobile = new NewItemMobile()
+            //Bitmap img = BitmapFactory.DecodeFile(path);
+            //var ownerId = 99;
+            //var newItemMobile = new NewItemMobile()
+            //{
+            //    OwnerId = ownerId,
+            //    ImageBase64 = path.ExifRotateBitmap(picture).BitmapToBase64(),
+            //    Description = itemDescription
+            //};
+
+            var itemImage = new ItemImage()
             {
-                OwnerId = ownerId,
+                Description = itemDescription,
                 ImageBase64 = path.ExifRotateBitmap(picture).BitmapToBase64(),
-                Description = itemDescription
             };
-            
+
             var uri = new System.Uri(URL);
             var client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var json = JsonConvert.SerializeObject(newItemMobile);
+            var json = JsonConvert.SerializeObject(itemImage);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await client.PostAsync(uri, content);
 
