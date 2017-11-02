@@ -12,15 +12,6 @@ namespace Collector2.Models
     {
         [Key]
         public int ItemId { get; set; }
-        [Required]
-        public string ItemDescription { get; set; }
-        [Required, ForeignKey("Owner")]
-        public int OwnerId { get; set; }
-        [Required, ForeignKey("ItemImage")]
-        public int ItemImageId { get; set; }
-        public bool IsDefined { get; set; }  
-
-        public virtual Owner Owner { get; set; }
-        public virtual ItemImage ItemImage { get; set; }
+        public List<ItemImage> ItemImages { get; set; }
     }
 }

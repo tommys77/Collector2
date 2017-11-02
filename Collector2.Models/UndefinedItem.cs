@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Collector2.Models
 {
-    public class UndefinedItem
+    public class ItemImage
     {
         public int ItemId { get; set; }
         public int ItemImageId { get; set; }

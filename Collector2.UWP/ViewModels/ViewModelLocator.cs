@@ -46,7 +46,7 @@ namespace Collector2.UWP.ViewModels
             SimpleIoc.Default.Register<INavigationService>(() => nav);
             SimpleIoc.Default.Register<MainPageViewModel>();
             SimpleIoc.Default.Register<SoftwarePageViewModel>();
-            SimpleIoc.Default.Register<UndefinedItemsViewModel>();
+            SimpleIoc.Default.Register<UndefinedImagesViewModel>();
             
         }
 
@@ -66,11 +66,11 @@ namespace Collector2.UWP.ViewModels
             }
         }
 
-        public UndefinedItemsViewModel UndefinedItemsViewInstance
+        public UndefinedImagesViewModel UndefinedImagesViewInstance
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<UndefinedItemsViewModel>();
+                return ServiceLocator.Current.GetInstance<UndefinedImagesViewModel>();
             }
         }
 
