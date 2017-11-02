@@ -11,8 +11,8 @@ using GalaSoft.MvvmLight.Command;
 using Windows.UI.Xaml.Controls;
 using Collector2.UWP.Views;
 using System.Net.Http;
-using Collector2.Model;
 using Newtonsoft.Json;
+using Collector2.Models;
 
 namespace Collector2.UWP.ViewModels
 {
@@ -34,27 +34,27 @@ namespace Collector2.UWP.ViewModels
             // GetUndefinedItemsCount();
             GetUndefinedItems.Execute(undefinedItemsExist);
         }
-
+        
         private RelayCommand getUndefinedItems;
         public RelayCommand GetUndefinedItems
         {
             get
             {
-                return getUndefinedItems 
-                    ?? (getUndefinedItems = new RelayCommand( async () =>
-               {
-                   using (var client = new HttpClient())
-                   {
-                       client.BaseAddress = new Uri(BaseUri);
-                       var json = await client.GetStringAsync("Items");
-                       Item[] items = JsonConvert.DeserializeObject<Item[]>(json);
-                       if (items.Count() != 0)
-                       {
-                           UndefinedItemsExists = !UndefinedItemsExists;
-                           NavigateToUndefinedItems.Execute(CurrentPage);
-                       }
-                   }
-               }));
+                return getUndefinedItems
+                    ?? (getUndefinedItems = new RelayCommand(async () =>
+              {
+                  using (var client = new HttpClient())
+                  {
+                      client.BaseAddress = new Uri(BaseUri);
+                      var json = await client.GetStringAsync("Items");
+                      UndefinedItem[] items = JsonConvert.DeserializeObject<UndefinedItem[]>(json);
+                      if (items.Count() != 0)
+                      {
+                          UndefinedItemsExists = !UndefinedItemsExists;
+                          NavigateToUndefinedItems.Execute(CurrentPage);
+                      }
+                  }
+              }));
             }
         }
 
@@ -148,7 +148,7 @@ namespace Collector2.UWP.ViewModels
             get
             {
                 return navigateCommand
-                    ?? (navigateCommand = new RelayCommand(()  =>
+                    ?? (navigateCommand = new RelayCommand(() =>
                 {
                     if (IsPaneOpen)
                     {

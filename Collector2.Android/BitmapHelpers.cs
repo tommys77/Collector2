@@ -34,8 +34,8 @@ namespace Collector2.Android
             if (outHeight > height || outWidth > width)
             {
                 inSampleSize = outWidth > outHeight
-                                   ? outHeight / height
-                                   : outWidth / width;
+                               ? outHeight / height
+                               : outWidth / width;
             }
 
             // Now we will load the image and have BitmapFactory resize it for us.
@@ -48,7 +48,6 @@ namespace Collector2.Android
 
         public static Bitmap ExifRotateBitmap(this string filepath, Bitmap bitmap)
         {
-            GC.Collect();
             var exif = new ExifInterface(filepath);
             var rotation = exif.GetAttributeInt(ExifInterface.TagOrientation, (int)Orientation.Normal);
             var rotationInDegrees = ExifToDegrees(rotation);
@@ -61,6 +60,9 @@ namespace Collector2.Android
                 return Bitmap.CreateBitmap(bitmap, 0, 0, bitmap.Width, bitmap.Height, matrix, true);
             }
         }
+
+
+        // Useful for automatically rotate the picture before use. 
         public static int ExifToDegrees(int exifOrientation)
         {
             switch (exifOrientation)
@@ -76,16 +78,17 @@ namespace Collector2.Android
             }
         }
 
-        public static byte[] BitmapToByteArray(this Bitmap bitmap)
+        // I convert the image data to a Base64 string before transfering to database as a string.
+        public static string BitmapToBase64(this Bitmap bitmap)
         {
-            byte[] bytes;
+            string str;
             using (var stream = new MemoryStream())
             {
-                bitmap.Compress(Bitmap.CompressFormat.Jpeg, 0, stream);
-                bytes = stream.ToArray();
-
+                bitmap.Compress(Bitmap.CompressFormat.Jpeg, 100, stream);
+                var bytes = stream.ToArray();
+                str = Convert.ToBase64String(bytes);
             }
-            return bytes;
+            return str;
         }
 
     }

@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Collector2.Model
+namespace Collector2.Models
 {
-    public class ScoreSystem
+    public class ItemImage
     {
         [Key]
-        public int ScoreSystemId { get; set; }
-        public string ScoreSystemName { get; set; }
+        public int ItemImageId { get; set; }
+        public string ImageBase64 { get; set; }
     }
 }

@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using Collector2.Model;
+using Collector2.Models;
 
 namespace Collector2.DataContext
 {
     public class CollectorContext : DbContext
     {
         public DbSet<Item> Item { get; set; }
-        public DbSet<ItemImage> ItemImage {get;set; }
+        public DbSet<ItemImage> ItemImage { get; set; }
         public DbSet<Owner> Owner { get; set; }
         public DbSet<Software> Software { get; set; }
         public DbSet<Hardware> Hardware { get; set; }
@@ -36,6 +36,6 @@ namespace Collector2.DataContext
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
 
-       
+
     }
 }

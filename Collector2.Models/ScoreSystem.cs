@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Collector2.Model
+namespace Collector2.Models
 {
-    public class Category
+    public class ScoreSystem
     {
-        public int CategoryId { get; set; }
-        public string CategoryName { get; set; }
+        [Key]
+        public int ScoreSystemId { get; set; }
+        public string ScoreSystemName { get; set; }
     }
 }

@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Collector2.DataContext;
-using Collector2.Model;
+using Collector2.Models;
 
 namespace Collector2.DataService.Controllers
 {
@@ -21,6 +21,24 @@ namespace Collector2.DataService.Controllers
         public IQueryable<Item> GetItem()
         {
             return db.Item;
+        }
+
+        // GET: api/UndefinedItems
+        [Route("api/UndefinedItems")]
+        public IQueryable<UndefinedItem> GetUndefinedItem()
+        {
+            var query = from i in db.Item
+                        join img in db.ItemImage on i.ItemImageId equals img.ItemImageId
+                        where i.IsDefined == false
+                        select new UndefinedItem()
+                        {
+                            ItemId = i.ItemId,
+                            ItemImageId = i.ItemImageId,
+                            ItemDescription = i.ItemDescription,
+                            ImageBase64 = img.ImageBase64
+                        };
+
+            return query;
         }
 
         // GET: api/Items/5
@@ -72,15 +90,15 @@ namespace Collector2.DataService.Controllers
         }
 
         // POST: api/Items
-        [ResponseType(typeof(NewItemMobileViewModel))]
-        public IHttpActionResult PostItem(NewItemMobileViewModel newItemMobile)
+        [ResponseType(typeof(NewItemMobile))]
+        public IHttpActionResult PostItem(NewItemMobile newItemMobile)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var existingImage = db.ItemImage.FirstOrDefault(i => i.Image == newItemMobile.ImageData);
+            var existingImage = db.ItemImage.FirstOrDefault(i => i.ImageBase64 == newItemMobile.ImageBase64);
 
             if (existingImage != null)
             {
@@ -89,7 +107,7 @@ namespace Collector2.DataService.Controllers
 
             var itemImage = new ItemImage()
             {
-                Image = newItemMobile.ImageData
+                ImageBase64 = newItemMobile.ImageBase64
             };
 
             if (newItemMobile.OwnerId == 99 && db.Owner.Find(99) == null)
@@ -107,7 +125,8 @@ namespace Collector2.DataService.Controllers
             {
                 ItemDescription = newItemMobile.Description,
                 OwnerId = newItemMobile.OwnerId,
-                ItemImageId = itemImage.ItemImageId
+                ItemImageId = itemImage.ItemImageId,
+                IsDefined = false
             };
 
             db.ItemImage.Add(itemImage);

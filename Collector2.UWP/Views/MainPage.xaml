@@ -61,7 +61,8 @@
                     </ListBoxItem>
                     <ListBoxItem x:Name="Undefined" Visibility="{ Binding UndefinedItemsExists, Converter={StaticResource BoolToVisibility} }" >
                         <StackPanel Orientation="Horizontal" >
-                            <Button x:Name="UndefinedBtn" FontFamily="Razer Header Regular" Content="??" FontSize="20"  Width="50" Height="50" ToolTipService.ToolTip="Hardware"/>
+                            <Button x:Name="UndefinedBtn" FontFamily="Razer Header Regular" Content="??" FontSize="20"  Width="50" Height="50" ToolTipService.ToolTip="Hardware"
+                                    Command="{Binding NavigateToUndefinedItems}"/>
                             <TextBlock  x:Name="UndefinedLabel" Text="Undefined" FontSize="20" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Razer Header Regular" />
                         </StackPanel>
                     </ListBoxItem>
@@ -70,7 +71,6 @@
             <SplitView.Content>
                 <Frame 
                     x:Name="thisFrame"
-                    HorizontalAlignment="Center"
                     SourcePageType="{Binding CurrentPage, Mode=TwoWay}">
                 </Frame>
             </SplitView.Content>

@@ -18,7 +18,9 @@ using Android.Widget;
 using Android.Graphics;
 using Android.Provider;
 using System.IO;
-using Collector2.Model;
+using Collector2.Models;
+using System.Threading.Tasks;
+using Android.Content.Res;
 
 namespace Collector2.Android
 {
@@ -30,6 +32,7 @@ namespace Collector2.Android
         private ImageView mPicture;
         private Button mEncodeBtn;
         private Bitmap picture;
+        private string path;
 
         private const string URL = "http://collectorv2.azurewebsites.net/api/Items/";
 
@@ -45,17 +48,15 @@ namespace Collector2.Android
             mEncodeBtn = FindViewById<Button>(Resource.Id.picture_btn_encode_and_upload);
             mEncodeBtn.Click += EncodeAndUpload;
 
-            var path = Intent.GetStringExtra("path");
-
-            var height = Resources.DisplayMetrics.HeightPixels;
-            var width = mPicture.Height;
-            picture = path.LoadAndResizeBitmap(width, height);
+            path = Intent.GetStringExtra("path");
+            
+            picture = path.LoadAndResizeBitmap(600, 800);
             mPicture.SetImageBitmap(path.ExifRotateBitmap(picture));
         }
 
         private async void EncodeAndUpload(object sender, EventArgs e)
         {
-            mStatus.SetTextColor(Color.Black);
+            mStatus.SetTextColor(Color.White);
             mStatus.Text = "Working...";
             mDescription = FindViewById<EditText>(Resource.Id.picture_et_description);
            
@@ -64,15 +65,15 @@ namespace Collector2.Android
             {
                 itemDescription = "None";
             }
-
+            Bitmap img = BitmapFactory.DecodeFile(path);
             var ownerId = 99;
             var newItemMobile = new NewItemMobile()
             {
                 OwnerId = ownerId,
-                ImageData = picture.BitmapToByteArray(),
+                ImageBase64 = path.ExifRotateBitmap(picture).BitmapToBase64(),
                 Description = itemDescription
             };
-
+            
             var uri = new System.Uri(URL);
             var client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -97,17 +98,6 @@ namespace Collector2.Android
             }
         }
 
-        //NOT USED
-        //private string BitmapToBase64(Bitmap bitmap)
-        //{
-        //    string str;
-        //    using (var stream = new MemoryStream())
-        //    {
-        //        bitmap.Compress(Bitmap.CompressFormat.Jpeg, 0, stream);
-        //        var bytes = stream.ToArray();
-        //        str = Convert.ToBase64String(bytes);
-        //    }
-        //    return str;
-        //}
+       
     }
 }
