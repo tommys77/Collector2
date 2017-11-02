@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Collector2.ModelFW
+namespace Collector2.Models
 {
-    public class UndefinedItem
+    public class NewItemMobile
     {
         public int ItemId { get; set; }
-        public int ItemImageId { get; set; }
-        public string ItemDescription { get; set; }
+        public int OwnerId { get; set; }
         public string ImageBase64 { get; set; }
+        public string Description { get; set; }
     }
 }

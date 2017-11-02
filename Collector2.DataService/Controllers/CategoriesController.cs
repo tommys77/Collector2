@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Collector2.DataContext;
-using Collector2.ModelFW;
+using Collector2.Models;
 
 namespace Collector2.DataService.Controllers
 {

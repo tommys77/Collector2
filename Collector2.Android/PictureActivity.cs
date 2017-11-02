@@ -18,7 +18,7 @@ using Android.Widget;
 using Android.Graphics;
 using Android.Provider;
 using System.IO;
-using Collector2.Model;
+using Collector2.Models;
 using System.Threading.Tasks;
 using Android.Content.Res;
 

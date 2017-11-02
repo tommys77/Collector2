@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using Collector2.Model;
+using Collector2.Models;
 
 namespace Collector2.DataContext
 {
     public class CollectorContext : DbContext
     {
         public DbSet<Item> Item { get; set; }
-        public DbSet<ItemImage> ItemImage {get;set; }
+        public DbSet<ItemImage> ItemImage { get; set; }
         public DbSet<Owner> Owner { get; set; }
         public DbSet<Software> Software { get; set; }
         public DbSet<Hardware> Hardware { get; set; }
@@ -34,19 +34,8 @@ namespace Collector2.DataContext
 
             //Don't want pluralized table names
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-
-            #region Set Up Keys and Relations
-
-            //Software (Software can have many images).
-
-            modelBuilder.Entity<Software>()
-                .HasMany(s => s.Image)
-                .WithOptional();
-
-                
-            #endregion
         }
 
-       
+
     }
 }

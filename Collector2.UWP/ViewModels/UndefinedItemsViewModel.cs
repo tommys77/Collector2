@@ -1,10 +1,10 @@
-﻿using Collector2.Model;
-using GalaSoft.MvvmLight.Command;
+﻿using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Collector2.Models;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;

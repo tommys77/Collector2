@@ -258,9 +258,9 @@
       <Project>{4f4be75d-457c-4d30-96a8-b6fa220abd5e}</Project>
       <Name>Collector2.DataContext</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Collector2.ModelFW\Collector2.ModelFW.csproj">
-      <Project>{7E5769A6-3CDD-4F0D-ACAF-3B18D6EF74CB}</Project>
-      <Name>Collector2.ModelFW</Name>
+    <ProjectReference Include="..\Collector2.Models\Collector2.Models.csproj">
+      <Project>{4cf4dc9b-497c-4c17-8352-6d805062a6f3}</Project>
+      <Name>Collector2.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

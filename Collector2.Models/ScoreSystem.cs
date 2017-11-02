@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Collector2.Model
+namespace Collector2.Models
 {
-    public class Format
+    public class ScoreSystem
     {
-        public int FormatId { get; set; }
-        public string FormatName { get; set; }
-
+        [Key]
+        public int ScoreSystemId { get; set; }
+        public string ScoreSystemName { get; set; }
     }
 }

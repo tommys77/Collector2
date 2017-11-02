@@ -55,9 +55,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Collector2.Model\Collector2.Model.csproj">
-      <Project>{7c787c57-9f13-44e1-b13d-8616c4308446}</Project>
-      <Name>Collector2.Model</Name>
+    <ProjectReference Include="..\Collector2.Models\Collector2.Models.csproj">
+      <Project>{4cf4dc9b-497c-4c17-8352-6d805062a6f3}</Project>
+      <Name>Collector2.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

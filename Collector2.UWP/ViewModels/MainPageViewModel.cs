@@ -11,8 +11,8 @@ using GalaSoft.MvvmLight.Command;
 using Windows.UI.Xaml.Controls;
 using Collector2.UWP.Views;
 using System.Net.Http;
-using Collector2.Model;
 using Newtonsoft.Json;
+using Collector2.Models;
 
 namespace Collector2.UWP.ViewModels
 {
