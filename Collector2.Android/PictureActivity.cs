@@ -60,10 +60,10 @@ namespace Collector2.Android
             mStatus.Text = "Working...";
             mDescription = FindViewById<EditText>(Resource.Id.picture_et_description);
            
-            var itemDescription = mDescription.Text;
-            if (itemDescription == "" || itemDescription == null)
+            var description = mDescription.Text;
+            if (description == "" || description == null)
             {
-                itemDescription = "None";
+                description = "None";
             }
             //Bitmap img = BitmapFactory.DecodeFile(path);
             //var ownerId = 99;
@@ -76,7 +76,7 @@ namespace Collector2.Android
 
             var itemImage = new ItemImage()
             {
-                Description = itemDescription,
+                Description = description,
                 ImageBase64 = path.ExifRotateBitmap(picture).BitmapToBase64(),
             };
 
