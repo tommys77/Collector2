@@ -14,5 +14,6 @@ namespace Collector2.Models
         public string ImageBase64 { get; set; }
         public string Description { get; set; }
         public bool IsAttached { get; set; } = false;
+        public bool IsMainImage { get; set; } = false;
     }
 }

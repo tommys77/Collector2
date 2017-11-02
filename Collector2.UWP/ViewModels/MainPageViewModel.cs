@@ -50,7 +50,7 @@ namespace Collector2.UWP.ViewModels
                       ItemImage[] items = JsonConvert.DeserializeObject<ItemImage[]>(json);
                       if (items.Count() != 0)
                       {
-                          UndefinedItemsExists = !UndefinedItemsExists;
+                          UnattachedImagesExists = !UnattachedImagesExists;
                           NavigateToUndefinedItems.Execute(CurrentPage);
                       }
                   }
@@ -78,13 +78,13 @@ namespace Collector2.UWP.ViewModels
                 Item[] items = JsonConvert.DeserializeObject<Item[]>(json);
                 if (items.Count() != 0)
                 {
-                    UndefinedItemsExists = true;
+                    UnattachedImagesExists = true;
                     CurrentPage = typeof(SoftwarePage);
                 }
             }
         }
 
-        public bool UndefinedItemsExists
+        public bool UnattachedImagesExists
         {
             get
             {
@@ -92,7 +92,7 @@ namespace Collector2.UWP.ViewModels
             }
             set
             {
-                if (!Equals(UndefinedItemsExists, value))
+                if (!Equals(UnattachedImagesExists, value))
                 {
                     unattachedImagesExists = value;
                     RaisePropertyChanged("UndefinedItemsExists");
