@@ -4,17 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
-using GalaSoft.MvvmLight;
 using Windows.UI.Xaml;
-using GalaSoft.MvvmLight.Views;
-using GalaSoft.MvvmLight.Command;
 using Windows.UI.Xaml.Controls;
-using Collector2.UWP.Views;
+using Collector2.UWP2.Views;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Collector2.Models;
 
-namespace Collector2.UWP.ViewModels
+namespace Collector2.UWP2.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
@@ -26,17 +23,15 @@ namespace Collector2.UWP.ViewModels
 
         private const string BaseUri = "http://collectorv2.azurewebsites.net/api/";
 
-        public static MainPageViewModel Current { get; private set; }
 
 
         public MainPageViewModel(INavigationService navigationService)
         {
-            Current = this;
             _navigationService = navigationService;
             // GetUndefinedItemsCount();
             GetUnattachedImages.Execute(unattachedImagesExists);
         }
-
+        
         private RelayCommand getUnattachedImages;
         public RelayCommand GetUnattachedImages
         {
@@ -48,15 +43,12 @@ namespace Collector2.UWP.ViewModels
                   using (var client = new HttpClient())
                   {
                       client.BaseAddress = new Uri(BaseUri);
-                      var result = await client.GetAsync("UnattachedImagesExists");
-                      if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                      var json = await client.GetStringAsync("ItemImages");
+                      ItemImage[] items = JsonConvert.DeserializeObject<ItemImage[]>(json);
+                      if (items.Count() != 0)
                       {
                           UnattachedImagesExists = !UnattachedImagesExists;
-                          NavigateToUnattachedItems.Execute(CurrentFrame);
-                      }
-                      if(result.StatusCode == System.Net.HttpStatusCode.Forbidden)
-                      {
-                          NavigateToSoftware.Execute(CurrentFrame);
+                          NavigateToUnattachedItems.Execute(CurrentPage);
                       }
                   }
               }));
@@ -69,7 +61,7 @@ namespace Collector2.UWP.ViewModels
             {
                 return navigateCommand = new RelayCommand(() =>
                     {
-                        CurrentFrame = typeof(UnattachedImagesPage);
+                        CurrentPage = typeof(UnattachedImagesPage);
                     });
             }
         }
@@ -84,7 +76,7 @@ namespace Collector2.UWP.ViewModels
                 if (items.Count() != 0)
                 {
                     UnattachedImagesExists = true;
-                    CurrentFrame = typeof(SoftwarePage);
+                    CurrentPage = typeof(SoftwarePage);
                 }
             }
         }
@@ -133,18 +125,18 @@ namespace Collector2.UWP.ViewModels
             }
         }
 
-        private Type currentFrame;
+        private Type currentPage;
 
-        public Type CurrentFrame
+        public Type CurrentPage
         {
             get
             {
-                return currentFrame;
+                return currentPage;
             }
             set
             {
-                this.currentFrame = value;
-                RaisePropertyChanged(nameof(CurrentFrame));
+                this.currentPage = value;
+                RaisePropertyChanged(nameof(CurrentPage));
             }
         }
 
@@ -159,7 +151,7 @@ namespace Collector2.UWP.ViewModels
                     {
                         IsPaneOpen = !IsPaneOpen;
                     }
-                    CurrentFrame = typeof(SoftwarePage);
+                    CurrentPage = typeof(SoftwarePage);
                 }));
             }
         }

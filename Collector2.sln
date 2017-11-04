@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collector2.UWP", "Collector
 		{4CF4DC9B-497C-4C17-8352-6D805062A6F3} = {4CF4DC9B-497C-4C17-8352-6D805062A6F3}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collector2.Models", "Collector2.Models\Collector2.Models.csproj", "{4CF4DC9B-497C-4C17-8352-6D805062A6F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collector2.Models", "Collector2.Models\Collector2.Models.csproj", "{4CF4DC9B-497C-4C17-8352-6D805062A6F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

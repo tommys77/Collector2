@@ -16,7 +16,8 @@ namespace Collector2.UWP.ViewModels
         private static bool _isInitialized;
         public const string MainPageKey = "MainPage";
         public const string SoftwarePageKey = "SoftwarePage";
-        public const string UndefinedItemsPageKey = "UndefinedItemsPage";
+        public const string UnattachedImagesPageKey = "UndefinedItemsPage";
+        public const string NewItemPageKey = "NewItemPage";
         
         public ViewModelLocator()
         {
@@ -32,7 +33,8 @@ namespace Collector2.UWP.ViewModels
 
             nav.Configure(MainPageKey, typeof(MainPage));
             nav.Configure(SoftwarePageKey, typeof(SoftwarePage));
-            nav.Configure(UndefinedItemsPageKey, typeof(UndefinedItemsPage));
+            nav.Configure(UnattachedImagesPageKey, typeof(UnattachedImagesPage));
+            nav.Configure(NewItemPageKey, typeof(NewItemPage));
             
             if (ViewModelBase.IsInDesignModeStatic)
             {
@@ -46,8 +48,8 @@ namespace Collector2.UWP.ViewModels
             SimpleIoc.Default.Register<INavigationService>(() => nav);
             SimpleIoc.Default.Register<MainPageViewModel>();
             SimpleIoc.Default.Register<SoftwarePageViewModel>();
-            SimpleIoc.Default.Register<UndefinedImagesViewModel>();
-            
+            SimpleIoc.Default.Register<UnattachedImagesViewModel>();
+            SimpleIoc.Default.Register<NewItemPageViewModel>();
         }
 
         public MainPageViewModel MainPageViewInstance
@@ -66,11 +68,19 @@ namespace Collector2.UWP.ViewModels
             }
         }
 
-        public UndefinedImagesViewModel UndefinedImagesViewInstance
+        public UnattachedImagesViewModel UnattachedImagesViewInstance
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<UndefinedImagesViewModel>();
+                return ServiceLocator.Current.GetInstance<UnattachedImagesViewModel>();
+            }
+        }
+
+        public NewItemPageViewModel NewItemViewInstance
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<NewItemPageViewModel>();
             }
         }
 

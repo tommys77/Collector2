@@ -82,6 +82,24 @@ namespace Collector2.DataService.Controllers
             return query;
         }
 
+        // GET: api/UnattachedItemsExists
+        [Route("api/UnattachedImagesExists")]
+        [HttpGet]
+        public IHttpActionResult UnattachedImagesExists()
+        {
+            var query = from i in db.ItemImage
+                        where i.IsAttached == false
+                        select i;
+
+            if (query == null)
+            {
+                return NotFound();
+            }
+
+            return Ok();
+
+        }
+
         // POST: api/ItemImages
         [ResponseType(typeof(ItemImage))]
         public IHttpActionResult PostItemImage(ItemImage itemImage)
@@ -92,7 +110,7 @@ namespace Collector2.DataService.Controllers
             }
 
             var existingImage = db.ItemImage.FirstOrDefault((System.Linq.Expressions.Expression<Func<ItemImage, bool>>)(i => i.ImageBase64 == itemImage.ImageBase64));
-            if(existingImage != null)
+            if (existingImage != null)
             {
                 return Conflict();
             }

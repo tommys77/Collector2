@@ -6,6 +6,6 @@
     xmlns:vm="using:Collector2.UWP.ViewModels"
     RequestedTheme="Light">
     <Application.Resources>
-        <vm:ViewModelLocator x:Key="Locator" />
+        <vm:ViewModelLocator xmlns:vm="using:Collector2.UWP.ViewModels"  x:Key="Locator"  />
     </Application.Resources>
 </Application>

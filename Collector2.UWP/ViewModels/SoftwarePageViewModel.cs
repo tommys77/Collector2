@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,11 @@ namespace Collector2.UWP.ViewModels
 {
     public class SoftwarePageViewModel : ViewModelBase
     {
-        public SoftwarePageViewModel()
-        {
+        private readonly INavigationService _navigationService;
 
+        public SoftwarePageViewModel(INavigationService navigationService)
+        {
+            _navigationService = navigationService;
         }
     }
 }
