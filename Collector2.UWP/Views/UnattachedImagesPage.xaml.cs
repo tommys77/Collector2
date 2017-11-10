@@ -20,11 +20,16 @@ namespace Collector2.UWP.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class UndefinedItemsPage : Page
+    public sealed partial class UnattachedImagesPage : Page
     {
-        public UndefinedItemsPage()
+        public UnattachedImagesPage()
         {
             this.InitializeComponent();
+        }
+
+        private void ItemsGrid_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
         }
     }
 }

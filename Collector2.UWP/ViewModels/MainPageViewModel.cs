@@ -26,15 +26,17 @@ namespace Collector2.UWP.ViewModels
 
         private const string BaseUri = "http://collectorv2.azurewebsites.net/api/";
 
+        public static MainPageViewModel Current { get; private set; }
 
 
         public MainPageViewModel(INavigationService navigationService)
         {
+            Current = this;
             _navigationService = navigationService;
             // GetUndefinedItemsCount();
             GetUnattachedImages.Execute(unattachedImagesExists);
         }
-        
+
         private RelayCommand getUnattachedImages;
         public RelayCommand GetUnattachedImages
         {
@@ -46,25 +48,28 @@ namespace Collector2.UWP.ViewModels
                   using (var client = new HttpClient())
                   {
                       client.BaseAddress = new Uri(BaseUri);
-                      var json = await client.GetStringAsync("ItemImages");
-                      ItemImage[] items = JsonConvert.DeserializeObject<ItemImage[]>(json);
-                      if (items.Count() != 0)
+                      var result = await client.GetAsync("UnattachedImagesExists");
+                      if (result.StatusCode == System.Net.HttpStatusCode.OK)
                       {
                           UnattachedImagesExists = !UnattachedImagesExists;
-                          NavigateToUndefinedItems.Execute(CurrentPage);
+                          NavigateToUnattachedItems.Execute(CurrentFrame);
+                      }
+                      if(result.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                      {
+                          NavigateToSoftware.Execute(CurrentFrame);
                       }
                   }
               }));
             }
         }
 
-        public RelayCommand NavigateToUndefinedItems
+        public RelayCommand NavigateToUnattachedItems
         {
             get
             {
                 return navigateCommand = new RelayCommand(() =>
                     {
-                        CurrentPage = typeof(UndefinedItemsPage);
+                        CurrentFrame = typeof(UnattachedImagesPage);
                     });
             }
         }
@@ -79,7 +84,7 @@ namespace Collector2.UWP.ViewModels
                 if (items.Count() != 0)
                 {
                     UnattachedImagesExists = true;
-                    CurrentPage = typeof(SoftwarePage);
+                    CurrentFrame = typeof(SoftwarePage);
                 }
             }
         }
@@ -95,7 +100,7 @@ namespace Collector2.UWP.ViewModels
                 if (!Equals(UnattachedImagesExists, value))
                 {
                     unattachedImagesExists = value;
-                    RaisePropertyChanged("UndefinedItemsExists");
+                    RaisePropertyChanged(nameof(UnattachedImagesExists));
                 }
             }
         }
@@ -111,7 +116,7 @@ namespace Collector2.UWP.ViewModels
                 if (!Equals(IsPaneOpen, value))
                 {
                     isPaneOpen = value;
-                    RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(IsPaneOpen));
                 }
             }
         }
@@ -128,18 +133,18 @@ namespace Collector2.UWP.ViewModels
             }
         }
 
-        private Type currentPage;
+        private Type currentFrame;
 
-        public Type CurrentPage
+        public Type CurrentFrame
         {
             get
             {
-                return currentPage;
+                return currentFrame;
             }
             set
             {
-                this.currentPage = value;
-                RaisePropertyChanged("CurrentPage");
+                this.currentFrame = value;
+                RaisePropertyChanged(nameof(CurrentFrame));
             }
         }
 
@@ -154,7 +159,7 @@ namespace Collector2.UWP.ViewModels
                     {
                         IsPaneOpen = !IsPaneOpen;
                     }
-                    CurrentPage = typeof(SoftwarePage);
+                    CurrentFrame = typeof(SoftwarePage);
                 }));
             }
         }
