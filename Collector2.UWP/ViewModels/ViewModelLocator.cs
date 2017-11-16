@@ -1,4 +1,5 @@
-﻿using Collector2.UWP.Views;
+﻿using Collector2.UWP.Services;
+using Collector2.UWP.Views;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
@@ -16,7 +17,7 @@ namespace Collector2.UWP.ViewModels
         private static bool _isInitialized;
         public const string MainPageKey = "MainPage";
         public const string SoftwarePageKey = "SoftwarePage";
-        public const string UnattachedImagesPageKey = "UndefinedItemsPage";
+        public const string UnattachedImagesPageKey = "UnattachedImagesPage";
         public const string NewItemPageKey = "NewItemPage";
         
         public ViewModelLocator()
@@ -29,9 +30,8 @@ namespace Collector2.UWP.ViewModels
 
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            var nav = new NavigationService();
+            var nav = new FrameNavigationService();
 
-            nav.Configure(MainPageKey, typeof(MainPage));
             nav.Configure(SoftwarePageKey, typeof(SoftwarePage));
             nav.Configure(UnattachedImagesPageKey, typeof(UnattachedImagesPage));
             nav.Configure(NewItemPageKey, typeof(NewItemPage));
@@ -46,17 +46,17 @@ namespace Collector2.UWP.ViewModels
             }
             
             SimpleIoc.Default.Register<INavigationService>(() => nav);
-            SimpleIoc.Default.Register<MainPageViewModel>();
+            SimpleIoc.Default.Register<ApplicationViewModel>();
             SimpleIoc.Default.Register<SoftwarePageViewModel>();
             SimpleIoc.Default.Register<UnattachedImagesViewModel>();
             SimpleIoc.Default.Register<NewItemPageViewModel>();
         }
 
-        public MainPageViewModel MainPageViewInstance
+        public ApplicationViewModel Application
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<MainPageViewModel>();
+                return ServiceLocator.Current.GetInstance<ApplicationViewModel>();
             }
         }
 
@@ -81,6 +81,14 @@ namespace Collector2.UWP.ViewModels
             get
             {
                 return ServiceLocator.Current.GetInstance<NewItemPageViewModel>();
+            }
+        }
+
+        public ApplicationViewModel ApplicationViewInstance
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ApplicationViewModel>();
             }
         }
 

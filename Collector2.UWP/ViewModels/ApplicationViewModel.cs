@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Collector2.UWP.ViewModels
 {
-    public class MainPageViewModel : ViewModelBase
+    public class ApplicationViewModel : ViewModelBase
     {
         private bool isPaneOpen;
         private bool unattachedImagesExists;
@@ -21,9 +21,9 @@ namespace Collector2.UWP.ViewModels
 
         private const string BaseUri = "http://collectorv2.azurewebsites.net/api/";
 
-        public static MainPageViewModel Current { get; private set; }
+        public static ApplicationViewModel Current { get; private set; }
 
-        public MainPageViewModel(INavigationService navigationService)
+        public ApplicationViewModel(INavigationService navigationService)
         {
             Current = this;
             _navigationService = navigationService;
@@ -39,33 +39,33 @@ namespace Collector2.UWP.ViewModels
             {
                 return getUnattachedImages
                     ?? (getUnattachedImages = new RelayCommand(async () =>
-              {
-                  using (var client = new HttpClient())
-                  {
-                      client.BaseAddress = new Uri(BaseUri);
-                      var result = await client.GetAsync("UnattachedImagesExists");
-                      if (result.StatusCode == System.Net.HttpStatusCode.OK)
-                      {
-                          UnattachedImagesExists = !UnattachedImagesExists;
-                          NavigateToUnattachedItems.Execute(CurrentFrame);
-                      }
-                      if (result.StatusCode == System.Net.HttpStatusCode.Forbidden)
-                      {
-                          NavigateToSoftware.Execute(CurrentFrame);
-                      }
-                  }
-              }));
+                    {
+                        using (var client = new HttpClient())
+                        {
+                            client.BaseAddress = new Uri(BaseUri);
+                            var result = await client.GetAsync("UnattachedImagesExists");
+                            if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                            {
+                                UnattachedImagesExists = !UnattachedImagesExists;
+                                NavigateToUnattachedImages.Execute("UnattachedImagesPage");
+                            }
+                            if (result.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                            {
+                                NavigateToSoftware.Execute(CurrentFrame);
+                            }
+                        }
+                    }));
             }
         }
 
-        public RelayCommand NavigateToUnattachedItems
+        public RelayCommand NavigateToUnattachedImages
         {
             get
             {
                 return navigateCommand = new RelayCommand(() =>
-                    {
-                        CurrentFrame = typeof(UnattachedImagesPage);
-                    });
+                {
+                    _navigationService.NavigateTo("UnattachedImagesPage");
+                });
             }
         }
 
@@ -79,7 +79,7 @@ namespace Collector2.UWP.ViewModels
                 if (items.Count() != 0)
                 {
                     UnattachedImagesExists = true;
-                    CurrentFrame = typeof(SoftwarePage);
+                    _navigationService.NavigateTo("SoftwarePage");
                 }
             }
         }
@@ -149,13 +149,13 @@ namespace Collector2.UWP.ViewModels
             {
                 return navigateCommand
                     ?? (navigateCommand = new RelayCommand(() =>
-                {
-                    if (IsPaneOpen)
                     {
-                        IsPaneOpen = !IsPaneOpen;
-                    }
-                    CurrentFrame = typeof(SoftwarePage);
-                }));
+                        if (IsPaneOpen)
+                        {
+                            IsPaneOpen = !IsPaneOpen;
+                        }
+                        _navigationService.NavigateTo("SoftwarePage");
+                    }));
             }
         }
     }

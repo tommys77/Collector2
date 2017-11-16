@@ -1,44 +1,36 @@
-﻿using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Views;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using Collector2.Models;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.Net.Http;
-using GalaSoft.MvvmLight;
-using Collector2.UWP.ViewModels;
-using Windows.Storage.Streams;
-using Windows.UI.Xaml.Media.Imaging;
-using Collector2.UWP.Views;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml;
+﻿using Collector2.Models;
 using Collector2.UWP.Helpers;
+using Collector2.UWP.Interface;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
+using Newtonsoft.Json;
+using System;
+using System.Collections.ObjectModel;
+using System.Net.Http;
 
 namespace Collector2.UWP.ViewModels
 {
-    public class UnattachedImagesViewModel : ViewModelBase
+    public class UnattachedImagesViewModel : ViewModelBase, INavigable
     {
-
-        private RelayCommand getUndefinedItems;
+        private RelayCommand getUnattachedImages;
         private string status;
         private readonly INavigationService _navigationService;
+
+        private UnattachedImagesViewModel VM;
 
         private const string BaseUri = "http://collectorv2.azurewebsites.net/api/";
 
         public UnattachedImagesViewModel(INavigationService navigationService)
         {
+            VM = this;
             _navigationService = navigationService;
             Images = new ObservableCollection<ItemImage>();
-            //Status = "Loading page, please be patient";
-            GetUnattachedImages.Execute(getUndefinedItems);
+            Status = "Loading page, please be patient";
+            GetUnattachedImages.Execute(getUnattachedImages);
         }
 
         private ObservableCollection<ItemImage> _images;
-        public List<ItemImage> UndefinedItemsList = new List<ItemImage>();
         public string bindingTest = "Undefined";
 
         public ObservableCollection<ItemImage> Images
@@ -51,15 +43,14 @@ namespace Collector2.UWP.ViewModels
         {
             get
             {
-                return (getUndefinedItems = new RelayCommand(async () =>
+                return (getUnattachedImages = new RelayCommand(async () =>
          {
              try
              {
                  using (var client = new HttpClient())
                  {
-                     UndefinedItemsList.Clear();
+                     Images.Clear();
                      client.BaseAddress = new Uri(BaseUri);
-
                      var json = await client.GetStringAsync("UnattachedImages");
                      ItemImage[] images = JsonConvert.DeserializeObject<ItemImage[]>(json);
                      // Status = items.ElementAt(0).ToString();
@@ -70,7 +61,6 @@ namespace Collector2.UWP.ViewModels
                              Images.Add(i);
                          }
                      }
-                     SelectedImage = Images.ElementAt(Images.Count() - 1);
                  }
              }
              catch (Exception ex)
@@ -82,6 +72,7 @@ namespace Collector2.UWP.ViewModels
         }
 
         private ItemImage selectedImage;
+
         public ItemImage SelectedImage
         {
             get { return selectedImage; }
@@ -93,16 +84,6 @@ namespace Collector2.UWP.ViewModels
                     RaisePropertyChanged(nameof(SelectedImage));
                 }
             }
-        }
-
-        public void Refresh()
-        {
-            _navigationService.NavigateTo("SoftwarePage");
-        }
-
-        public void SelectedItemClick()
-        {
-
         }
 
         public string Status
@@ -127,11 +108,28 @@ namespace Collector2.UWP.ViewModels
                 return newItemCommand = new RelayCommand(() =>
                 {
                     //Very simple way of navigating to the page from here without losing the hamburger menu
-                    ItemSelectionHelper.CurrentItemImage = SelectedImage;
-                    MainPageViewModel.Current.CurrentFrame = typeof(NewItemPage);
+                    if (SelectedImage != null)
+                    {
+                        Status = SelectedImage.ItemImageId.ToString();
+                    }
+
+                    ItemSelectionHelper.SetCurrentItemImage(SelectedImage);
+                    _navigationService.NavigateTo("NewItemPage");
+
+                    //
+                    //MainPageViewModel.Current.CurrentFrame = typeof(NewItemPage);
                 });
             }
         }
+
+        public void Activate(object parameter)
+        {
+            Status = "Loading data, please wait!";
+        }
+
+        public void Deactivate(object parameter)
+        {
+            this.Cleanup();
+        }
     }
 }
-

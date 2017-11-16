@@ -1,28 +1,28 @@
 ﻿using Collector2.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Collector2.UWP.Helpers
 {
-    public static class ItemSelectionHelper
+    public class ItemSelectionHelper : INotifyPropertyChanged
     {
-        private static ItemImage currentItemImage;
+        private static ItemImage CurrentItemImage { get; set; }
         private static Software currentSoftware;
         private static Hardware currentHardware;
-
-        public static ItemImage CurrentItemImage
+        
+        public static void SetCurrentItemImage(ItemImage itemImage)
         {
-            get { return currentItemImage; }
-            set
-            {
-                if (!Equals(CurrentItemImage, value))
-                {
-                    currentItemImage = value;
-                }
-            }
+            CurrentItemImage = itemImage;
+        }
+
+        public static ItemImage GetCurrentItemImage()
+        {
+            return CurrentItemImage;
         }
 
         public static Software CurrentSoftware
@@ -49,6 +49,11 @@ namespace Collector2.UWP.Helpers
             }
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
 
+        public void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
