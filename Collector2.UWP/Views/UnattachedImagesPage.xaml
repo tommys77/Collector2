@@ -20,9 +20,9 @@
         <!--<HyperlinkButton x:Name="refresh" Content="Refresh" Command="{Binding GetUnattachedImages}" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True"/>-->
         <Grid RelativePanel.AlignTopWithPanel="True" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <!--<Image x:Name="LastImage" Source="{Binding SelectedItem.ImageBase64, Converter={StaticResource BytesToImage}}" HorizontalAlignment="Center"></Image>-->
-            <GridView x:Name="ItemsGrid" ItemsSource="{Binding Path=Images}" SelectedItem="{Binding SelectedImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  SelectionMode="Single" IsItemClickEnabled="True">
+            <GridView x:Name="ItemsGrid" ItemsSource="{Binding Path=Images}" SelectedItem="{Binding SelectedImage, Mode=TwoWay}" SelectionMode="Single" IsItemClickEnabled="True">
                 <Interactivity:Interaction.Behaviors>
-                    <Core:EventTriggerBehavior EventName="SelectionChanged">
+                    <Core:EventTriggerBehavior EventName="Tapped">
                         <Core:InvokeCommandAction Command="{Binding Path=NewItemCommand}"/>
                     </Core:EventTriggerBehavior>
                 </Interactivity:Interaction.Behaviors>

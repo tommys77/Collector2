@@ -1,13 +1,8 @@
-﻿using Collector2.Models;
-using Collector2.UWP.Views;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
-using Newtonsoft.Json;
 using System;
-using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace Collector2.UWP.ViewModels
 {
@@ -25,65 +20,25 @@ namespace Collector2.UWP.ViewModels
 
         public ApplicationViewModel(INavigationService navigationService)
         {
-            Current = this;
             _navigationService = navigationService;
-            // GetUndefinedItemsCount();
-            GetUnattachedImages.Execute(unattachedImagesExists);
+            CheckIfUnattachedExistsAsync();
         }
 
-        private RelayCommand getUnattachedImages;
-
-        public RelayCommand GetUnattachedImages
-        {
-            get
-            {
-                return getUnattachedImages
-                    ?? (getUnattachedImages = new RelayCommand(async () =>
-                    {
-                        using (var client = new HttpClient())
-                        {
-                            client.BaseAddress = new Uri(BaseUri);
-                            var result = await client.GetAsync("UnattachedImagesExists");
-                            if (result.StatusCode == System.Net.HttpStatusCode.OK)
-                            {
-                                UnattachedImagesExists = !UnattachedImagesExists;
-                                NavigateToUnattachedImages.Execute("UnattachedImagesPage");
-                            }
-                            if (result.StatusCode == System.Net.HttpStatusCode.Forbidden)
-                            {
-                                NavigateToSoftware.Execute(CurrentFrame);
-                            }
-                        }
-                    }));
-            }
-        }
-
-        public RelayCommand NavigateToUnattachedImages
-        {
-            get
-            {
-                return navigateCommand = new RelayCommand(() =>
-                {
-                    _navigationService.NavigateTo("UnattachedImagesPage");
-                });
-            }
-        }
-
-        public async Task GetUndefinedItemsCount()
+        public async void CheckIfUnattachedExistsAsync()
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(BaseUri);
-                var json = await client.GetStringAsync("Items");
-                Item[] items = JsonConvert.DeserializeObject<Item[]>(json);
-                if (items.Count() != 0)
+                var result = await client.GetAsync("UnattachedImagesExists");
+                if (result.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    UnattachedImagesExists = true;
-                    _navigationService.NavigateTo("SoftwarePage");
+                    UnattachedImagesExists = !UnattachedImagesExists;
+                    _navigationService.NavigateTo("UnattachedImagesPage");
                 }
             }
         }
 
+        #region Properties
         public bool UnattachedImagesExists
         {
             get
@@ -115,7 +70,11 @@ namespace Collector2.UWP.ViewModels
                 }
             }
         }
+        #endregion
 
+        //Query to find out if there are any unattached images in the database, goes to relevant page if so.
+
+        #region Button commands
         public RelayCommand OpenPaneCommand
         {
             get
@@ -125,21 +84,6 @@ namespace Collector2.UWP.ViewModels
                     {
                         IsPaneOpen = !IsPaneOpen;
                     }));
-            }
-        }
-
-        private Type currentFrame;
-
-        public Type CurrentFrame
-        {
-            get
-            {
-                return currentFrame;
-            }
-            set
-            {
-                this.currentFrame = value;
-                RaisePropertyChanged(nameof(CurrentFrame));
             }
         }
 
@@ -158,5 +102,19 @@ namespace Collector2.UWP.ViewModels
                     }));
             }
         }
+
+        public RelayCommand NavigateToUnattachedImages
+        {
+            get
+            {
+                return navigateCommand = new RelayCommand(() =>
+                {
+                    _navigationService.NavigateTo("UnattachedImagesPage");
+                });
+            }
+        }
+
+        #endregion
     }
+
 }

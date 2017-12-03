@@ -50,6 +50,8 @@ namespace Collector2.UWP.ViewModels
             SimpleIoc.Default.Register<SoftwarePageViewModel>();
             SimpleIoc.Default.Register<UnattachedImagesViewModel>();
             SimpleIoc.Default.Register<NewItemPageViewModel>();
+            SimpleIoc.Default.Register<AttachToItemViewModel>();
+            SimpleIoc.Default.Register<ItemCreationSelectViewModel>();
         }
 
         public ApplicationViewModel Application
@@ -89,6 +91,22 @@ namespace Collector2.UWP.ViewModels
             get
             {
                 return ServiceLocator.Current.GetInstance<ApplicationViewModel>();
+            }
+        }
+
+        public AttachToItemViewModel AttachToItemViewInstance
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<AttachToItemViewModel>();
+            }
+        }
+
+        public ItemCreationSelectViewModel ItemCreationSelectViewInstance
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ItemCreationSelectViewModel>();
             }
         }
 

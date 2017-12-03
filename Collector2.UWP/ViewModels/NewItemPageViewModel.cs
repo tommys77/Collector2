@@ -1,10 +1,14 @@
 ﻿using Collector2.Models;
 using Collector2.UWP.Helpers;
 using Collector2.UWP.Interface;
+using Collector2.UWP.Views;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 namespace Collector2.UWP.ViewModels
@@ -13,9 +17,8 @@ namespace Collector2.UWP.ViewModels
     {
         private ItemImage selectedItemImage = ItemSelectionHelper.GetCurrentItemImage();
         private string status;
-        public ObservableCollection<string> ActionSelections = new ObservableCollection<string>();
 
-        private readonly INavigationService _navigationService;
+        //private readonly INavigationService _navigationService;
 
         public ItemImage SelectedItemImage
         {
@@ -43,19 +46,76 @@ namespace Collector2.UWP.ViewModels
             }
         }
 
-        public NewItemPageViewModel(INavigationService navigationService)
+        //public NewItemPageViewModel(INavigationService navigationService)
+        //{
+        //    _navigationService = navigationService;
+        //}
+
+
+        private const string ATTACH_TO_ITEM = "Attach to...";
+        private const string EDIT_ITEM = "Edit existing item";
+        private const string CREATE_NEW_ITEM = "Create new...";
+
+        public ObservableCollection<string> ActionSelections
         {
-            _navigationService = navigationService;
-            //AddActionSelections();
-            //Status = SelectedItemImage.ItemImageId.ToString();
+            get
+            {
+                return new ObservableCollection<string>
+                {
+                    ATTACH_TO_ITEM,
+                    EDIT_ITEM,
+                    CREATE_NEW_ITEM
+                };
+            }
         }
 
-        public void AddActionSelections()
+        private string _actionSelected;
+
+        public string ActionSelected
         {
-            ActionSelections.Clear();
-            ActionSelections.Add("Attach to existing item");
-            ActionSelections.Add("New Software Item");
-            ActionSelections.Add("New Hardware Item");
+            get
+            {
+                return _actionSelected;
+            }
+            set
+            {
+                _actionSelected = value;
+            }
+        }
+
+        private RelayCommand _actionSelectedCommand;
+
+        public RelayCommand ActionSelectedCommand
+        {
+            get
+            {
+                return (_actionSelectedCommand = new RelayCommand(() =>
+          {
+              switch (ActionSelected)
+              {
+                  case ATTACH_TO_ITEM:
+                      ActionPage = typeof(AttachToItem);
+                      break;
+                  case EDIT_ITEM:
+                      break;
+                  case CREATE_NEW_ITEM:
+                      ActionPage = typeof(ItemCreationSelect);
+                      break;
+              }
+          }));
+            }
+        }
+
+        private Type _actionPage;
+
+        public Type ActionPage
+        {
+            get { return _actionPage; }
+            set
+            {
+                this._actionPage = value;
+                RaisePropertyChanged(nameof(ActionPage));
+            }
         }
 
         public void Activate(object parameter)
@@ -65,7 +125,6 @@ namespace Collector2.UWP.ViewModels
 
         public void Deactivate(object parameter)
         {
-            this.Cleanup();
         }
 
         private RelayCommand navigateToSoftwareEditor;

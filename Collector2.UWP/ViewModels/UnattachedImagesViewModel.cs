@@ -15,23 +15,19 @@ namespace Collector2.UWP.ViewModels
     {
         private RelayCommand getUnattachedImages;
         private string status;
-        private readonly INavigationService _navigationService;
 
-        private UnattachedImagesViewModel VM;
+        private readonly INavigationService _navigationService;
 
         private const string BaseUri = "http://collectorv2.azurewebsites.net/api/";
 
         public UnattachedImagesViewModel(INavigationService navigationService)
         {
-            VM = this;
             _navigationService = navigationService;
             Images = new ObservableCollection<ItemImage>();
-            Status = "Loading page, please be patient";
             GetUnattachedImages.Execute(getUnattachedImages);
         }
 
         private ObservableCollection<ItemImage> _images;
-        public string bindingTest = "Undefined";
 
         public ObservableCollection<ItemImage> Images
         {
@@ -53,14 +49,11 @@ namespace Collector2.UWP.ViewModels
                      client.BaseAddress = new Uri(BaseUri);
                      var json = await client.GetStringAsync("UnattachedImages");
                      ItemImage[] images = JsonConvert.DeserializeObject<ItemImage[]>(json);
-                     // Status = items.ElementAt(0).ToString();
                      foreach (var i in images)
                      {
-                         if (i.IsAttached == false)
-                         {
-                             Images.Add(i);
-                         }
+                         Images.Add(i);
                      }
+                     Status = $"You have {Images.Count} unattached images. Click on them to attach them to a new or existing item.";
                  }
              }
              catch (Exception ex)
@@ -105,31 +98,25 @@ namespace Collector2.UWP.ViewModels
         {
             get
             {
-                return newItemCommand = new RelayCommand(() =>
+                return newItemCommand ?? (newItemCommand = new RelayCommand(() =>
                 {
                     //Very simple way of navigating to the page from here without losing the hamburger menu
-                    if (SelectedImage != null)
-                    {
-                        Status = SelectedImage.ItemImageId.ToString();
-                    }
-
+                    //if (SelectedImage != null)
+                    //{
+                    //    Status = SelectedImage.ItemImageId.ToString();
+                    //}
                     ItemSelectionHelper.SetCurrentItemImage(SelectedImage);
                     _navigationService.NavigateTo("NewItemPage");
-
-                    //
-                    //MainPageViewModel.Current.CurrentFrame = typeof(NewItemPage);
-                });
+                }));
             }
         }
 
         public void Activate(object parameter)
         {
-            Status = "Loading data, please wait!";
         }
 
         public void Deactivate(object parameter)
         {
-            this.Cleanup();
         }
     }
 }
