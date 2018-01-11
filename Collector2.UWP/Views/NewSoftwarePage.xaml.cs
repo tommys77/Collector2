@@ -21,9 +21,9 @@ namespace Collector2.UWP.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class ItemCreationSelect : BindablePage
+    public sealed partial class NewSoftwarePage : BindablePage
     {
-        public ItemCreationSelect()
+        public NewSoftwarePage()
         {
             this.InitializeComponent();
         }

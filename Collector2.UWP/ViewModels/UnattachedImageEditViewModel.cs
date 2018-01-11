@@ -13,11 +13,19 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Collector2.UWP.ViewModels
 {
-    public class NewItemPageViewModel : ViewModelBase, INavigable
+    public class UnattachedImageEditViewModel : ViewModelBase, INavigable
     {
         private ItemImage selectedItemImage = ItemSelectionHelper.GetCurrentItemImage();
         private string status;
 
+        //public UnattachedImageEditViewModel ()
+        //{
+        //    if(IsInDesignMode)
+        //    {
+
+        //    }
+        //}
+        
         //private readonly INavigationService _navigationService;
 
         public ItemImage SelectedItemImage
@@ -54,7 +62,7 @@ namespace Collector2.UWP.ViewModels
 
         private const string ATTACH_TO_ITEM = "Attach to...";
         private const string EDIT_ITEM = "Edit existing item";
-        private const string CREATE_NEW_ITEM = "Create new...";
+        private const string CREATE_NEW = "Create new...";
 
         public ObservableCollection<string> ActionSelections
         {
@@ -64,7 +72,7 @@ namespace Collector2.UWP.ViewModels
                 {
                     ATTACH_TO_ITEM,
                     EDIT_ITEM,
-                    CREATE_NEW_ITEM
+                    CREATE_NEW
                 };
             }
         }
@@ -98,8 +106,8 @@ namespace Collector2.UWP.ViewModels
                       break;
                   case EDIT_ITEM:
                       break;
-                  case CREATE_NEW_ITEM:
-                      ActionPage = typeof(ItemCreationSelect);
+                  case CREATE_NEW:
+                      ActionPage = typeof(CreateItemPage);
                       break;
               }
           }));

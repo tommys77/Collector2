@@ -10,6 +10,7 @@
     DataContext="{Binding AttachToItemViewInstance, Source={StaticResource Locator}}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock Text="{Binding Path=Status}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="24"/>
+        <TextBlock Text="{Binding Path=Status}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24"/>
+        <ListView HorizontalAlignment="Left" Height="100" Margin="126,542,0,0" VerticalAlignment="Top" Width="100"/>
     </Grid>
 </common:BindablePage>

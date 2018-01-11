@@ -18,7 +18,7 @@ namespace Collector2.UWP.ViewModels
         public const string MainPageKey = "MainPage";
         public const string SoftwarePageKey = "SoftwarePage";
         public const string UnattachedImagesPageKey = "UnattachedImagesPage";
-        public const string NewItemPageKey = "NewItemPage";
+        public const string UnattachedImageEditPage = "UnattachedImageEditPage";
         
         public ViewModelLocator()
         {
@@ -34,7 +34,7 @@ namespace Collector2.UWP.ViewModels
 
             nav.Configure(SoftwarePageKey, typeof(SoftwarePage));
             nav.Configure(UnattachedImagesPageKey, typeof(UnattachedImagesPage));
-            nav.Configure(NewItemPageKey, typeof(NewItemPage));
+            nav.Configure(UnattachedImageEditPage, typeof(UnattachedImageEditPage));
             
             if (ViewModelBase.IsInDesignModeStatic)
             {
@@ -49,9 +49,10 @@ namespace Collector2.UWP.ViewModels
             SimpleIoc.Default.Register<ApplicationViewModel>();
             SimpleIoc.Default.Register<SoftwarePageViewModel>();
             SimpleIoc.Default.Register<UnattachedImagesViewModel>();
-            SimpleIoc.Default.Register<NewItemPageViewModel>();
+            SimpleIoc.Default.Register<UnattachedImageEditViewModel>();
             SimpleIoc.Default.Register<AttachToItemViewModel>();
-            SimpleIoc.Default.Register<ItemCreationSelectViewModel>();
+            SimpleIoc.Default.Register<NewSoftwareViewModel>();
+            SimpleIoc.Default.Register<CreateItemViewModel>();
         }
 
         public ApplicationViewModel Application
@@ -78,11 +79,11 @@ namespace Collector2.UWP.ViewModels
             }
         }
 
-        public NewItemPageViewModel NewItemViewInstance
+        public UnattachedImageEditViewModel UnattachedImageEditViewInstance
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<NewItemPageViewModel>();
+                return ServiceLocator.Current.GetInstance<UnattachedImageEditViewModel>();
             }
         }
 
@@ -102,11 +103,19 @@ namespace Collector2.UWP.ViewModels
             }
         }
 
-        public ItemCreationSelectViewModel ItemCreationSelectViewInstance
+        public NewSoftwareViewModel NewSoftwareViewInstance
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<ItemCreationSelectViewModel>();
+                return ServiceLocator.Current.GetInstance<NewSoftwareViewModel>();
+            }
+        }
+
+        public CreateItemViewModel CreateItemViewInstance
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<CreateItemViewModel>();
             }
         }
 

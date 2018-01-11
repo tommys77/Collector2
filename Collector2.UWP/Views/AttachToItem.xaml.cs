@@ -1,18 +1,7 @@
 ﻿using Collector2.UWP.Common;
+using GalaSoft.MvvmLight.Command;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+using System.Net.Http;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -23,9 +12,38 @@ namespace Collector2.UWP.Views
     /// </summary>
     public sealed partial class AttachToItem : BindablePage
     {
+
+        private RelayCommand getAllItemsCommand;
+        public string Status;
+        
+
+
+        private const string BASE_URI = "http://collectorv2.azurewebsites.net/api/";
+
         public AttachToItem()
         {
             this.InitializeComponent();
+        }
+
+        public RelayCommand GetAllItemsCommand
+        {
+            get
+            {
+                return (getAllItemsCommand = new RelayCommand(async () =>
+                {
+                    try
+                    {
+                        using (var client = new HttpClient())
+                        {
+                            client.BaseAddress = new Uri(BASE_URI);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Status = "Error: " + ex;
+                    }
+                }));
+            }
         }
     }
 }

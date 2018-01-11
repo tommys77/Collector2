@@ -18,7 +18,7 @@ namespace Collector2.UWP.ViewModels
 
         private readonly INavigationService _navigationService;
 
-        private const string BaseUri = "http://collectorv2.azurewebsites.net/api/";
+        private const string BASE_URI = "http://collectorv2.azurewebsites.net/api/";
 
         public UnattachedImagesViewModel(INavigationService navigationService)
         {
@@ -46,7 +46,7 @@ namespace Collector2.UWP.ViewModels
                  using (var client = new HttpClient())
                  {
                      Images.Clear();
-                     client.BaseAddress = new Uri(BaseUri);
+                     client.BaseAddress = new Uri(BASE_URI);
                      var json = await client.GetStringAsync("UnattachedImages");
                      ItemImage[] images = JsonConvert.DeserializeObject<ItemImage[]>(json);
                      foreach (var i in images)
@@ -106,7 +106,7 @@ namespace Collector2.UWP.ViewModels
                     //    Status = SelectedImage.ItemImageId.ToString();
                     //}
                     ItemSelectionHelper.SetCurrentItemImage(SelectedImage);
-                    _navigationService.NavigateTo("NewItemPage");
+                    _navigationService.NavigateTo("UnattachedImageEditPage");
                 }));
             }
         }

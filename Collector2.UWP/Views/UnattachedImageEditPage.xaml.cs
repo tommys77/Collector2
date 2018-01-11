@@ -21,16 +21,11 @@ namespace Collector2.UWP.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class NewItemPage : BindablePage
+    public sealed partial class UnattachedImageEditPage : BindablePage
     {
-        public NewItemPage()
+        public UnattachedImageEditPage()
         {
             this.InitializeComponent();
-        }
-
-        private void ActionSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }
