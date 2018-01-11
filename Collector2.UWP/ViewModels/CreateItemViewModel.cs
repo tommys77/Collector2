@@ -1,4 +1,5 @@
-﻿using Collector2.UWP.Views;
+﻿using Collector2.UWP.Interface;
+using Collector2.UWP.Views;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Collector2.UWP.ViewModels
 {
-    public class CreateItemViewModel : ViewModelBase
+    public class CreateItemViewModel : ViewModelBase, INavigable
     {
 
         private const string SOFTWARE = "Software";
@@ -77,6 +78,22 @@ namespace Collector2.UWP.ViewModels
                     }
                 }));
             }
+        }
+
+        public void Defaults()
+        {
+            TypeSelected = SOFTWARE;
+            FormPage = typeof(NewSoftwarePage);
+        }
+
+        public void Activate(object parameter)
+        {
+            Defaults();
+        }
+
+        public void Deactivate(object parameter)
+        {
+            throw new NotImplementedException();
         }
     }
 }

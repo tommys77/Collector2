@@ -22,8 +22,7 @@
                   Grid.Row="0"
                   Width="300"
                   ItemsSource="{Binding TypeSelections, Mode=OneTime}"
-                  SelectedItem="{Binding TypeSelected, Mode=TwoWay}"
-                  PlaceholderText="Select type">
+                  SelectedItem="{Binding TypeSelected, Mode=TwoWay}">
             <Interactivity:Interaction.Behaviors>
                 <Core:EventTriggerBehavior EventName="SelectionChanged">
                     <Core:InvokeCommandAction Command="{Binding TypeSelectionCommand}" />

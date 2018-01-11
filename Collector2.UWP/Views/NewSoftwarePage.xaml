@@ -22,7 +22,9 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="Auto">
                 <TextBlock Text="Year Of Release:" Width="200" VerticalAlignment="Center"></TextBlock>
-                <ComboBox x:Name="cb_year" Width="500"></ComboBox>
+                <ComboBox x:Name="cb_year" Width="500"
+                          SelectedItem="{Binding SelectedYear, Mode=TwoWay}"
+                          ItemsSource="{Binding Years, Mode=OneTime }"></ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="Auto">
                 <TextBlock Text="Category:" Width="200" VerticalAlignment="Center"></TextBlock>
