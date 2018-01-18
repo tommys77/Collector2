@@ -6,11 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:conv="using:Collector2.UWP.Converters"
+    xmlns:helper="using:Collector2.UWP.Helpers"
     mc:Ignorable="d"
-    DataContext="{Binding Application, Source={StaticResource Locator}}">
+    DataContext="{Binding Path=Application, Source={StaticResource Locator}}">
 
     <common:BindablePage.Resources>
         <conv:BooleanToVisibilityConverter x:Key="BoolToVisibility"></conv:BooleanToVisibilityConverter>
+        <helper:StatusBarHelper x:Key="StatusBarHelper" />
     </common:BindablePage.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -69,9 +71,17 @@
                 </ListBox>
             </SplitView.Pane>
             <SplitView.Content>
-                <Frame 
-                    x:Name="Content">
-                </Frame>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Frame 
+                        x:Name="Content"
+                        Grid.Row="0" />
+                    <TextBlock  x:Name="tbStatusBar" Grid.Row="1" Text="{Binding Source={StaticResource ResourceKey=StatusBarHelper}, Path=Instance.StatusBarMessage, Mode=TwoWay}" HorizontalAlignment="Center" />
+                </Grid>
+
             </SplitView.Content>
         </SplitView>
     </Grid>

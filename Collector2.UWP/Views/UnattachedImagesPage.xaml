@@ -16,18 +16,16 @@
         <converter:ByteArrayToImageConverter x:Key="BytesToImage" />
     </common:BindablePage.Resources>
     <RelativePanel>
-        <TextBlock x:Name="StatusTxt" Text="{Binding Status}" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
-        <!--<HyperlinkButton x:Name="refresh" Content="Refresh" Command="{Binding GetUnattachedImages}" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True"/>-->
+        <HyperlinkButton x:Name="refresh" Content="Refresh" Command="{Binding GetUnattachedImages}" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
         <Grid RelativePanel.AlignTopWithPanel="True" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <!--<Image x:Name="LastImage" Source="{Binding SelectedItem.ImageBase64, Converter={StaticResource BytesToImage}}" HorizontalAlignment="Center"></Image>-->
-            <GridView x:Name="ItemsGrid" ItemsSource="{Binding Path=Images}" SelectedItem="{Binding SelectedImage, Mode=TwoWay}" SelectionMode="Single" IsItemClickEnabled="True">
+            <GridView x:Name="ItemsGrid" ItemsSource="{Binding Path=UnattachedImages}" SelectedItem="{Binding SelectedImage, Mode=TwoWay}" SelectionMode="Single" IsItemClickEnabled="True">
                 <Interactivity:Interaction.Behaviors>
                     <Core:EventTriggerBehavior EventName="Tapped">
                         <Core:InvokeCommandAction Command="{Binding Path=NewItemCommand}"/>
                     </Core:EventTriggerBehavior>
                 </Interactivity:Interaction.Behaviors>
                 <GridView.ItemTemplate >
-
                     <DataTemplate>
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="5, 5" ToolTipService.ToolTip="Click to create new/attach to item">
                             <Image x:Name="ItemImage" Source="{Binding Path=ImageBase64, Converter={StaticResource BytesToImage}}" MaxHeight="180" MaxWidth="140"></Image>

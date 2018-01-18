@@ -13,4 +13,6 @@ namespace Collector2.Models
         public int FormatId { get; set; }
         public string FormatName { get; set; }
     }
+
+    
 }

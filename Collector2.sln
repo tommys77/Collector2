@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+# Blend for Visual Studio 15
+VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collector2.DataService", "Collector2.DataService\Collector2.DataService.csproj", "{DA468E92-25FB-48CE-9EA9-0E5EC65D25A2}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collector2.UWP", "Collector
 		{4CF4DC9B-497C-4C17-8352-6D805062A6F3} = {4CF4DC9B-497C-4C17-8352-6D805062A6F3}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Collector2.Models", "Collector2.Models\Collector2.Models.csproj", "{4CF4DC9B-497C-4C17-8352-6D805062A6F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Collector2.Models", "Collector2.Models\Collector2.Models.csproj", "{4CF4DC9B-497C-4C17-8352-6D805062A6F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -98,7 +98,9 @@
     <Compile Include="Common\BindablePage.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\ByteArrayToImageConverter.cs" />
+    <Compile Include="Helpers\DatabaseHelper.cs" />
     <Compile Include="Helpers\ItemSelectionHelper.cs" />
+    <Compile Include="Helpers\StatusBarHelper.cs" />
     <Compile Include="Interface\INavigable.cs" />
     <Compile Include="Services\FrameNavigationService.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />

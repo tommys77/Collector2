@@ -13,11 +13,9 @@ namespace Collector2.UWP.Views
     public sealed partial class AttachToItem : BindablePage
     {
 
-        private RelayCommand getAllItemsCommand;
+        private RelayCommand _getAllItemsCommand;
         public string Status;
         
-
-
         private const string BASE_URI = "http://collectorv2.azurewebsites.net/api/";
 
         public AttachToItem()
@@ -25,25 +23,25 @@ namespace Collector2.UWP.Views
             this.InitializeComponent();
         }
 
-        public RelayCommand GetAllItemsCommand
-        {
-            get
-            {
-                return (getAllItemsCommand = new RelayCommand(async () =>
-                {
-                    try
-                    {
-                        using (var client = new HttpClient())
-                        {
-                            client.BaseAddress = new Uri(BASE_URI);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Status = "Error: " + ex;
-                    }
-                }));
-            }
-        }
+        //public RelayCommand GetAllItemsCommand
+        //{
+        //    get
+        //    {
+        //        return (_getAllItemsCommand = new RelayCommand(async () =>
+        //        {
+        //            try
+        //            {
+        //                using (var client = new HttpClient())
+        //                {
+        //                    client.BaseAddress = new Uri(BASE_URI);
+        //                }
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                Status = "Error: " + ex;
+        //            }
+        //        }));
+        //    }
+        //}
     }
 }

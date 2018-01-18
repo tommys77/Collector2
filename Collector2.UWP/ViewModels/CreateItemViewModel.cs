@@ -93,7 +93,7 @@ namespace Collector2.UWP.ViewModels
 
         public void Deactivate(object parameter)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

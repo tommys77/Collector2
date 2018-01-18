@@ -73,12 +73,21 @@ namespace Collector2.DataService.Controllers
 
         // POST: api/Softwares
         [ResponseType(typeof(Software))]
-        public IHttpActionResult PostSoftware(Software software)
+        [HttpPost]
+        [Route("api/AddNewSoftware")]
+        public IHttpActionResult PostSoftware(Software software, int imgId)
         {
-            if (!ModelState.IsValid)
+
+            var img = db.ItemImage.Find(imgId);
+            img.IsAttached = true;
+
+            var item = new Item
             {
-                return BadRequest(ModelState);
-            }
+                ItemImages = new List<ItemImage>() { img }
+            };
+
+            db.Item.Add(item);
+            software.ItemId = item.ItemId;
 
             db.Software.Add(software);
 
@@ -97,7 +106,6 @@ namespace Collector2.DataService.Controllers
                     throw;
                 }
             }
-
             return CreatedAtRoute("DefaultApi", new { id = software.ItemId }, software);
         }
 

@@ -24,7 +24,7 @@ namespace Collector2.UWP.ViewModels
         {
             if(_isInitialized)
             {
-                return;
+
             }
             _isInitialized = true;
 

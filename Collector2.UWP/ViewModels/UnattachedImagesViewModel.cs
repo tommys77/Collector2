@@ -14,7 +14,6 @@ namespace Collector2.UWP.ViewModels
     public class UnattachedImagesViewModel : ViewModelBase, INavigable
     {
         private RelayCommand getUnattachedImages;
-        private string status;
 
         private readonly INavigationService _navigationService;
 
@@ -23,13 +22,16 @@ namespace Collector2.UWP.ViewModels
         public UnattachedImagesViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            Images = new ObservableCollection<ItemImage>();
-            GetUnattachedImages.Execute(getUnattachedImages);
+            if (GetUnattachedImages.CanExecute(UnattachedImages))
+            {
+                GetUnattachedImages.Execute(UnattachedImages);
+            }
+            
         }
 
         private ObservableCollection<ItemImage> _images;
 
-        public ObservableCollection<ItemImage> Images
+        public ObservableCollection<ItemImage> UnattachedImages
         {
             get { return _images; }
             set { _images = value; }
@@ -40,27 +42,14 @@ namespace Collector2.UWP.ViewModels
             get
             {
                 return (getUnattachedImages = new RelayCommand(async () =>
-         {
-             try
-             {
-                 using (var client = new HttpClient())
-                 {
-                     Images.Clear();
-                     client.BaseAddress = new Uri(BASE_URI);
-                     var json = await client.GetStringAsync("UnattachedImages");
-                     ItemImage[] images = JsonConvert.DeserializeObject<ItemImage[]>(json);
-                     foreach (var i in images)
-                     {
-                         Images.Add(i);
-                     }
-                     Status = $"You have {Images.Count} unattached images. Click on them to attach them to a new or existing item.";
-                 }
-             }
-             catch (Exception ex)
-             {
-                 Status = "Error: " + ex.Message;
-             }
-         }));
+                {
+                    
+                    UnattachedImages = new ObservableCollection<ItemImage>();
+                    UnattachedImages.Clear();
+                    await DatabaseHelper.GetAllObjectsAsync(UnattachedImages, "UnattachedImages");
+
+                    StatusBarHelper.Instance.StatusBarMessage = $"You have {UnattachedImages.Count} unattached images. Click on them to attach them to a new or existing item.";
+                }));
             }
         }
 
@@ -75,19 +64,6 @@ namespace Collector2.UWP.ViewModels
                 {
                     selectedImage = value;
                     RaisePropertyChanged(nameof(SelectedImage));
-                }
-            }
-        }
-
-        public string Status
-        {
-            get { return status; }
-            set
-            {
-                if (!Equals(Status, value))
-                {
-                    status = value;
-                    RaisePropertyChanged(nameof(Status));
                 }
             }
         }

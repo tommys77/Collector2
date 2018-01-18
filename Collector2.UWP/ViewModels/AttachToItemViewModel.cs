@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight;
+﻿using Collector2.UWP.Helpers;
+using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace Collector2.UWP.ViewModels
         }
         public AttachToItemViewModel()
         {
+            StatusBarHelper.Instance.StatusBarMessage = "This is still the Attach view";
         }
 
     }

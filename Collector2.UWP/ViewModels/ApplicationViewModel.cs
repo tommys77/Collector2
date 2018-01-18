@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight;
+﻿using Collector2.UWP.Helpers;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
 using System;
@@ -16,8 +17,6 @@ namespace Collector2.UWP.ViewModels
 
         private const string BaseUri = "http://collectorv2.azurewebsites.net/api/";
 
-        public static ApplicationViewModel Current { get; private set; }
-
         public ApplicationViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
@@ -26,6 +25,7 @@ namespace Collector2.UWP.ViewModels
 
         public async void CheckIfUnattachedExistsAsync()
         {
+
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(BaseUri);
@@ -33,8 +33,8 @@ namespace Collector2.UWP.ViewModels
                 if (result.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     UnattachedImagesExists = !UnattachedImagesExists;
-                    _navigationService.NavigateTo("UnattachedImagesPage");
                 }
+                else _navigationService.NavigateTo("SoftwarePage");
             }
         }
 
