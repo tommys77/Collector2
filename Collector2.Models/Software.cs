@@ -16,7 +16,7 @@ namespace Collector2.Models
         public string SoftwareType { get; set; }
         public string Title { get; set; }
         public int YearOfRelease { get; set; }
-        public string FormatCount { get; set; }
+        public int FormatCount { get; set; }
         public string Requirements { get; set; }
         [ForeignKey("Format")]
         public int FormatId { get; set; }

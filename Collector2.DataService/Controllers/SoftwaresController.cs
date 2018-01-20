@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Collector2.DataContext;
 using Collector2.Models;
+using Collector2.Models.DTO;
 
 namespace Collector2.DataService.Controllers
 {
@@ -73,12 +74,22 @@ namespace Collector2.DataService.Controllers
 
         // POST: api/Softwares
         [ResponseType(typeof(Software))]
-        public IHttpActionResult PostSoftware(Software software)
+        [HttpPost]
+        public IHttpActionResult PostSoftware(SoftwareDTO sw)
         {
-            if (!ModelState.IsValid)
+            var software = sw.Software;
+            var imgId = sw.ItemImageId;
+
+            var img = db.ItemImage.Find(imgId);
+
+            img.IsAttached = true;
+            var item = new Item
             {
-                return BadRequest(ModelState);
-            }
+                ItemImages = new List<ItemImage>() { img }
+            };
+
+            db.Item.Add(item);
+            software.ItemId = item.ItemId;
 
             db.Software.Add(software);
 
@@ -97,8 +108,8 @@ namespace Collector2.DataService.Controllers
                     throw;
                 }
             }
-
-            return CreatedAtRoute("DefaultApi", new { id = software.ItemId }, software);
+            return Ok();
+            //return CreatedAtRoute("DefaultApi", new { id = software.ItemId }, software);
         }
 
         // DELETE: api/Softwares/5

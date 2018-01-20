@@ -1,26 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Android.App;
+using Android.Content;
+using Android.Graphics;
+using Android.OS;
+using Android.Widget;
+using Collector2.Models;
+using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using Newtonsoft.Json;
-
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Uri = Android.Net.Uri;
-using Android.Runtime;
-using Android.Views;
-using Java.IO;
-using Android.Widget;
-using Android.Graphics;
-using Android.Provider;
-using System.IO;
-using Collector2.Models;
-using System.Threading.Tasks;
-using Android.Content.Res;
+using System.Text;
 
 namespace Collector2.Android
 {
@@ -49,7 +37,7 @@ namespace Collector2.Android
             mEncodeBtn.Click += EncodeAndUpload;
 
             path = Intent.GetStringExtra("path");
-            
+
             picture = path.LoadAndResizeBitmap(600, 800);
             mPicture.SetImageBitmap(path.ExifRotateBitmap(picture));
         }
@@ -59,51 +47,43 @@ namespace Collector2.Android
             mStatus.SetTextColor(Color.White);
             mStatus.Text = "Working...";
             mDescription = FindViewById<EditText>(Resource.Id.picture_et_description);
-           
+
             var description = mDescription.Text;
             if (description == "" || description == null)
             {
                 description = "None";
             }
-            //Bitmap img = BitmapFactory.DecodeFile(path);
-            //var ownerId = 99;
-            //var newItemMobile = new NewItemMobile()
-            //{
-            //    OwnerId = ownerId,
-            //    ImageBase64 = path.ExifRotateBitmap(picture).BitmapToBase64(),
-            //    Description = itemDescription
-            //};
 
-            var itemImage = new ItemImage()
+            using (var client = new HttpClient())
             {
-                Description = description,
-                ImageBase64 = path.ExifRotateBitmap(picture).BitmapToBase64(),
-            };
+                var itemImage = new ItemImage()
+                {
+                    Description = description,
+                    ImageBase64 = path.ExifRotateBitmap(picture).BitmapToBase64(),
+                };
 
-            var uri = new System.Uri(URL);
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            var json = JsonConvert.SerializeObject(itemImage);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(uri, content);
+                var uri = new Uri(URL);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var json = JsonConvert.SerializeObject(itemImage);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(uri, content);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.Created)
-            {
-                mStatus.Text = "Success!";
-                mStatus.SetTextColor(Color.Green);
-            }
-            else if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
-            {
-                mStatus.Text = "Already exists";
-                mStatus.SetTextColor(Color.Blue);
-            }
-            else
-            {
-                mStatus.SetTextColor(Color.Red);
-                mStatus.Text = response.StatusCode.ToString();
+                if (response.StatusCode == System.Net.HttpStatusCode.Created)
+                {
+                    mStatus.Text = "Success!";
+                    mStatus.SetTextColor(Color.Green);
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
+                {
+                    mStatus.Text = "Already exists";
+                    mStatus.SetTextColor(Color.Blue);
+                }
+                else
+                {
+                    mStatus.SetTextColor(Color.Red);
+                    mStatus.Text = response.StatusCode.ToString();
+                }
             }
         }
-
-       
     }
 }

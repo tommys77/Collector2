@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Collector2.UWP.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Collector2.UWP.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SoftwarePage : Page
+    public sealed partial class SoftwarePage : BindablePage
     {
         public SoftwarePage()
         {

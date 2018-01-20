@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-using GalaSoft.MvvmLight;
-using Windows.UI.Xaml;
-using GalaSoft.MvvmLight.Views;
-using GalaSoft.MvvmLight.Command;
-using Windows.UI.Xaml.Controls;
+﻿using Collector2.Models;
 using Collector2.UWP.Views;
-using System.Net.Http;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
 using Newtonsoft.Json;
-using Collector2.Models;
+using System;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Collector2.UWP.ViewModels
 {
@@ -28,7 +23,6 @@ namespace Collector2.UWP.ViewModels
 
         public static MainPageViewModel Current { get; private set; }
 
-
         public MainPageViewModel(INavigationService navigationService)
         {
             Current = this;
@@ -38,6 +32,7 @@ namespace Collector2.UWP.ViewModels
         }
 
         private RelayCommand getUnattachedImages;
+
         public RelayCommand GetUnattachedImages
         {
             get
@@ -54,7 +49,7 @@ namespace Collector2.UWP.ViewModels
                           UnattachedImagesExists = !UnattachedImagesExists;
                           NavigateToUnattachedItems.Execute(CurrentFrame);
                       }
-                      if(result.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                      if (result.StatusCode == System.Net.HttpStatusCode.Forbidden)
                       {
                           NavigateToSoftware.Execute(CurrentFrame);
                       }

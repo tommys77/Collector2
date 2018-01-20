@@ -21,9 +21,9 @@ namespace Collector2.UWP.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class UnattachedImagesPage : BindablePage
+    public sealed partial class CreateItemPage : BindablePage
     {
-        public UnattachedImagesPage()
+        public CreateItemPage()
         {
             this.InitializeComponent();
         }

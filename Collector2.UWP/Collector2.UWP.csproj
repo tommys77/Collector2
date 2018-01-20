@@ -95,20 +95,40 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\BindablePage.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\ByteArrayToImageConverter.cs" />
+    <Compile Include="Helpers\DatabaseHelper.cs" />
     <Compile Include="Helpers\ItemSelectionHelper.cs" />
-    <Compile Include="ViewModels\MainPageViewModel.cs" />
-    <Compile Include="ViewModels\NewItemPageViewModel.cs" />
+    <Compile Include="Helpers\StatusBarHelper.cs" />
+    <Compile Include="Interface\INavigable.cs" />
+    <Compile Include="Services\FrameNavigationService.cs" />
+    <Compile Include="ViewModels\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\AttachToItemViewModel.cs" />
+    <Compile Include="ViewModels\CreateItemViewModel.cs" />
+    <Compile Include="ViewModels\UnattachedImageEditViewModel.cs" />
+    <Compile Include="ViewModels\NewSoftwareViewModel.cs" />
     <Compile Include="ViewModels\SoftwarePageViewModel.cs" />
     <Compile Include="ViewModels\UnattachedImagesViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <Compile Include="Views\AttachToItem.xaml.cs">
+      <DependentUpon>AttachToItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NewItemPage.xaml.cs">
-      <DependentUpon>NewItemPage.xaml</DependentUpon>
+    <Compile Include="Views\CreateItemPage.xaml.cs">
+      <DependentUpon>CreateItemPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewFormatPage.xaml.cs">
+      <DependentUpon>NewFormatPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UnattachedImageEditPage.xaml.cs">
+      <DependentUpon>UnattachedImageEditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewSoftwarePage.xaml.cs">
+      <DependentUpon>NewSoftwarePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shell.xaml.cs">
+      <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SoftwarePage.xaml.cs">
       <DependentUpon>SoftwarePage.xaml</DependentUpon>
@@ -126,6 +146,7 @@
   <ItemGroup>
     <Content Include="Assets\Amiga_Logo_1985.svg.png" />
     <Content Include="Assets\floppy-disk-35.png" />
+    <Content Include="Assets\Turrican2.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -159,11 +180,27 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\MainPage.xaml">
+    <Page Include="Views\AttachToItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\NewItemPage.xaml">
+    <Page Include="Views\CreateItemPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewFormatPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UnattachedImageEditPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NewSoftwarePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Shell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

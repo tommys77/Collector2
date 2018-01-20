@@ -24,6 +24,7 @@ namespace Collector2.DataContext
 
         public CollectorContext() : base("CollectorDB")
         {
+            Database.SetInitializer(new CollectorDbInitializer());
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
         }
@@ -35,7 +36,6 @@ namespace Collector2.DataContext
             //Don't want pluralized table names
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
-
 
     }
 }

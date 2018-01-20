@@ -1,47 +1,37 @@
-﻿using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Views;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using Collector2.Models;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using System.Net.Http;
-using GalaSoft.MvvmLight;
-using Collector2.UWP.ViewModels;
-using Windows.Storage.Streams;
-using Windows.UI.Xaml.Media.Imaging;
-using Collector2.UWP.Views;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml;
+﻿using Collector2.Models;
 using Collector2.UWP.Helpers;
+using Collector2.UWP.Interface;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
+using Newtonsoft.Json;
+using System;
+using System.Collections.ObjectModel;
+using System.Net.Http;
 
 namespace Collector2.UWP.ViewModels
 {
-    public class UnattachedImagesViewModel : ViewModelBase
+    public class UnattachedImagesViewModel : ViewModelBase, INavigable
     {
+        private RelayCommand getUnattachedImages;
 
-        private RelayCommand getUndefinedItems;
-        private string status;
         private readonly INavigationService _navigationService;
 
-        private const string BaseUri = "http://collectorv2.azurewebsites.net/api/";
+        private const string BASE_URI = "http://collectorv2.azurewebsites.net/api/";
 
         public UnattachedImagesViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            Images = new ObservableCollection<ItemImage>();
-            //Status = "Loading page, please be patient";
-            GetUnattachedImages.Execute(getUndefinedItems);
+            if (GetUnattachedImages.CanExecute(UnattachedImages))
+            {
+                GetUnattachedImages.Execute(UnattachedImages);
+            }
+            
         }
 
         private ObservableCollection<ItemImage> _images;
-        public List<ItemImage> UndefinedItemsList = new List<ItemImage>();
-        public string bindingTest = "Undefined";
 
-        public ObservableCollection<ItemImage> Images
+        public ObservableCollection<ItemImage> UnattachedImages
         {
             get { return _images; }
             set { _images = value; }
@@ -51,37 +41,20 @@ namespace Collector2.UWP.ViewModels
         {
             get
             {
-                return (getUndefinedItems = new RelayCommand(async () =>
-         {
-             try
-             {
-                 using (var client = new HttpClient())
-                 {
-                     UndefinedItemsList.Clear();
-                     client.BaseAddress = new Uri(BaseUri);
+                return (getUnattachedImages = new RelayCommand(async () =>
+                {
+                    
+                    UnattachedImages = new ObservableCollection<ItemImage>();
+                    UnattachedImages.Clear();
+                    await DatabaseHelper.GetAllObjectsAsync(UnattachedImages, "UnattachedImages");
 
-                     var json = await client.GetStringAsync("UnattachedImages");
-                     ItemImage[] images = JsonConvert.DeserializeObject<ItemImage[]>(json);
-                     // Status = items.ElementAt(0).ToString();
-                     foreach (var i in images)
-                     {
-                         if (i.IsAttached == false)
-                         {
-                             Images.Add(i);
-                         }
-                     }
-                     SelectedImage = Images.ElementAt(Images.Count() - 1);
-                 }
-             }
-             catch (Exception ex)
-             {
-                 Status = "Error: " + ex.Message;
-             }
-         }));
+                    StatusBarHelper.Instance.StatusBarMessage = $"You have {UnattachedImages.Count} unattached images. Click on them to attach them to a new or existing item.";
+                }));
             }
         }
 
         private ItemImage selectedImage;
+
         public ItemImage SelectedImage
         {
             get { return selectedImage; }
@@ -95,43 +68,31 @@ namespace Collector2.UWP.ViewModels
             }
         }
 
-        public void Refresh()
-        {
-            _navigationService.NavigateTo("SoftwarePage");
-        }
-
-        public void SelectedItemClick()
-        {
-
-        }
-
-        public string Status
-        {
-            get { return status; }
-            set
-            {
-                if (!Equals(Status, value))
-                {
-                    status = value;
-                    RaisePropertyChanged(nameof(Status));
-                }
-            }
-        }
-
         private RelayCommand newItemCommand;
 
         public RelayCommand NewItemCommand
         {
             get
             {
-                return newItemCommand = new RelayCommand(() =>
+                return newItemCommand ?? (newItemCommand = new RelayCommand(() =>
                 {
                     //Very simple way of navigating to the page from here without losing the hamburger menu
-                    ItemSelectionHelper.CurrentItemImage = SelectedImage;
-                    MainPageViewModel.Current.CurrentFrame = typeof(NewItemPage);
-                });
+                    //if (SelectedImage != null)
+                    //{
+                    //    Status = SelectedImage.ItemImageId.ToString();
+                    //}
+                    ItemSelectionHelper.SetCurrentItemImage(SelectedImage);
+                    _navigationService.NavigateTo("UnattachedImageEditPage");
+                }));
             }
+        }
+
+        public void Activate(object parameter)
+        {
+        }
+
+        public void Deactivate(object parameter)
+        {
         }
     }
 }
-

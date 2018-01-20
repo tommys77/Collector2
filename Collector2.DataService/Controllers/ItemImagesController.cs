@@ -87,17 +87,14 @@ namespace Collector2.DataService.Controllers
         [HttpGet]
         public IHttpActionResult UnattachedImagesExists()
         {
-            var query = from i in db.ItemImage
-                        where i.IsAttached == false
-                        select i;
+            var img = db.ItemImage.Where(i => i.IsAttached == false).FirstOrDefault();
 
-            if (query == null)
+            if (img == null)
             {
                 return NotFound();
             }
 
             return Ok();
-
         }
 
         // POST: api/ItemImages
