@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Collector2.DataContext;
 using Collector2.Models;
+using Collector2.Models.DTO;
 
 namespace Collector2.DataService.Controllers
 {
@@ -74,13 +75,14 @@ namespace Collector2.DataService.Controllers
         // POST: api/Softwares
         [ResponseType(typeof(Software))]
         [HttpPost]
-        [Route("api/AddNewSoftware")]
-        public IHttpActionResult PostSoftware(Software software, int imgId)
+        public IHttpActionResult PostSoftware(SoftwareDTO sw)
         {
+            var software = sw.Software;
+            var imgId = sw.ItemImageId;
 
             var img = db.ItemImage.Find(imgId);
-            img.IsAttached = true;
 
+            img.IsAttached = true;
             var item = new Item
             {
                 ItemImages = new List<ItemImage>() { img }
@@ -106,7 +108,8 @@ namespace Collector2.DataService.Controllers
                     throw;
                 }
             }
-            return CreatedAtRoute("DefaultApi", new { id = software.ItemId }, software);
+            return Ok();
+            //return CreatedAtRoute("DefaultApi", new { id = software.ItemId }, software);
         }
 
         // DELETE: api/Softwares/5

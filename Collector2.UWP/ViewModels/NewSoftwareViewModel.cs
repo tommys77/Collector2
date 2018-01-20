@@ -1,4 +1,5 @@
 ﻿using Collector2.Models;
+using Collector2.Models.DTO;
 using Collector2.UWP.Helpers;
 using Collector2.UWP.Interface;
 using GalaSoft.MvvmLight;
@@ -24,6 +25,7 @@ namespace Collector2.UWP.ViewModels
         private string _message;
         private string _softwareTitle;
         private string _softwareRequirements;
+        private string _softwareType;
         private int _softwareFormatCount;
         private int _softwareYearOfRelease;
 
@@ -106,6 +108,16 @@ namespace Collector2.UWP.ViewModels
             {
                 _softwareRequirements = value;
                 RaisePropertyChanged(nameof(SoftwareRequirements));
+            }
+        }
+
+        public string SoftwareType
+        {
+            get { return _softwareType; }
+            set
+            {
+                _softwareType = value;
+                RaisePropertyChanged(nameof(SoftwareType));
             }
         }
 
@@ -325,24 +337,29 @@ namespace Collector2.UWP.ViewModels
             {
                 return _saveToDatabase = new RelayCommand(async () =>
                 {
-                    var software = new Software
+                    var imgId = ItemSelectionHelper.GetCurrentItemImage().ItemImageId;
+                    var softwareDTO = new SoftwareDTO
                     {
-                        Title = SoftwareTitle,
-                        YearOfRelease = SoftwareYearOfRelease,
-                        FormatId = SoftwareFormat.FormatId,
-                        FormatCount = SoftwareFormatCount,
-                        HardwareSpecId = SoftwareHardwareSpec.HardwareSpecId,
-                        CategoryId = SoftwareCategory.CategoryId
+                        Software = new Software
+                        {
+                            Title = SoftwareTitle,
+                            YearOfRelease = SoftwareYearOfRelease,
+                            FormatId = SoftwareFormat.FormatId,
+                            FormatCount = SoftwareFormatCount,
+                            HardwareSpecId = SoftwareHardwareSpec.HardwareSpecId,
+                            CategoryId = SoftwareCategory.CategoryId,
+                            SoftwareType = SoftwareType
+                        },
+                        ItemImageId = imgId
                     };
 
-                    var imgId = ItemSelectionHelper.GetCurrentItemImage().ItemImageId;
-                    var partialUri = "AddNewSoftware?imgId=" + imgId;
-                    var result = await DatabaseHelper.PostObjectAsync(software, partialUri);
-                    if (result == System.Net.HttpStatusCode.Created)
+                    var partialUri = "Softwares";
+                    var result = await DatabaseHelper.PostObjectAsync(softwareDTO, partialUri);
+                    if (result == System.Net.HttpStatusCode.OK)
                     {
-                        _navigationService.NavigateTo("UnattachedImages");
+                        _navigationService.NavigateTo("UnattachedImagesPage");
                     }
-                    StatusBarHelper.Instance.StatusBarMessage = result.ToString();
+                    else StatusBarHelper.Instance.StatusBarMessage = result.ToString();
                 });
             }
         }

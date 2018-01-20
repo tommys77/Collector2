@@ -17,8 +17,16 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel HorizontalAlignment="Left" Height="Auto" Width="700" Margin="20">
             <StackPanel Orientation="Horizontal" Height="Auto">
-                <TextBlock Text="Title:   " Width="200" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Text="Title:" Width="200" VerticalAlignment="Center"></TextBlock>
                 <TextBox x:Name="tb_title" Text="{Binding SoftwareTitle, Mode=TwoWay}" Width="500"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="Auto">
+                <TextBlock Text="Software Type:" Width="200" VerticalAlignment="Center"></TextBlock>
+                <!--<TextBox x:Name="txtsoftwareType"  Text="{Binding SoftwareType, Mode=TwoWay}" Width="500"></TextBox>-->
+                <ComboBox SelectedIndex="{Binding SoftwareType, Mode=TwoWay}" Width="500">
+                    <ComboBoxItem Content="Game" />
+                    <ComboBoxItem Content="Application" />
+                </ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="Auto">
                 <TextBlock Text="Year Of Release:" Width="200" VerticalAlignment="Center"></TextBlock>
