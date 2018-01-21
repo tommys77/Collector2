@@ -22,7 +22,6 @@ namespace Collector2.UWP.ViewModels
         private string _newFormatName;
         private string _openCloseFormatCreation;
         private string _newFormatStatus;
-        private string _message;
         private string _softwareTitle;
         private string _softwareRequirements;
         private string _softwareType;

@@ -14,8 +14,8 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <ComboBox x:Name="selectTypeCB"
                   Margin="0,30"
@@ -36,6 +36,5 @@
             Margin="15, 0"
             VerticalAlignment="Stretch">
         </Frame>
-
     </Grid>
 </common:BindablePage>

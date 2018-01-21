@@ -100,6 +100,7 @@
     <Compile Include="Converters\ByteArrayToImageConverter.cs" />
     <Compile Include="Helpers\DatabaseHelper.cs" />
     <Compile Include="Helpers\ItemSelectionHelper.cs" />
+    <Compile Include="Helpers\SoftwareHardwareWrapper.cs" />
     <Compile Include="Helpers\StatusBarHelper.cs" />
     <Compile Include="Interface\INavigable.cs" />
     <Compile Include="Services\FrameNavigationService.cs" />
@@ -112,6 +113,9 @@
     <Compile Include="ViewModels\UnattachedImagesViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\AttachToHardwareListPage.xaml.cs">
+      <DependentUpon>AttachToHardwareListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AttachToItem.xaml.cs">
       <DependentUpon>AttachToItem.xaml</DependentUpon>
     </Compile>
@@ -120,6 +124,9 @@
     </Compile>
     <Compile Include="Views\NewFormatPage.xaml.cs">
       <DependentUpon>NewFormatPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AttachToSoftwareListPage.xaml.cs">
+      <DependentUpon>AttachToSoftwareListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UnattachedImageEditPage.xaml.cs">
       <DependentUpon>UnattachedImageEditPage.xaml</DependentUpon>
@@ -180,6 +187,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\AttachToHardwareListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AttachToItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -189,6 +200,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NewFormatPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AttachToSoftwareListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -36,6 +36,34 @@ namespace Collector2.DataService.Controllers
             return Ok(itemImage);
         }
 
+        [Route("api/ItemImages")]
+        public IHttpActionResult AttachOrDetachImageToItem(int imgId, int itemId)
+        {
+            var img = db.ItemImage.Find(imgId);
+            var item = db.Item.Find(itemId);
+
+            if (img == null || item == null)
+            {
+                return NotFound();
+            }
+
+            if (item.ItemImages != null && item.ItemImages.Where(image => image.ItemImageId == img.ItemImageId).FirstOrDefault() != null)
+            {
+                item.ItemImages.Remove(img);
+            }
+
+            else
+            {
+                item.ItemImages = new List<ItemImage>();
+                item.ItemImages.Add(img);
+                img.IsAttached = true;
+            }
+
+            db.SaveChanges();
+
+            return Ok();
+        }
+
         // PUT: api/ItemImages/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutItemImage(int id, ItemImage itemImage)

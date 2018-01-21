@@ -62,7 +62,7 @@
                         </StackPanel>
                     </ListBoxItem>
                     <ListBoxItem x:Name="Undefined" Visibility="{ Binding UnattachedImagesExists, Converter={StaticResource BoolToVisibility} }" >
-                        <StackPanel Orientation="Horizontal" >
+                        <StackPanel Orientation="Horizontal">
                             <Button x:Name="UndefinedBtn" FontFamily="Razer Header Regular" Content="??" FontSize="20"  Width="50" Height="50" ToolTipService.ToolTip="Unattached images"
                                     Command="{Binding NavigateToUnattachedImages}"/>
                             <TextBlock  x:Name="UndefinedLabel" Text="Undefined" FontSize="20" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Razer Header Regular" />
