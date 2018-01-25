@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Collector2.UWP.Helpers
 {
-    public static class DatabaseHelper
+    public static class GenericDbAccess
     {
         private const string Root = "https://collectorv2.azurewebsites.net/api/";
 

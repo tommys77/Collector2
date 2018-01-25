@@ -80,7 +80,11 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="Auto">
                 <TextBlock x:Name="txtRequirements"  Text="Requirements:" Width="200" VerticalAlignment="Center"></TextBlock>
-                <TextBox x:Name="tbRequirements" Width="500" Text="{Binding SoftwareRequirements}"/>
+                <TextBox x:Name="tbRequirements" Width="500" Text="{Binding SoftwareRequirements, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="Auto">
+                <TextBlock x:Name="txtCondition"  Text="Condition:" Width="200" VerticalAlignment="Center"></TextBlock>
+                <TextBox x:Name="tbCondition" Width="500" Text="{Binding SoftwareCondition, Mode=TwoWay}"/>
             </StackPanel>
             <Button x:Name="btnSaveToDatabase" Margin="0, 20" HorizontalAlignment="Right" Content="Save" Command="{Binding SaveToDatabase}"/>
         </StackPanel>

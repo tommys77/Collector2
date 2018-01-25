@@ -96,17 +96,23 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\BindablePage.cs" />
+    <Compile Include="Config\CollectorConfig.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\ByteArrayToImageConverter.cs" />
-    <Compile Include="Helpers\DatabaseHelper.cs" />
+    <Compile Include="Helpers\GenericDbAccess.cs" />
     <Compile Include="Helpers\ItemSelectionHelper.cs" />
     <Compile Include="Helpers\SoftwareHardwareWrapper.cs" />
     <Compile Include="Helpers\StatusBarHelper.cs" />
     <Compile Include="Interface\INavigable.cs" />
+    <Compile Include="Interface\IRepository.cs" />
+    <Compile Include="Repository\HardwareRepository.cs" />
+    <Compile Include="Repository\RepositoryReturnType.cs" />
+    <Compile Include="Repository\SoftwareRepository.cs" />
     <Compile Include="Services\FrameNavigationService.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\AttachToItemViewModel.cs" />
     <Compile Include="ViewModels\CreateItemViewModel.cs" />
+    <Compile Include="ViewModels\SoftwareDetailsViewModel.cs" />
     <Compile Include="ViewModels\UnattachedImageEditViewModel.cs" />
     <Compile Include="ViewModels\NewSoftwareViewModel.cs" />
     <Compile Include="ViewModels\SoftwarePageViewModel.cs" />
@@ -122,11 +128,11 @@
     <Compile Include="Views\CreateItemPage.xaml.cs">
       <DependentUpon>CreateItemPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\NewFormatPage.xaml.cs">
-      <DependentUpon>NewFormatPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\AttachToSoftwareListPage.xaml.cs">
       <DependentUpon>AttachToSoftwareListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SoftwareDetailsPage.xaml.cs">
+      <DependentUpon>SoftwareDetailsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UnattachedImageEditPage.xaml.cs">
       <DependentUpon>UnattachedImageEditPage.xaml</DependentUpon>
@@ -199,11 +205,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\NewFormatPage.xaml">
+    <Page Include="Views\AttachToSoftwareListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AttachToSoftwareListPage.xaml">
+    <Page Include="Views\SoftwareDetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

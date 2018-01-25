@@ -1,4 +1,5 @@
 ﻿using Collector2.Models;
+using Collector2.UWP.Config;
 using Collector2.UWP.Helpers;
 using Collector2.UWP.Views;
 using GalaSoft.MvvmLight;
@@ -9,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,12 +21,16 @@ namespace Collector2.UWP.ViewModels
         private const string SOFTWARE = "Software";
         private const string HARDWARE = "Hardware";
 
+        private static string Root;
+
         INavigationService _navigationService;
-       
+
 
         public AttachToItemViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
+
+            Root = CollectorConfig.ApiRoot;
 
             Softwares = new ObservableCollection<Software>();
             Hardwares = new ObservableCollection<Hardware>();
@@ -76,12 +82,12 @@ namespace Collector2.UWP.ViewModels
                     {
                         case SOFTWARE:
                             Softwares.Clear();
-                            await DatabaseHelper.GetAllObjectsAsync(Softwares, "Softwares");
+                            await GenericDbAccess.GetAllObjectsAsync(Softwares, "Softwares");
                             ListPage = typeof(AttachToSoftwareListPage);
                             break;
                         case HARDWARE:
                             Hardwares.Clear();
-                            await DatabaseHelper.GetAllObjectsAsync(Hardwares, "Hardwares");
+                            await GenericDbAccess.GetAllObjectsAsync(Hardwares, "Hardwares");
                             ListPage = typeof(AttachToHardwareListPage);
                             break;
                     }
@@ -106,7 +112,7 @@ namespace Collector2.UWP.ViewModels
 
         private RelayCommand _attachToSoftwareCommand;
 
-        public RelayCommand AttachToSoftwareCommand 
+        public RelayCommand AttachToSoftwareCommand
         {
             get
             {
@@ -114,14 +120,17 @@ namespace Collector2.UWP.ViewModels
                 {
                     var imgId = ItemSelectionHelper.GetCurrentItemImage().ItemImageId;
                     var itemId = Software.ItemId;
-                    var result = await DatabaseHelper.AttachOrDetachImageToItemAsync(imgId, itemId);
-
-                    if (result == System.Net.HttpStatusCode.OK)
+                    using (var client = new HttpClient())
                     {
-                        _navigationService.NavigateTo("UnattachedImagesPage");
+                        client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                        var requestUri = Root + $"AttachOrDetachImage?imgId={imgId}&itemId={itemId}";
+                        var response = await client.PostAsync(requestUri, null);
+                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            _navigationService.NavigateTo("UnattachedImagesPage");
+                        }
+                        else StatusBarHelper.Instance.StatusBarMessage = response.ReasonPhrase;
                     }
-                    //StatusBarHelper.Instance.StatusBarMessage = $"ItemImageId: {imgId}, ItemId: {itemId}";
-                    StatusBarHelper.Instance.StatusBarMessage = result.ToString();
                 }));
             }
         }

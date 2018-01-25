@@ -72,23 +72,28 @@ namespace Collector2.DataService.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Softwares
-        [ResponseType(typeof(Software))]
+        // POST : api/Softwares?={imgId}
         [HttpPost]
-        public IHttpActionResult PostSoftware(SoftwareDTO sw)
+        [ResponseType(typeof(Software))]
+        public IHttpActionResult PostSoftwareWithImage(Software software, int imgId)
         {
-            var software = sw.Software;
-            var imgId = sw.ItemImageId;
-
             var img = db.ItemImage.Find(imgId);
-
             img.IsAttached = true;
+
             var item = new Item
             {
                 ItemImages = new List<ItemImage>() { img }
             };
 
+            var exists = db.Software.Select(s => s.Title == software.Title).FirstOrDefault();
+
+            if (exists)
+            {
+                return Conflict();
+            }
+
             db.Item.Add(item);
+
             software.ItemId = item.ItemId;
 
             db.Software.Add(software);
@@ -97,20 +102,56 @@ namespace Collector2.DataService.Controllers
             {
                 db.SaveChanges();
             }
-            catch (DbUpdateException)
+            catch
             {
                 if (SoftwareExists(software.ItemId))
                 {
                     return Conflict();
                 }
-                else
-                {
-                    throw;
-                }
             }
-            return Ok();
-            //return CreatedAtRoute("DefaultApi", new { id = software.ItemId }, software);
+
+            return CreatedAtRoute("DefaultApi", new { id = software.ItemId }, software);
         }
+
+        //// POST: api/Softwares
+        //[ResponseType(typeof(Software))]
+        //[HttpPost]
+        //public IHttpActionResult PostSoftware(SoftwareDTO sw)
+        //{
+        //    var software = sw.Software;
+        //    var imgId = sw.ItemImageId;
+
+        //    var img = db.ItemImage.Find(imgId);
+
+        //    img.IsAttached = true;
+        //    var item = new Item
+        //    {
+        //        ItemImages = new List<ItemImage>() { img }
+        //    };
+
+        //    db.Item.Add(item);
+        //    software.ItemId = item.ItemId;
+
+        //    db.Software.Add(software);
+
+        //    try
+        //    {
+        //        db.SaveChanges();
+        //    }
+        //    catch (DbUpdateException)
+        //    {
+        //        if (SoftwareExists(software.ItemId))
+        //        {
+        //            return Conflict();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+        //    return Ok();
+        //    //return CreatedAtRoute("DefaultApi", new { id = software.ItemId }, software);
+        //}
 
         // DELETE: api/Softwares/5
         [ResponseType(typeof(Software))]

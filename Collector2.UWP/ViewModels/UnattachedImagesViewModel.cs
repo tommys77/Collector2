@@ -46,7 +46,7 @@ namespace Collector2.UWP.ViewModels
                     
                     UnattachedImages = new ObservableCollection<ItemImage>();
                     UnattachedImages.Clear();
-                    await DatabaseHelper.GetAllObjectsAsync(UnattachedImages, "UnattachedImages");
+                    await GenericDbAccess.GetAllObjectsAsync(UnattachedImages, "UnattachedImages");
 
                     StatusBarHelper.Instance.StatusBarMessage = $"You have {UnattachedImages.Count} unattached images. Click on them to attach them to a new or existing item.";
                 }));

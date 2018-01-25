@@ -1,5 +1,8 @@
 ﻿using Collector2.Models;
+using Collector2.UWP.Config;
+using Collector2.UWP.Helpers;
 using Collector2.UWP.Interface;
+using Collector2.UWP.Repository;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
@@ -16,15 +19,20 @@ namespace Collector2.UWP.ViewModels
 {
     public class SoftwarePageViewModel : ViewModelBase, INavigable
     {
-        private const string BASEURI = "https://collectorv2.azurewebsites.net/api/";
+        private string Root;
 
         private ObservableCollection<Software> _softwareList;
+
         private RelayCommand _getSoftwareList;
+
         private readonly INavigationService _navigationService;
+        private SoftwareRepository _softwareRepository = new SoftwareRepository();
 
         public SoftwarePageViewModel(INavigationService navigationService)
         {
+            Root = CollectorConfig.ApiRoot;
             _navigationService = navigationService;
+            
             if (this.IsInDesignMode)
             {
                 SoftwareList = new ObservableCollection<Software>()
@@ -54,23 +62,41 @@ namespace Collector2.UWP.ViewModels
                 SoftwareList = new ObservableCollection<Software>();
                 return _getSoftwareList = new RelayCommand(async () =>
                 {
-                    using (var client = new HttpClient())
-                    {
-                        client.BaseAddress = new Uri(BASEURI);
-                        var json = await client.GetStringAsync("Softwares");
-                        Software[] softwares = JsonConvert.DeserializeObject<Software[]>(json);
-                        foreach (var h in softwares)
-                        {
-                            SoftwareList.Add(h);
-                        }
-                    }
+                    SoftwareList = await _softwareRepository.GetAllAsync();
                 });
+
+
+
+            }
+        }
+
+        private Software _selectedSoftware;
+
+        public Software SelectedSoftware
+        {
+            get { return _selectedSoftware; }
+            set
+            {
+                _selectedSoftware = value;
+                RaisePropertyChanged(nameof(SelectedSoftware));
+            }
+        }
+
+        public RelayCommand GoToDetailsPage
+        {
+            get
+            {
+                return (new RelayCommand(() =>
+                {
+                    ItemSelectionHelper.CurrentSoftware = SelectedSoftware;
+                    _navigationService.NavigateTo("SoftwareDetailsPage");
+                }));
             }
         }
 
         public void Activate(object parameter)
         {
-            if(GetSoftwareList.CanExecute(SoftwareList))
+            if (GetSoftwareList.CanExecute(SoftwareList))
             {
                 GetSoftwareList.Execute(SoftwareList);
             }

@@ -23,7 +23,7 @@ namespace Collector2.UWP.Views
     /// </summary>
     public sealed partial class Shell : BindablePage
     {
-        public Frame AppFrame { get { return this.Content; } }
+        public Frame AppFrame { get { return this.contentFrame; } }
 
         public Shell()
         {

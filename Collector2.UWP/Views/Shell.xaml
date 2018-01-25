@@ -20,7 +20,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <RelativePanel x:Name="TopPanel" Background="LightBlue" BorderBrush="Blue">
+        <RelativePanel x:Name="TopPanel" Background="LightSkyBlue" BorderBrush="Blue">
             <Border x:Name="menuBoarder" Width="75" Height="75">
                 <Button x:Name="Main" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Width="50" Height="50" HorizontalAlignment="Center" Command="{Binding OpenPaneCommand}"/>
             </Border>
@@ -42,7 +42,7 @@
             CompactPaneLength="75" 
             OpenPaneLength="200">
             <SplitView.Pane>
-                <ListBox Background="LightBlue" SelectionMode="Single">
+                <ListBox Background="LightSkyBlue" SelectionMode="Single">
                     <ListBoxItem>
                         <StackPanel Orientation="Horizontal">
                             <Button x:Name="Software" FontFamily="Razer Header Regular" Content="SW" FontSize="20" Width="50" Height="50" ToolTipService.ToolTip="Software" Command="{Binding NavigateToSoftware}">
@@ -77,7 +77,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Frame 
-                        x:Name="Content"
+                        x:Name="contentFrame"
                         Grid.Row="0" />
                     <TextBlock  x:Name="tbStatusBar" Grid.Row="1" Text="{Binding Source={StaticResource ResourceKey=StatusBarHelper}, Path=Instance.StatusBarMessage, Mode=TwoWay}" HorizontalAlignment="Center" />
                 </Grid>
