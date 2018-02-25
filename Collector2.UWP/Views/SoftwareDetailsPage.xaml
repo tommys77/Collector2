@@ -17,7 +17,27 @@
         </Grid.ColumnDefinitions>
         <Pivot Grid.ColumnSpan="3">
             <PivotItem Header="Details">
-                <TextBlock Text="Here is the main page for the game/application/hardware" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Grid>
+                    <StackPanel Width="Auto" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Title: " FontStyle="Italic" Width="300"></TextBlock>
+                            <TextBox Text="Perihelion" Width="500" BorderThickness="0"></TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Year of Release: " FontStyle="Italic" Width="300"></TextBlock>
+                            <TextBox Text="1993" Width="500" BorderThickness="0"></TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Category: " FontStyle="Italic" Width="300"></TextBlock>
+                            <TextBox Text="RPG" Width="500" BorderThickness="0"></TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Hardware" FontStyle="Italic" Width="300"></TextBlock>
+                            <TextBox Text="Commodore Amiga 500" Width="500" BorderThickness="0" ></TextBox>
+                        </StackPanel>
+                        <Button Content="Edit" HorizontalAlignment="Right"></Button>
+                    </StackPanel>
+                </Grid>
             </PivotItem>
             <PivotItem Header="Reviews">
                 <TextBlock Text="Here I will put the reviews for the game/application" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
