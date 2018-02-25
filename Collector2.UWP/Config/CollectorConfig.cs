@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Collector2.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,11 @@ namespace Collector2.UWP.Config
             {
                 return _apiRoot;
             }
+        }
+
+        public static Owner Owner
+        {
+            get { return new Owner() { FirstName = "Tommy", LastName = "Stenberg" }; }
         }
     }
 }

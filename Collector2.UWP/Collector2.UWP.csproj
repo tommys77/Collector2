@@ -106,6 +106,7 @@
     <Compile Include="Interface\INavigable.cs" />
     <Compile Include="Interface\IRepository.cs" />
     <Compile Include="Repository\HardwareRepository.cs" />
+    <Compile Include="Repository\ItemImageRepository.cs" />
     <Compile Include="Repository\RepositoryReturnType.cs" />
     <Compile Include="Repository\SoftwareRepository.cs" />
     <Compile Include="Services\FrameNavigationService.cs" />

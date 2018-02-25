@@ -79,6 +79,7 @@ namespace Collector2.DataService.Controllers
         {
             var img = db.ItemImage.Find(imgId);
             img.IsAttached = true;
+            img.IsMainImage = true;
 
             var item = new Item
             {

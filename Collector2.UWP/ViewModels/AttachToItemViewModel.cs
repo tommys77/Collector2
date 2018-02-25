@@ -1,6 +1,7 @@
 ﻿using Collector2.Models;
 using Collector2.UWP.Config;
 using Collector2.UWP.Helpers;
+using Collector2.UWP.Repository;
 using Collector2.UWP.Views;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -120,17 +121,15 @@ namespace Collector2.UWP.ViewModels
                 {
                     var imgId = ItemSelectionHelper.GetCurrentItemImage().ItemImageId;
                     var itemId = Software.ItemId;
-                    using (var client = new HttpClient())
+
+                    var repository = new ItemImageRepository();
+                    await repository.AttachOrDetachImageToItem(imgId, itemId);
+
+                    if (repository.StatusCode == System.Net.HttpStatusCode.OK)
                     {
-                        client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                        var requestUri = Root + $"AttachOrDetachImage?imgId={imgId}&itemId={itemId}";
-                        var response = await client.PostAsync(requestUri, null);
-                        if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                        {
-                            _navigationService.NavigateTo("UnattachedImagesPage");
-                        }
-                        else StatusBarHelper.Instance.StatusBarMessage = response.ReasonPhrase;
+                        _navigationService.NavigateTo("UnattachedImagesPage");
                     }
+                    else StatusBarHelper.Instance.StatusBarMessage = repository.StatusCode.ToString();
                 }));
             }
         }
