@@ -21,11 +21,9 @@ namespace Collector2.UWP.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Shell : BindablePage
+    public sealed partial class AttachToSoftwareListPage : BindablePage
     {
-        public Frame AppFrame { get { return this.contentFrame; } }
-
-        public Shell()
+        public AttachToSoftwareListPage()
         {
             this.InitializeComponent();
         }

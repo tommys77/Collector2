@@ -19,6 +19,7 @@ namespace Collector2.UWP.ViewModels
         public const string SoftwarePageKey = "SoftwarePage";
         public const string UnattachedImagesPageKey = "UnattachedImagesPage";
         public const string UnattachedImageEditPage = "UnattachedImageEditPage";
+        public const string SoftwareDetailsPage = "SoftwareDetailsPage";
         
         public ViewModelLocator()
         {
@@ -35,6 +36,7 @@ namespace Collector2.UWP.ViewModels
             nav.Configure(SoftwarePageKey, typeof(SoftwarePage));
             nav.Configure(UnattachedImagesPageKey, typeof(UnattachedImagesPage));
             nav.Configure(UnattachedImageEditPage, typeof(UnattachedImageEditPage));
+            nav.Configure(SoftwareDetailsPage, typeof(SoftwareDetailsPage));
             
             if (ViewModelBase.IsInDesignModeStatic)
             {
@@ -53,6 +55,7 @@ namespace Collector2.UWP.ViewModels
             SimpleIoc.Default.Register<AttachToItemViewModel>();
             SimpleIoc.Default.Register<NewSoftwareViewModel>();
             SimpleIoc.Default.Register<CreateItemViewModel>();
+            SimpleIoc.Default.Register<SoftwareDetailsViewModel>();
         }
 
         public ApplicationViewModel Application
@@ -116,6 +119,14 @@ namespace Collector2.UWP.ViewModels
             get
             {
                 return ServiceLocator.Current.GetInstance<CreateItemViewModel>();
+            }
+        }
+
+        public SoftwareDetailsViewModel SoftwareDetailsViewInstance
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<SoftwareDetailsViewModel>();
             }
         }
 

@@ -36,6 +36,35 @@ namespace Collector2.DataService.Controllers
             return Ok(itemImage);
         }
 
+        [HttpPost]
+        [Route("api/AttachOrDetachImage")]
+        public IHttpActionResult AttachOrDetachImageToItem(int imgId, int itemId)
+        {
+            var img = db.ItemImage.Find(imgId);
+            var item = db.Item.Find(itemId);
+
+            if (img == null || item == null)
+            {
+                return NotFound();
+            }
+
+            if (item.ItemImages != null && item.ItemImages.Where(image => image.ItemImageId == img.ItemImageId).FirstOrDefault() != null)
+            {
+                item.ItemImages.Remove(img);
+            }
+
+            else
+            {
+                item.ItemImages = new List<ItemImage>();
+                item.ItemImages.Add(img);
+                img.IsAttached = true;
+            }
+
+            db.SaveChanges();
+
+            return Ok();
+        }
+
         // PUT: api/ItemImages/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutItemImage(int id, ItemImage itemImage)
@@ -72,6 +101,7 @@ namespace Collector2.DataService.Controllers
         }
 
         // GET: api/UnattachedItems
+        [HttpGet]
         [Route("api/UnattachedImages")]
         public IQueryable<ItemImage> GetUnattachedImages()
         {
@@ -83,8 +113,8 @@ namespace Collector2.DataService.Controllers
         }
 
         // GET: api/UnattachedItemsExists
-        [Route("api/UnattachedImagesExists")]
         [HttpGet]
+        [Route("api/UnattachedImagesExists")]
         public IHttpActionResult UnattachedImagesExists()
         {
             var img = db.ItemImage.Where(i => i.IsAttached == false).FirstOrDefault();
@@ -98,6 +128,7 @@ namespace Collector2.DataService.Controllers
         }
 
         // POST: api/ItemImages
+        [HttpPost]
         [ResponseType(typeof(ItemImage))]
         public IHttpActionResult PostItemImage(ItemImage itemImage)
         {
@@ -106,7 +137,7 @@ namespace Collector2.DataService.Controllers
                 return BadRequest(ModelState);
             }
 
-            var existingImage = db.ItemImage.FirstOrDefault((System.Linq.Expressions.Expression<Func<ItemImage, bool>>)(i => i.ImageBase64 == itemImage.ImageBase64));
+            var existingImage = db.ItemImage.FirstOrDefault(i => i.ImageBase64 == itemImage.ImageBase64);
             if (existingImage != null)
             {
                 return Conflict();

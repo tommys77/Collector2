@@ -1,4 +1,5 @@
-﻿using Collector2.UWP.Helpers;
+﻿using Collector2.UWP.Config;
+using Collector2.UWP.Helpers;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
@@ -15,24 +16,25 @@ namespace Collector2.UWP.ViewModels
         private RelayCommand navigateCommand;
         private readonly INavigationService _navigationService;
 
-        private const string BaseUri = "http://collectorv2.azurewebsites.net/api/";
+        private string Root;
 
         public ApplicationViewModel(INavigationService navigationService)
         {
+            Root = CollectorConfig.ApiRoot;
             _navigationService = navigationService;
             CheckIfUnattachedExistsAsync();
         }
 
         public async void CheckIfUnattachedExistsAsync()
         {
-
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(BaseUri);
+                client.BaseAddress = new Uri(Root);
                 var result = await client.GetAsync("UnattachedImagesExists");
                 if (result.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     UnattachedImagesExists = !UnattachedImagesExists;
+                    _navigationService.NavigateTo("UnattachedImagesPage");
                 }
                 else _navigationService.NavigateTo("SoftwarePage");
             }
@@ -72,7 +74,7 @@ namespace Collector2.UWP.ViewModels
         }
         #endregion
 
-        //Query to find out if there are any unattached images in the database, goes to relevant page if so.
+        //Query to find out if there are any unattached images in the database.
 
         #region Button commands
         public RelayCommand OpenPaneCommand

@@ -2,6 +2,7 @@
 using Collector2.Models.DTO;
 using Collector2.UWP.Helpers;
 using Collector2.UWP.Interface;
+using Collector2.UWP.Repository;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
@@ -17,12 +18,11 @@ namespace Collector2.UWP.ViewModels
     public class NewSoftwareViewModel : ViewModelBase, INavigable
     {
 
-        private const string BASEURI = "http://collectorv2.azurewebsites.net/api/";
+        private const string Root = "http://collectorv2.azurewebsites.net/api/";
 
         private string _newFormatName;
         private string _openCloseFormatCreation;
         private string _newFormatStatus;
-        private string _message;
         private string _softwareTitle;
         private string _softwareRequirements;
         private string _softwareType;
@@ -248,7 +248,7 @@ namespace Collector2.UWP.ViewModels
                     using (var client = new HttpClient())
                     {
                         Formats.Clear();
-                        await DatabaseHelper.GetAllObjectsAsync(Formats, "Formats");
+                        await GenericDbAccess.GetAllObjectsAsync(Formats, "Formats");
                     }
                 }));
             }
@@ -262,7 +262,7 @@ namespace Collector2.UWP.ViewModels
                 return _loadHardwareSpecsCommand = new RelayCommand(async () =>
                 {
                     HardwareSpecs.Clear();
-                    await DatabaseHelper.GetAllObjectsAsync(HardwareSpecs, "HardwareSpecs");
+                    await GenericDbAccess.GetAllObjectsAsync(HardwareSpecs, "HardwareSpecs");
                 });
             }
         }
@@ -280,7 +280,7 @@ namespace Collector2.UWP.ViewModels
                         using (HttpClient client = new HttpClient())
                         {
                             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                            var uri = BASEURI + "Formats";
+                            var uri = Root + "Formats";
                             var json = JsonConvert.SerializeObject(format);
                             var content = new StringContent(json, Encoding.UTF8, "application/json");
                             var response = await client.PostAsync(uri, content);
@@ -319,7 +319,7 @@ namespace Collector2.UWP.ViewModels
                    using (var client = new HttpClient())
                    {
                        Categories.Clear();
-                       client.BaseAddress = new Uri(BASEURI);
+                       client.BaseAddress = new Uri(Root);
                        var json = await client.GetStringAsync("Categories");
                        Category[] categories = JsonConvert.DeserializeObject<Category[]>(json);
                        foreach (var c in categories)
@@ -338,29 +338,51 @@ namespace Collector2.UWP.ViewModels
                 return _saveToDatabase = new RelayCommand(async () =>
                 {
                     var imgId = ItemSelectionHelper.GetCurrentItemImage().ItemImageId;
-                    var softwareDTO = new SoftwareDTO
+                    var software = new Software
                     {
-                        Software = new Software
-                        {
-                            Title = SoftwareTitle,
-                            YearOfRelease = SoftwareYearOfRelease,
-                            FormatId = SoftwareFormat.FormatId,
-                            FormatCount = SoftwareFormatCount,
-                            HardwareSpecId = SoftwareHardwareSpec.HardwareSpecId,
-                            CategoryId = SoftwareCategory.CategoryId,
-                            SoftwareType = SoftwareType
-                        },
-                        ItemImageId = imgId
+                        Title = SoftwareTitle,
+                        YearOfRelease = SoftwareYearOfRelease,
+                        FormatId = SoftwareFormat.FormatId,
+                        FormatCount = SoftwareFormatCount,
+                        HardwareSpecId = SoftwareHardwareSpec.HardwareSpecId,
+                        CategoryId = SoftwareCategory.CategoryId,
+                        SoftwareType = SoftwareType,
+                        Condition = SoftwareCondition,
+                        Requirements = SoftwareRequirements
                     };
 
-                    var partialUri = "Softwares";
-                    var result = await DatabaseHelper.PostObjectAsync(softwareDTO, partialUri);
-                    if (result == System.Net.HttpStatusCode.OK)
+                    var repository = new SoftwareRepository();
+                    await repository.AddAsync(software, imgId);
+
+                    //"SoftwareType": "sample string 2",
+                    //"Title": "sample string 3",
+                    //"YearOfRelease": 4,
+                    //"FormatCount": 5,
+                    //"Requirements": "sample string 6",
+                    //"Condition": "sample string 7",
+                    //"FormatId": 8,
+                    //"CategoryId": 9,
+                    //"HardwareSpecId": 10,
+
+                    if (repository.StatusCode == System.Net.HttpStatusCode.Created)
                     {
                         _navigationService.NavigateTo("UnattachedImagesPage");
                     }
-                    else StatusBarHelper.Instance.StatusBarMessage = result.ToString();
+
+                    StatusBarHelper.Instance.StatusBarMessage = repository.StatusCode.ToString();
                 });
+            }
+        }
+
+        private string _softwareCondition;
+
+        public string SoftwareCondition
+        {
+            get { return _softwareCondition; }
+            set
+            {
+                _softwareCondition = value;
+                RaisePropertyChanged(nameof(SoftwareCondition));
             }
         }
 

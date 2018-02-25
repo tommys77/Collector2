@@ -1,6 +1,7 @@
 ﻿using Collector2.Models;
 using Collector2.UWP.Helpers;
 using Collector2.UWP.Interface;
+using Collector2.UWP.Repository;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Views;
@@ -26,15 +27,19 @@ namespace Collector2.UWP.ViewModels
             {
                 GetUnattachedImages.Execute(UnattachedImages);
             }
-            
+
         }
 
-        private ObservableCollection<ItemImage> _images;
+        private ObservableCollection<ItemImage> _unattachedImages;
 
         public ObservableCollection<ItemImage> UnattachedImages
         {
-            get { return _images; }
-            set { _images = value; }
+            get { return _unattachedImages; }
+            set
+            {
+                _unattachedImages = value;
+                RaisePropertyChanged(nameof(UnattachedImages));
+            }
         }
 
         public RelayCommand GetUnattachedImages
@@ -43,11 +48,10 @@ namespace Collector2.UWP.ViewModels
             {
                 return (getUnattachedImages = new RelayCommand(async () =>
                 {
-                    
                     UnattachedImages = new ObservableCollection<ItemImage>();
                     UnattachedImages.Clear();
-                    await DatabaseHelper.GetAllObjectsAsync(UnattachedImages, "UnattachedImages");
-
+                    var repository = new ItemImageRepository();
+                    UnattachedImages = await repository.GetAllAsync();
                     StatusBarHelper.Instance.StatusBarMessage = $"You have {UnattachedImages.Count} unattached images. Click on them to attach them to a new or existing item.";
                 }));
             }
@@ -76,11 +80,6 @@ namespace Collector2.UWP.ViewModels
             {
                 return newItemCommand ?? (newItemCommand = new RelayCommand(() =>
                 {
-                    //Very simple way of navigating to the page from here without losing the hamburger menu
-                    //if (SelectedImage != null)
-                    //{
-                    //    Status = SelectedImage.ItemImageId.ToString();
-                    //}
                     ItemSelectionHelper.SetCurrentItemImage(SelectedImage);
                     _navigationService.NavigateTo("UnattachedImageEditPage");
                 }));
@@ -89,6 +88,7 @@ namespace Collector2.UWP.ViewModels
 
         public void Activate(object parameter)
         {
+            GetUnattachedImages.Execute(UnattachedImages);
         }
 
         public void Deactivate(object parameter)

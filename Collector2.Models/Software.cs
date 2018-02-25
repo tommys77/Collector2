@@ -18,6 +18,8 @@ namespace Collector2.Models
         public int YearOfRelease { get; set; }
         public int FormatCount { get; set; }
         public string Requirements { get; set; }
+        public string Condition { get; set; }
+
         [ForeignKey("Format")]
         public int FormatId { get; set; }
         [ForeignKey("Category")]

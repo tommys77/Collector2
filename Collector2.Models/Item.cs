@@ -12,6 +12,7 @@ namespace Collector2.Models
     {
         [Key]
         public int ItemId { get; set; }
+
         public List<ItemImage> ItemImages { get; set; }
     }
 }

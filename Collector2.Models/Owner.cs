@@ -15,6 +15,7 @@ namespace Collector2.Models
         public int OwnerId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
         public List<Item> Items { get; set; }
     }
 }

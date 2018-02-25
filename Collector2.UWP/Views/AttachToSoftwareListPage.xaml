@@ -1,0 +1,24 @@
+﻿<common:BindablePage
+    x:Class="Collector2.UWP.Views.AttachToSoftwareListPage"
+    xmlns:common="using:Collector2.UWP.Common"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Collector2.UWP.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    DataContext="{Binding AttachToItemViewInstance, Source={StaticResource Locator}}">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel>
+            <ListView ItemsSource="{Binding Softwares}" SelectedItem="{Binding Software, Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Title}"></TextBlock>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Content="Attach" Command="{Binding AttachToSoftwareCommand}"></Button>
+        </StackPanel>
+    </Grid>
+</common:BindablePage>

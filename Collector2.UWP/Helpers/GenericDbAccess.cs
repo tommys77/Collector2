@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Collector2.UWP.Helpers
 {
-    public static class DatabaseHelper
+    public static class GenericDbAccess
     {
         private const string Root = "https://collectorv2.azurewebsites.net/api/";
 
@@ -45,5 +45,18 @@ namespace Collector2.UWP.Helpers
                 return response.StatusCode;
             }
         }
+
+        public static async Task<System.Net.HttpStatusCode> AttachOrDetachImageToItemAsync (int imgId, int itemId)
+        {
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                var requestUri = Root + $"ItemImages?imgId={imgId}&itemId={itemId}";
+                var response = await client.PostAsync(requestUri, null);
+
+                return response.StatusCode;
+            }
+        }
+        
     }
 }
