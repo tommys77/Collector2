@@ -57,6 +57,5 @@ namespace Collector2.UWP.Helpers
                 return response.StatusCode;
             }
         }
-        
     }
 }

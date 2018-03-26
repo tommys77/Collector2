@@ -12,16 +12,9 @@ namespace Collector2.UWP.Helpers
     public class StatusBarHelper : ObservableObject
 
     {
-        private static readonly StatusBarHelper _instance = new StatusBarHelper();
         private static string _statusBarMessage;
 
-        public static StatusBarHelper Instance
-        {
-            get
-            {
-                return _instance;
-            }
-        }
+        public static StatusBarHelper Instance { get; } = new StatusBarHelper();
 
         public string StatusBarMessage
         {

@@ -1,4 +1,4 @@
-﻿using Collector2.Models;
+﻿ using Collector2.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

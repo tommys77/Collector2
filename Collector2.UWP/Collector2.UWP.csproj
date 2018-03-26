@@ -113,6 +113,8 @@
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\AttachToItemViewModel.cs" />
     <Compile Include="ViewModels\CreateItemViewModel.cs" />
+    <Compile Include="ViewModels\SDetailsViewModel.cs" />
+    <Compile Include="ViewModels\SDetailsViewModel.Edit.cs" />
     <Compile Include="ViewModels\SoftwareDetailsViewModel.cs" />
     <Compile Include="ViewModels\UnattachedImageEditViewModel.cs" />
     <Compile Include="ViewModels\NewSoftwareViewModel.cs" />
@@ -131,6 +133,9 @@
     </Compile>
     <Compile Include="Views\AttachToSoftwareListPage.xaml.cs">
       <DependentUpon>AttachToSoftwareListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PivotViews\SDetails.xaml.cs">
+      <DependentUpon>SDetails.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SoftwareDetailsPage.xaml.cs">
       <DependentUpon>SoftwareDetailsPage.xaml</DependentUpon>
@@ -207,6 +212,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AttachToSoftwareListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PivotViews\SDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

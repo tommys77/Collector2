@@ -36,7 +36,7 @@ namespace Collector2.UWP.ViewModels
                     UnattachedImagesExists = !UnattachedImagesExists;
                     _navigationService.NavigateTo("UnattachedImagesPage");
                 }
-                else _navigationService.NavigateTo("SoftwarePage");
+                else _navigationService.NavigateTo("SoftwarePage"); 
             }
         }
 

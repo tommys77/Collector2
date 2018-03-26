@@ -11,6 +11,7 @@ using System.Web.Http.Description;
 using Collector2.DataContext;
 using Collector2.Models;
 using Collector2.Models.DTO;
+using Collector2.Models.ViewModels;
 
 namespace Collector2.DataService.Controllers
 {
@@ -19,9 +20,31 @@ namespace Collector2.DataService.Controllers
         private CollectorContext db = new CollectorContext();
 
         // GET: api/Softwares
-        public IQueryable<Software> GetSoftware()
+        public IQueryable<SoftwareViewModel> GetSoftware()
         {
-            return db.Software;
+            var items = db.Item.Include("ItemImages");
+
+            var software = db.Software.Include("Category")
+                .Include("HardwareSpec")
+                .Include("Format");
+
+            var result = from s in software
+                        join i in items on s.ItemId equals i.ItemId
+                        select new SoftwareViewModel() {
+                            ItemId = s.ItemId,
+                            Category = s.Category,
+                            Condition = s.Condition,
+                            Format = s.Format,
+                            SoftwareType = s.SoftwareType,
+                            Title = s.Title,
+                            YearOfRelease = s.YearOfRelease,
+                            Requirements = s.Requirements,
+                            FormatCount = s.FormatCount,
+                            ItemImages = i.ItemImages,
+                            HardwareSpec = s.HardwareSpec
+                        };
+
+            return result;
         }
 
         // GET: api/Softwares/5

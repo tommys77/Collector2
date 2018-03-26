@@ -1,4 +1,5 @@
 ﻿using Collector2.Models;
+using Collector2.Models.ViewModels;
 using Collector2.UWP.Config;
 using Collector2.UWP.Helpers;
 using Collector2.UWP.Interface;
@@ -21,7 +22,7 @@ namespace Collector2.UWP.ViewModels
     {
         private string Root;
 
-        private ObservableCollection<Software> _softwareList;
+        private ObservableCollection<SoftwareViewModel> _softwareList;
 
         private RelayCommand _getSoftwareList;
 
@@ -35,17 +36,17 @@ namespace Collector2.UWP.ViewModels
             
             if (this.IsInDesignMode)
             {
-                SoftwareList = new ObservableCollection<Software>()
+                SoftwareList = new ObservableCollection<SoftwareViewModel>()
                 {
-                    new Software { Title = "Monkey Island 2"},
-                    new Software { Title = "Sensible World of Soccer 96/97"},
-                    new Software { Title = "Soccer Kid" },
-                    new Software { Title = "Moonstone" }
+                    new SoftwareViewModel { Title = "Monkey Island 2"},
+                    new SoftwareViewModel { Title = "Sensible World of Soccer 96/97"},
+                    new SoftwareViewModel { Title = "Soccer Kid" },
+                    new SoftwareViewModel { Title = "Moonstone" }
                 };
             }
         }
 
-        public ObservableCollection<Software> SoftwareList
+        public ObservableCollection<SoftwareViewModel> SoftwareList
         {
             get { return _softwareList; }
             set
@@ -59,7 +60,7 @@ namespace Collector2.UWP.ViewModels
         {
             get
             {
-                SoftwareList = new ObservableCollection<Software>();
+                SoftwareList = new ObservableCollection<SoftwareViewModel>();
                 return _getSoftwareList = new RelayCommand(async () =>
                 {
                     SoftwareList = await _softwareRepository.GetAllAsync();
@@ -70,9 +71,9 @@ namespace Collector2.UWP.ViewModels
             }
         }
 
-        private Software _selectedSoftware;
+        private SoftwareViewModel _selectedSoftware;
 
-        public Software SelectedSoftware
+        public SoftwareViewModel SelectedSoftware
         {
             get { return _selectedSoftware; }
             set
@@ -88,7 +89,7 @@ namespace Collector2.UWP.ViewModels
             {
                 return (new RelayCommand(() =>
                 {
-                    ItemSelectionHelper.CurrentSoftware = SelectedSoftware;
+                    ItemSelectionHelper.SetCurrentSoftware(SelectedSoftware);
                     _navigationService.NavigateTo("SoftwareDetailsPage");
                 }));
             }

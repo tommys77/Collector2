@@ -20,10 +20,11 @@ namespace Collector2.UWP.ViewModels
         public const string UnattachedImagesPageKey = "UnattachedImagesPage";
         public const string UnattachedImageEditPage = "UnattachedImageEditPage";
         public const string SoftwareDetailsPage = "SoftwareDetailsPage";
-        
+        public const string SDetails = "SDetails";
+
         public ViewModelLocator()
         {
-            if(_isInitialized)
+            if (_isInitialized)
             {
 
             }
@@ -37,7 +38,7 @@ namespace Collector2.UWP.ViewModels
             nav.Configure(UnattachedImagesPageKey, typeof(UnattachedImagesPage));
             nav.Configure(UnattachedImageEditPage, typeof(UnattachedImageEditPage));
             nav.Configure(SoftwareDetailsPage, typeof(SoftwareDetailsPage));
-            
+
             if (ViewModelBase.IsInDesignModeStatic)
             {
                 // Create design time view services and models
@@ -46,7 +47,7 @@ namespace Collector2.UWP.ViewModels
             {
                 // Create run time view services and models
             }
-            
+
             SimpleIoc.Default.Register<INavigationService>(() => nav);
             SimpleIoc.Default.Register<ApplicationViewModel>();
             SimpleIoc.Default.Register<SoftwarePageViewModel>();
@@ -56,6 +57,7 @@ namespace Collector2.UWP.ViewModels
             SimpleIoc.Default.Register<NewSoftwareViewModel>();
             SimpleIoc.Default.Register<CreateItemViewModel>();
             SimpleIoc.Default.Register<SoftwareDetailsViewModel>();
+            SimpleIoc.Default.Register<SDetailsViewModel>();
         }
 
         public ApplicationViewModel Application
@@ -66,11 +68,21 @@ namespace Collector2.UWP.ViewModels
             }
         }
 
+
+
         public SoftwarePageViewModel SoftwarePageViewInstance
         {
             get
             {
                 return ServiceLocator.Current.GetInstance<SoftwarePageViewModel>();
+            }
+        }
+
+        public SDetailsViewModel SDetailsViewInstance
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<SDetailsViewModel>();
             }
         }
 

@@ -25,10 +25,10 @@
                 <Button x:Name="Main" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Width="50" Height="50" HorizontalAlignment="Center" Command="{Binding OpenPaneCommand}"/>
             </Border>
             <Border x:Name="titleBorder" BorderBrush="Blue" Height="75" Width="Auto" RelativePanel.RightOf="menuBoarder" Margin="15, 0, 0, 0">
-                <TextBlock x:Name="Title" Text="Collector 2 - Gamer Edition"   VerticalAlignment="Center" FontSize="22" FontFamily="Razer Header Regular"/>
+                <TextBlock x:Name="Title" Text="Collector 2 - Gamer Edition"   VerticalAlignment="Center" FontSize="22" FontFamily="Arial Unicode MS" FontWeight="Normal"/>
             </Border>
             <StackPanel Orientation="Horizontal" RelativePanel.AlignRightWithPanel="True" Height="75">
-                <TextBlock x:Name="SettingsLabel" Text="Settings" FontSize="20" VerticalAlignment="Center" Margin="0, 0, 15, 0" FontFamily="Razer Header Regular" />
+                <TextBlock x:Name="SettingsLabel" Text="Settings" FontSize="18" VerticalAlignment="Center" Margin="0, 0, 15, 0" FontFamily="Arial" />
                 <Button x:Name="SettingsBtn" FontFamily="Segoe MDL2 Assets" Content="&#xE713;" Width="50" Height="50" Margin="0, 0, 15, 0"/>
             </StackPanel>
         </RelativePanel>
@@ -45,27 +45,27 @@
                 <ListBox Background="LightSkyBlue" SelectionMode="Single">
                     <ListBoxItem>
                         <StackPanel Orientation="Horizontal">
-                            <Button x:Name="Software" FontFamily="Razer Header Regular" Content="SW" FontSize="20" Width="50" Height="50" ToolTipService.ToolTip="Software" Command="{Binding NavigateToSoftware}">
+                            <Button x:Name="Software" FontFamily="Arial" Content="SW" FontSize="18" Width="50" Height="50" ToolTipService.ToolTip="Software" Command="{Binding NavigateToSoftware}">
                                 <!--<Button.Template>
                                     <ControlTemplate>
                                         <Image Source="ms-appx:///Assets/floppy-disk-35.png"></Image>
                                     </ControlTemplate>
                                 </Button.Template>-->
                             </Button>
-                            <TextBlock  x:Name="SoftwareLabel" Text="Software" FontSize="20" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Razer Header Regular" />
+                            <TextBlock  x:Name="SoftwareLabel" Text="Software" FontSize="18" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Arial" />
                         </StackPanel>
                     </ListBoxItem>
                     <ListBoxItem>
                         <StackPanel Orientation="Horizontal">
-                            <Button x:Name="Hardware" FontFamily="Razer Header Regular" Content="HW" FontSize="20"  Width="50" Height="50" ToolTipService.ToolTip="Hardware"/>
-                            <TextBlock  x:Name="HardwareLabel" Text="Hardware" FontSize="20" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Razer Header Regular" />
+                            <Button x:Name="Hardware" FontFamily="Arial" Content="HW" FontSize="18"  Width="50" Height="50" ToolTipService.ToolTip="Hardware"/>
+                            <TextBlock  x:Name="HardwareLabel" Text="Hardware" FontSize="18" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Arial" />
                         </StackPanel>
                     </ListBoxItem>
                     <ListBoxItem x:Name="Undefined" Visibility="{ Binding UnattachedImagesExists, Converter={StaticResource BoolToVisibility} }" >
                         <StackPanel Orientation="Horizontal">
-                            <Button x:Name="UndefinedBtn" FontFamily="Razer Header Regular" Content="??" FontSize="20"  Width="50" Height="50" ToolTipService.ToolTip="Unattached images"
+                            <Button x:Name="UndefinedBtn" FontFamily="Arial" Content="??" FontSize="18"  Width="50" Height="50" ToolTipService.ToolTip="Unattached images"
                                     Command="{Binding NavigateToUnattachedImages}"/>
-                            <TextBlock  x:Name="UndefinedLabel" Text="Undefined" FontSize="20" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Razer Header Regular" />
+                            <TextBlock  x:Name="UndefinedLabel" Text="Undefined" FontSize="18" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Arial" />
                         </StackPanel>
                     </ListBoxItem>
                 </ListBox>
@@ -79,7 +79,7 @@
                     <Frame 
                         x:Name="contentFrame"
                         Grid.Row="0" />
-                    <TextBlock  x:Name="tbStatusBar" Grid.Row="1" Text="{Binding Source={StaticResource ResourceKey=StatusBarHelper}, Path=Instance.StatusBarMessage, Mode=TwoWay}" HorizontalAlignment="Center" />
+                    <TextBlock  x:Name="tbStatusBar" Grid.Row="1" Text="{Binding Path=Instance.StatusBarMessage, Source={StaticResource ResourceKey=StatusBarHelper},  Mode=TwoWay}" HorizontalAlignment="Center" />
                 </Grid>
 
             </SplitView.Content>

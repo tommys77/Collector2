@@ -1,4 +1,5 @@
 ﻿using Collector2.Models;
+using Collector2.Models.ViewModels;
 using Collector2.UWP.Helpers;
 using Collector2.UWP.Interface;
 using Newtonsoft.Json;
@@ -16,6 +17,7 @@ namespace Collector2.UWP.Repository
     public class SoftwareRepository : IRepository<Software>
     {
         ObservableCollection<Software> Softwares;
+        ObservableCollection<SoftwareViewModel> SoftwareViewModels;
 
         private System.Net.HttpStatusCode _statusCode;
 
@@ -25,16 +27,16 @@ namespace Collector2.UWP.Repository
         {
         }
 
-        public async Task<ObservableCollection<Software>> GetAllAsync()
+        public async Task<ObservableCollection<SoftwareViewModel>> GetAllAsync()
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(Root);
                 var json = await client.GetStringAsync("Softwares");
-                Softwares = JsonConvert.DeserializeObject<ObservableCollection<Software>>(json);
+                SoftwareViewModels = JsonConvert.DeserializeObject<ObservableCollection<SoftwareViewModel>>(json);
             }
 
-            return Softwares;
+            return SoftwareViewModels;
         }
 
         public async Task AddAsync(Software software)
@@ -76,6 +78,11 @@ namespace Collector2.UWP.Repository
         }
 
         public Software FindByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<ObservableCollection<Software>> IRepository<Software>.GetAllAsync()
         {
             throw new NotImplementedException();
         }

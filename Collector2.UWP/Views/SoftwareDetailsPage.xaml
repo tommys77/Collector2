@@ -6,8 +6,8 @@
     xmlns:local="using:Collector2.UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
-
+    mc:Ignorable="d"
+    DataContext="{Binding SoftwareDetailsViewInstance, Source={StaticResource Locator}}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
@@ -17,34 +17,17 @@
         </Grid.ColumnDefinitions>
         <Pivot Grid.ColumnSpan="3">
             <PivotItem Header="Details">
-                <Grid>
-                    <StackPanel Width="Auto" HorizontalAlignment="Left">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Title: " FontStyle="Italic" Width="300"></TextBlock>
-                            <TextBox Text="Perihelion" Width="500" BorderThickness="0"></TextBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Year of Release: " FontStyle="Italic" Width="300"></TextBlock>
-                            <TextBox Text="1993" Width="500" BorderThickness="0"></TextBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Category: " FontStyle="Italic" Width="300"></TextBlock>
-                            <TextBox Text="RPG" Width="500" BorderThickness="0"></TextBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Hardware" FontStyle="Italic" Width="300"></TextBlock>
-                            <TextBox Text="Commodore Amiga 500" Width="500" BorderThickness="0" ></TextBox>
-                        </StackPanel>
-                        <Button Content="Edit" HorizontalAlignment="Right"></Button>
-                    </StackPanel>
-                </Grid>
+                <Frame SourcePageType="{Binding Details, Mode=TwoWay}"></Frame>
             </PivotItem>
             <PivotItem Header="Reviews">
-                <TextBlock Text="Here I will put the reviews for the game/application" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Frame SourcePageType="{Binding Reviews, Mode=TwoWay}"></Frame>
             </PivotItem>
             <PivotItem Header="Comments">
-                <TextBlock Text="Here I will put som extra comments" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Frame SourcePageType="{Binding Comments, Mode=TwoWay}"></Frame>
             </PivotItem>
+            <!--<PivotItem Header="Images">
+                <Frame SourcePageType="{Binding Images, Mode=TwoWay}"></Frame>
+            </PivotItem>-->
         </Pivot>
     </Grid>
 </common:BindablePage>
