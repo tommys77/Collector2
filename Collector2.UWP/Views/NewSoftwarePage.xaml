@@ -23,7 +23,7 @@
             <StackPanel Orientation="Horizontal" Height="Auto">
                 <TextBlock Text="Software Type:" Width="200" VerticalAlignment="Center"></TextBlock>
                 <!--<TextBox x:Name="txtsoftwareType"  Text="{Binding SoftwareType, Mode=TwoWay}" Width="500"></TextBox>-->
-                <ComboBox SelectedIndex="{Binding SoftwareType, Mode=TwoWay}" Width="500">
+                <ComboBox SelectedValue="{Binding SoftwareType, Mode=TwoWay}" SelectedValuePath="Content" Width="500">
                     <ComboBoxItem Content="Game"/>
                     <ComboBoxItem Content="Application"/>
                 </ComboBox>

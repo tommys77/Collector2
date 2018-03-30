@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace Collector2.UWP.Helpers
 {
-    public class ItemSelectionHelper : INotifyPropertyChanged
+    public class ItemSelectionHelper
     {
-        private static ItemImage _currentItemImage { get; set; }
-        private static SoftwareViewModel _currentSoftware { get; set; }
+        private static ItemImage _currentItemImage;
+        private static SoftwareViewModel _currentSoftware;
         private static Hardware currentHardware;
-        
+
         public static void SetCurrentItemImage(ItemImage itemImage)
         {
             _currentItemImage = itemImage;
@@ -49,11 +49,5 @@ namespace Collector2.UWP.Helpers
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

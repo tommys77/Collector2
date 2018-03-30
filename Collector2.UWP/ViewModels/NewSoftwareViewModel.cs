@@ -354,16 +354,6 @@ namespace Collector2.UWP.ViewModels
                     var repository = new SoftwareRepository();
                     await repository.AddAsync(software, imgId);
 
-                    //"SoftwareType": "sample string 2",
-                    //"Title": "sample string 3",
-                    //"YearOfRelease": 4,
-                    //"FormatCount": 5,
-                    //"Requirements": "sample string 6",
-                    //"Condition": "sample string 7",
-                    //"FormatId": 8,
-                    //"CategoryId": 9,
-                    //"HardwareSpecId": 10,
-
                     if (repository.StatusCode == System.Net.HttpStatusCode.Created)
                     {
                         _navigationService.NavigateTo("UnattachedImagesPage");

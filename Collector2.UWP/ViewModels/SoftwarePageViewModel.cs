@@ -33,7 +33,7 @@ namespace Collector2.UWP.ViewModels
         {
             Root = CollectorConfig.ApiRoot;
             _navigationService = navigationService;
-            
+
             if (this.IsInDesignMode)
             {
                 SoftwareList = new ObservableCollection<SoftwareViewModel>()
@@ -89,8 +89,11 @@ namespace Collector2.UWP.ViewModels
             {
                 return (new RelayCommand(() =>
                 {
-                    ItemSelectionHelper.SetCurrentSoftware(SelectedSoftware);
-                    _navigationService.NavigateTo("SoftwareDetailsPage");
+                    if (SelectedSoftware != null)
+                    {
+                        ItemSelectionHelper.SetCurrentSoftware(SelectedSoftware);
+                        _navigationService.NavigateTo("SoftwareDetailsPage");
+                    }
                 }));
             }
         }

@@ -16,7 +16,6 @@ namespace Collector2.UWP.Repository
 {
     public class SoftwareRepository : IRepository<Software>
     {
-        ObservableCollection<Software> Softwares;
         ObservableCollection<SoftwareViewModel> SoftwareViewModels;
 
         private System.Net.HttpStatusCode _statusCode;

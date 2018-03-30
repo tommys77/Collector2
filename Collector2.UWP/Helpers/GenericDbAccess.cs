@@ -57,5 +57,10 @@ namespace Collector2.UWP.Helpers
                 return response.StatusCode;
             }
         }
+
+        internal static Task GetAllObjectsAsync(object requirements, string v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
