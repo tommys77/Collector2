@@ -23,6 +23,7 @@ namespace Collector2.UWP.ViewModels
         private string Root;
 
         private ObservableCollection<SoftwareViewModel> _softwareList;
+        public ObservableCollection<ItemImage> MainImages { get; set; }
 
         private RelayCommand _getSoftwareList;
 
@@ -61,13 +62,21 @@ namespace Collector2.UWP.ViewModels
             get
             {
                 SoftwareList = new ObservableCollection<SoftwareViewModel>();
+                MainImages = new ObservableCollection<ItemImage>();
                 return _getSoftwareList = new RelayCommand(async () =>
                 {
                     SoftwareList = await _softwareRepository.GetAllAsync();
+                    foreach (var s in SoftwareList)
+                    {
+                        foreach (var i in s.ItemImages)
+                        {
+                            if (i.IsMainImage)
+                            {
+                                MainImages.Add(i);
+                            }
+                        }
+                    }
                 });
-
-
-
             }
         }
 
@@ -82,6 +91,41 @@ namespace Collector2.UWP.ViewModels
                 RaisePropertyChanged(nameof(SelectedSoftware));
             }
         }
+
+        private bool _showGridView;
+        public bool ShowGridView
+        {
+            get { return _showGridView; }
+            set
+            {
+                _showGridView = value;
+                ShowListView = !value;
+                RaisePropertyChanged(nameof(ShowGridView));
+            }
+        }
+
+        private bool _showListView;
+        public bool ShowListView
+        {
+            get { return _showListView; }
+            set
+            {
+                _showListView = value;
+                RaisePropertyChanged(nameof(ShowListView));
+            }
+        }
+
+        public RelayCommand GridViewImages
+        {
+            get
+            {
+                return (new RelayCommand(() =>
+                {
+                    ShowGridView = !ShowGridView;
+                }));
+            }
+        }
+
 
         public RelayCommand GoToDetailsPage
         {
@@ -100,10 +144,12 @@ namespace Collector2.UWP.ViewModels
 
         public void Activate(object parameter)
         {
+            ShowListView = true;
             if (GetSoftwareList.CanExecute(SoftwareList))
             {
                 GetSoftwareList.Execute(SoftwareList);
             }
+
         }
 
         public void Deactivate(object parameter)

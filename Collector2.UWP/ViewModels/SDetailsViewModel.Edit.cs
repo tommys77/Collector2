@@ -127,16 +127,12 @@ namespace Collector2.UWP.ViewModels
                     });
 
                     var mapper = config.CreateMapper();
-                    var _software = mapper.Map<SoftwareViewModel, Software>(Current);
-
-                    _software.CategoryId = _software.Category.CategoryId;
-                    _software.FormatId = _software.Format.FormatId;
-                    _software.HardwareSpecId = _software.HardwareSpec.HardwareSpecId;
+                    var software = mapper.Map<SoftwareViewModel, Software>(Current);
 
                     var repository = new SoftwareRepository();
-                    await repository.UpdateAsync(_software);
+                    await repository.UpdateAsync(software);
 
-                    StatusBarHelper.Instance.StatusBarMessage = _software.CategoryId.ToString();
+                    StatusBarHelper.Instance.StatusBarMessage = software.CategoryId.ToString();
 
                 });
             }

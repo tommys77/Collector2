@@ -22,7 +22,7 @@ namespace Collector2.UWP.ViewModels
         {
             Root = CollectorConfig.ApiRoot;
             _navigationService = navigationService;
-            CheckIfUnattachedExistsAsync();
+           CheckIfUnattachedExistsAsync();
         }
 
         public async void CheckIfUnattachedExistsAsync()

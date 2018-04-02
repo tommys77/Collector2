@@ -20,18 +20,16 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <RelativePanel x:Name="TopPanel" Background="LightSkyBlue" BorderBrush="Blue">
-            <Border x:Name="menuBoarder" Width="75" Height="75">
-                <Button x:Name="Main" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Width="50" Height="50" HorizontalAlignment="Center" Command="{Binding OpenPaneCommand}"/>
-            </Border>
-            <Border x:Name="titleBorder" BorderBrush="Blue" Height="75" Width="Auto" RelativePanel.RightOf="menuBoarder" Margin="15, 0, 0, 0">
-                <TextBlock x:Name="Title" Text="Collector 2 - Gamer Edition"   VerticalAlignment="Center" FontSize="22" FontFamily="Arial Unicode MS" FontWeight="Normal"/>
-            </Border>
-            <StackPanel Orientation="Horizontal" RelativePanel.AlignRightWithPanel="True" Height="75">
-                <TextBlock x:Name="SettingsLabel" Text="Settings" FontSize="18" VerticalAlignment="Center" Margin="0, 0, 15, 0" FontFamily="Arial" />
-                <Button x:Name="SettingsBtn" FontFamily="Segoe MDL2 Assets" Content="&#xE713;" Width="50" Height="50" Margin="0, 0, 15, 0"/>
-            </StackPanel>
-        </RelativePanel>
+        <StackPanel>
+            <RelativePanel x:Name="TopPanel" Background="LightSkyBlue" BorderBrush="Blue">
+                <Border x:Name="menuBoarder" Width="75" Height="75">
+                    <Button x:Name="Main" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Width="50" Height="50" HorizontalAlignment="Center" Command="{Binding OpenPaneCommand}"/>
+                </Border>
+                <Border x:Name="titleBorder" BorderBrush="Blue" Height="75" Width="Auto" RelativePanel.RightOf="menuBoarder" Margin="15, 0, 0, 0">
+                    <TextBlock x:Name="Title" Text="Collector 2 - Gamer Edition"   VerticalAlignment="Center" FontSize="22" FontFamily="Arial Unicode MS" FontWeight="Normal"/>
+                </Border>
+            </RelativePanel>
+        </StackPanel>
         <SplitView 
             x:Name="MySplitView"
             HorizontalAlignment="Stretch" 
@@ -42,33 +40,41 @@
             CompactPaneLength="75" 
             OpenPaneLength="200">
             <SplitView.Pane>
-                <ListBox Background="LightSkyBlue" SelectionMode="Single">
-                    <ListBoxItem>
-                        <StackPanel Orientation="Horizontal">
-                            <Button x:Name="Software" FontFamily="Arial" Content="SW" FontSize="18" Width="50" Height="50" ToolTipService.ToolTip="Software" Command="{Binding NavigateToSoftware}">
-                                <!--<Button.Template>
-                                    <ControlTemplate>
-                                        <Image Source="ms-appx:///Assets/floppy-disk-35.png"></Image>
-                                    </ControlTemplate>
-                                </Button.Template>-->
-                            </Button>
-                            <TextBlock  x:Name="SoftwareLabel" Text="Software" FontSize="18" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Arial" />
-                        </StackPanel>
-                    </ListBoxItem>
-                    <ListBoxItem>
-                        <StackPanel Orientation="Horizontal">
-                            <Button x:Name="Hardware" FontFamily="Arial" Content="HW" FontSize="18"  Width="50" Height="50" ToolTipService.ToolTip="Hardware"/>
-                            <TextBlock  x:Name="HardwareLabel" Text="Hardware" FontSize="18" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Arial" />
-                        </StackPanel>
-                    </ListBoxItem>
-                    <ListBoxItem x:Name="Undefined" Visibility="{ Binding UnattachedImagesExists, Converter={StaticResource BoolToVisibility} }" >
-                        <StackPanel Orientation="Horizontal">
-                            <Button x:Name="UndefinedBtn" FontFamily="Arial" Content="??" FontSize="18"  Width="50" Height="50" ToolTipService.ToolTip="Unattached images"
+                <Grid>
+                    <RelativePanel Background="LightSkyBlue" Grid.Row="0" Grid.RowSpan="2">
+                        <ListBox Background="LightSkyBlue" SelectionMode="Single">
+                            <ListBoxItem>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="Software" FontFamily="Arial" Content="SW" FontSize="18" Width="50" Height="50" ToolTipService.ToolTip="Software" Command="{Binding NavigateToSoftware}"/>
+                                    <TextBlock  x:Name="SoftwareLabel" Text="Software" FontSize="18" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Arial" />
+                                </StackPanel>
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="Hardware" FontFamily="Arial" Content="HW" FontSize="18"  Width="50" Height="50" ToolTipService.ToolTip="Hardware"/>
+                                    <TextBlock  x:Name="HardwareLabel" Text="Hardware" FontSize="18" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Arial" />
+                                </StackPanel>
+                            </ListBoxItem>
+                            <ListBoxItem x:Name="Undefined" Visibility="{ Binding UnattachedImagesExists, Converter={StaticResource BoolToVisibility} }" >
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="UndefinedBtn" FontFamily="Arial" Content="??" FontSize="18"  Width="50" Height="50" ToolTipService.ToolTip="Unattached images"
                                     Command="{Binding NavigateToUnattachedImages}"/>
-                            <TextBlock  x:Name="UndefinedLabel" Text="Undefined" FontSize="18" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Arial" />
-                        </StackPanel>
-                    </ListBoxItem>
-                </ListBox>
+                                    <TextBlock  x:Name="UndefinedLabel" Text="Undefined" FontSize="18" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Arial" />
+                                </StackPanel>
+                            </ListBoxItem>
+                        </ListBox>
+                    </RelativePanel>
+                    <RelativePanel Grid.Row="1">
+                        <ListBox Background="LightSkyBlue"  SelectionMode="Single" RelativePanel.AlignBottomWithPanel="True">
+                            <ListBoxItem VerticalAlignment="Bottom">
+                            <StackPanel Orientation="Horizontal">
+                                <Button FontFamily="Segoe MDL2 Assets" FontSize="18" Content="&#xE713;" Height="50" Width="50"/>
+                                <TextBlock Text="Settings" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Arial"/>
+                            </StackPanel>
+                        </ListBoxItem>
+                        </ListBox>
+                    </RelativePanel>
+                </Grid>
             </SplitView.Pane>
             <SplitView.Content>
                 <Grid>
@@ -81,7 +87,6 @@
                         Grid.Row="0" />
                     <TextBlock  x:Name="tbStatusBar" Grid.Row="1" Text="{Binding Path=Instance.StatusBarMessage, Source={StaticResource ResourceKey=StatusBarHelper},  Mode=TwoWay}" HorizontalAlignment="Center" />
                 </Grid>
-
             </SplitView.Content>
         </SplitView>
     </Grid>

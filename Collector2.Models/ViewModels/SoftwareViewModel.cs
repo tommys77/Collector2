@@ -10,6 +10,10 @@ namespace Collector2.Models.ViewModels
     {
         public SoftwareViewModel() { }
 
+        public int CategoryId { get; set; }
+        public int FormatId { get; set; }
+        public int HardwareSpecId { get; set; }
+
         public SoftwareViewModel(SoftwareViewModel model)
         {
             ItemId = model.ItemId;
@@ -136,6 +140,7 @@ namespace Collector2.Models.ViewModels
             set
             {
                 _hardwareSpec = value;
+                HardwareSpecId = value.HardwareSpecId;
                 HasChanged = true;
                 NotifyPropertyChanged(nameof(HardwareSpec));
             }
@@ -148,6 +153,7 @@ namespace Collector2.Models.ViewModels
             set
             {
                 _category = value;
+                CategoryId = value.CategoryId;
                 HasChanged = true;
                 NotifyPropertyChanged(nameof(Category));
             }
@@ -160,6 +166,7 @@ namespace Collector2.Models.ViewModels
             set
             {
                 _format = value;
+                FormatId = value.FormatId;
                 HasChanged = true;
                 NotifyPropertyChanged(nameof(Format));
             }

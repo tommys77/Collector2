@@ -49,6 +49,14 @@ namespace Collector2.DataService.Controllers
             return result;
         }
 
+        [HttpGet]
+        [Route("api/getallsoftware")]
+        [ResponseType(typeof(Software))]
+        public IQueryable<Software> GetAllSoftware()
+        {
+            return db.Software;
+        }
+
 
         // GET: api/Softwares/5
         [ResponseType(typeof(Software))]

@@ -8,22 +8,38 @@
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converter="using:Collector2.UWP.Converters"
     mc:Ignorable="d"
     DataContext="{Binding Path=SoftwarePageViewInstance, Source={StaticResource Locator}}">
-    
+
+    <common:BindablePage.Resources>
+        <converter:BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        <converter:ByteArrayToImageConverter x:Key="BytesToImage"/>
+    </common:BindablePage.Resources>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ListView ItemsSource="{Binding SoftwareList}" SelectedItem="{Binding SelectedSoftware, Mode=TwoWay}" IsTapEnabled="True" IsItemClickEnabled="True">
-            <Interactivity:Interaction.Behaviors>
-                <Core:EventTriggerBehavior EventName="Tapped">
-                    <Core:InvokeCommandAction Command="{Binding GoToDetailsPage}"/>
-                </Core:EventTriggerBehavior>
-            </Interactivity:Interaction.Behaviors>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Title}"></TextBlock>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <StackPanel Orientation="Vertical">
+            <Button FontFamily="Segoe MDL2 Assets" Content="&#xF0E2;" HorizontalAlignment="Right" FontSize="25" Command="{Binding GridViewImages}"></Button>
+            <GridView ItemsSource="{Binding MainImages, Mode=TwoWay}" Visibility="{Binding ShowGridView}">
+                <GridView.ItemTemplate>
+                    <DataTemplate>
+                            <Image x:Name="ItemImage" Source="{Binding Path=ImageBase64, Converter={StaticResource BytesToImage}}" MaxHeight="180" MaxWidth="140"></Image>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+            <ListView ItemsSource="{Binding SoftwareList}"  SelectedItem="{Binding SelectedSoftware, Mode=TwoWay}" Visibility="{Binding ShowListView}" IsTapEnabled="True" IsItemClickEnabled="True" HorizontalAlignment="Left">
+                <Interactivity:Interaction.Behaviors>
+                    <Core:EventTriggerBehavior EventName="Tapped">
+                        <Core:InvokeCommandAction Command="{Binding GoToDetailsPage}"/>
+                    </Core:EventTriggerBehavior>
+                </Interactivity:Interaction.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Title}"></TextBlock>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
         <!--<Image 
             x:Name="AmigaLogo" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None" Source="ms-appx:///Assets/Amiga_Logo_1985.svg.png"
                />-->
