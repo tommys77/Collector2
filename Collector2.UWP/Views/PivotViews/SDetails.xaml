@@ -102,7 +102,7 @@
                     <TextBlock Text="Hardware:" FontStyle="Italic" Width="200"></TextBlock>
                     <StackPanel>
                         <TextBox Text="{Binding Current.HardwareSpec.HardwareSpecName, Mode=TwoWay}" Width="300" Height="32" IsReadOnly="True" BorderThickness="0" Visibility="{Binding IsInViewMode, Mode=TwoWay, FallbackValue=true}"></TextBox>
-                        <ComboBox  Visibility="{Binding IsInEditMode, Mode=TwoWay, FallbackValue=false}" Width="300" ItemsSource="{Binding Path=HardwareSpecs}" SelectedItem="{Binding Current.HardwareSpec}">
+                        <ComboBox  Visibility="{Binding IsInEditMode, Mode=TwoWay, FallbackValue=false}" Width="300" ItemsSource="{Binding Path=HardwareSpecs}" SelectedItem="{Binding Current.HardwareSpec, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Path=HardwareSpecName}"></TextBlock>
@@ -120,6 +120,7 @@
                 <HyperlinkButton Content="Cancel" Margin="10" RelativePanel.AlignLeftWithPanel="True" Command="{Binding CancelChanges}" Visibility="{Binding Current.HasChanged, FallbackValue=False}"></HyperlinkButton>
                 <HyperlinkButton Content="Edit mode On/Off" Margin="10" RelativePanel.AlignRightWithPanel="True" Command="{Binding EditModeCommand}"></HyperlinkButton>
             </RelativePanel>
+            <Button Content="Save" Margin="10, 0" Visibility="{Binding Current.HasChanged}" Command="{Binding SaveChangesToDatabase}"></Button>
         </StackPanel>
         <ListView VerticalAlignment="Top" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Width="Auto" ItemsSource="{Binding Current.ItemImages}" SelectedItem="{Binding Path=SelectedImage, Mode=TwoWay}" Margin="0, 10" >
             <ListView.ItemsPanel>

@@ -11,8 +11,8 @@ namespace Collector2.UWP.Interface
     {
         Task<ObservableCollection<T>> GetAllAsync();
         Task AddAsync(T entity);
-        void DeleteAsync(T entity);
-        void UpdateAsync(T entity);
+        Task DeleteAsync(T entity);
+        Task UpdateAsync(T entity);
         T FindByIdAsync(int id);
     }
 }

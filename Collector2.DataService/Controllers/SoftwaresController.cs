@@ -10,8 +10,8 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Collector2.DataContext;
 using Collector2.Models;
-using Collector2.Models.DTO;
 using Collector2.Models.ViewModels;
+using AutoMapper;
 
 namespace Collector2.DataService.Controllers
 {
@@ -29,23 +29,26 @@ namespace Collector2.DataService.Controllers
                 .Include("Format");
 
             var result = from s in software
-                        join i in items on s.ItemId equals i.ItemId
-                        select new SoftwareViewModel() {
-                            ItemId = s.ItemId,
-                            Category = s.Category,
-                            Condition = s.Condition,
-                            Format = s.Format,
-                            SoftwareType = s.SoftwareType,
-                            Title = s.Title,
-                            YearOfRelease = s.YearOfRelease,
-                            Requirements = s.Requirements,
-                            FormatCount = s.FormatCount,
-                            ItemImages = i.ItemImages,
-                            HardwareSpec = s.HardwareSpec
-                        };
+                         join i in items on s.ItemId equals i.ItemId
+                         select new SoftwareViewModel()
+                         {
+                             ItemId = s.ItemId,
+                             Title = s.Title,
+                             YearOfRelease = s.YearOfRelease,
+                             Category = s.Category,
+                             Condition = s.Condition,
+                             Format = s.Format,
+                             FormatCount = s.FormatCount,
+                             SoftwareType = s.SoftwareType,
+                             Requirements = s.Requirements,
+                             ItemImages = i.ItemImages,
+                             HardwareSpec = s.HardwareSpec,
+                         };
+
 
             return result;
         }
+
 
         // GET: api/Softwares/5
         [ResponseType(typeof(Software))]
@@ -136,6 +139,31 @@ namespace Collector2.DataService.Controllers
 
             return CreatedAtRoute("DefaultApi", new { id = software.ItemId }, software);
         }
+
+        [HttpPost]
+        [Route("api/UpdateSoftware")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult UpdateSoftware(Software software)
+        {
+            
+            db.Software.Attach(software);
+            db.Entry(software).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                if(!SoftwareExists(software.ItemId))
+                {
+                    return NotFound();
+                }
+            }
+            
+            return StatusCode(HttpStatusCode.OK);
+        }
+
 
         //// POST: api/Softwares
         //[ResponseType(typeof(Software))]

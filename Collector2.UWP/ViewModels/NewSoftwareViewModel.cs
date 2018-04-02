@@ -1,5 +1,4 @@
 ﻿using Collector2.Models;
-using Collector2.Models.DTO;
 using Collector2.UWP.Helpers;
 using Collector2.UWP.Interface;
 using Collector2.UWP.Repository;

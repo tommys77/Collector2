@@ -63,6 +63,16 @@ namespace Collector2.UWP.Repository
             throw new NotImplementedException();
         }
 
+        Task IRepository<ItemImage>.DeleteAsync(ItemImage entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IRepository<ItemImage>.UpdateAsync(ItemImage entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public System.Net.HttpStatusCode StatusCode
         {
             get { return _statusCode; }

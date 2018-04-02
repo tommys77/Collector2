@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace Collector2.UWP.ViewModels
 {
@@ -73,12 +74,22 @@ namespace Collector2.UWP.ViewModels
             }
         }
 
+        public ObservableCollection<Format> AllFormats
+        {
+            get { return _allFormats; }
+            set
+            {
+                _allFormats = value;
+                RaisePropertyChanged(nameof(AllFormats));
+            }
+        }
+
         public RelayCommand SetupEditMode
         {
             get
             {
                 return new RelayCommand(async () =>
-                {
+                { 
                     await LoadData();
                 });
             }
@@ -94,18 +105,6 @@ namespace Collector2.UWP.ViewModels
             await GenericDbAccess.GetAllObjectsAsync(HardwareSpecs, "HardwareSpecs");
         }
 
-        public ObservableCollection<Format> AllFormats
-        {
-            get { return _allFormats; }
-            set
-            {
-                _allFormats = value;
-                RaisePropertyChanged(nameof(AllFormats));
-            }
-        }
-
-
-
         public RelayCommand EditModeCommand
         {
             get
@@ -114,6 +113,32 @@ namespace Collector2.UWP.ViewModels
                     {
                         IsInEditMode = !IsInEditMode;
                     });
+            }
+        }
+
+        public RelayCommand SaveChangesToDatabase
+        {
+            get
+            {
+                return new RelayCommand(async () =>
+                {
+                    var config = new MapperConfiguration(cfg => {
+                        cfg.CreateMap<SoftwareViewModel, Software>();
+                    });
+
+                    var mapper = config.CreateMapper();
+                    var _software = mapper.Map<SoftwareViewModel, Software>(Current);
+
+                    _software.CategoryId = _software.Category.CategoryId;
+                    _software.FormatId = _software.Format.FormatId;
+                    _software.HardwareSpecId = _software.HardwareSpec.HardwareSpecId;
+
+                    var repository = new SoftwareRepository();
+                    await repository.UpdateAsync(_software);
+
+                    StatusBarHelper.Instance.StatusBarMessage = _software.CategoryId.ToString();
+
+                });
             }
         }
     }

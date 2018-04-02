@@ -53,5 +53,15 @@ namespace Collector2.UWP.Repository
         {
             throw new NotImplementedException();
         }
+
+        Task IRepository<Hardware>.DeleteAsync(Hardware entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IRepository<Hardware>.UpdateAsync(Hardware entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

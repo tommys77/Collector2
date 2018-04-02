@@ -66,14 +66,23 @@ namespace Collector2.UWP.Repository
             }
         }
 
-        public void DeleteAsync(Software entity)
+        public Task DeleteAsync(Software entity)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateAsync(Software entity)
+        public async Task UpdateAsync(Software entity)
         {
-            throw new NotImplementedException();
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                var json = JsonConvert.SerializeObject(entity);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var requestUri = Root + "UpdateSoftware";
+
+                var response = await client.PostAsync(requestUri, content);
+                _statusCode = response.StatusCode;
+            }
         }
 
         public Software FindByIdAsync(int id)
@@ -85,6 +94,7 @@ namespace Collector2.UWP.Repository
         {
             throw new NotImplementedException();
         }
+
 
         public System.Net.HttpStatusCode StatusCode
         {

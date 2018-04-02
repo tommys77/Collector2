@@ -114,7 +114,6 @@ namespace Collector2.Models.ViewModels
             }
         }
 
-
         private List<ItemImage> _itemImages;
         public List<ItemImage> ItemImages
         {
@@ -127,8 +126,11 @@ namespace Collector2.Models.ViewModels
             }
         }
 
+
+       
+
         private HardwareSpec _hardwareSpec;
-        public virtual HardwareSpec HardwareSpec
+        public HardwareSpec HardwareSpec
         {
             get { return _hardwareSpec; }
             set
@@ -152,7 +154,7 @@ namespace Collector2.Models.ViewModels
         }
 
         private Format _format;
-        public virtual Format Format
+        public Format Format
         {
             get { return _format; }
             set
