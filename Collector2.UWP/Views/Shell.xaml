@@ -13,6 +13,7 @@
     <common:BindablePage.Resources>
         <conv:BooleanToVisibilityConverter x:Key="BoolToVisibility"></conv:BooleanToVisibilityConverter>
         <helper:StatusBarHelper x:Key="StatusBarHelper" />
+        <helper:GoBackHelper x:Key="GoBackHelper"/>
     </common:BindablePage.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -28,6 +29,8 @@
                 <Border x:Name="titleBorder" BorderBrush="Blue" Height="75" Width="Auto" RelativePanel.RightOf="menuBoarder" Margin="15, 0, 0, 0">
                     <TextBlock x:Name="Title" Text="Collector 2 - Gamer Edition"   VerticalAlignment="Center" FontSize="22" FontFamily="Arial Unicode MS" FontWeight="Normal"/>
                 </Border>
+                <Button FontFamily="Segoe MDL2 Assets" Content="&#xE72B;" Width="50" Height="50" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="10"
+                        Command="{Binding GoBack}" Visibility="{Binding Path=Instance.CanGoBack, Source={StaticResource ResourceKey=GoBackHelper}, Converter={StaticResource BoolToVisibility}, Mode=OneWay}"></Button>
             </RelativePanel>
         </StackPanel>
         <SplitView 
@@ -67,11 +70,11 @@
                     <RelativePanel Grid.Row="1">
                         <ListBox Background="LightSkyBlue"  SelectionMode="Single" RelativePanel.AlignBottomWithPanel="True">
                             <ListBoxItem VerticalAlignment="Bottom">
-                            <StackPanel Orientation="Horizontal">
-                                <Button FontFamily="Segoe MDL2 Assets" FontSize="18" Content="&#xE713;" Height="50" Width="50"/>
-                                <TextBlock Text="Settings" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Arial"/>
-                            </StackPanel>
-                        </ListBoxItem>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button FontFamily="Segoe MDL2 Assets" FontSize="18" Content="&#xE713;" Height="50" Width="50"/>
+                                    <TextBlock Text="Settings" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Arial"/>
+                                </StackPanel>
+                            </ListBoxItem>
                         </ListBox>
                     </RelativePanel>
                 </Grid>

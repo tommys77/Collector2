@@ -20,7 +20,7 @@ namespace Collector2.DataService.Controllers
         // GET: api/Categories
         public IQueryable<Category> GetCategory()
         {
-            return db.Category;
+            return db.Category.OrderBy(c => c.CategoryName);
         }
 
         // GET: api/Categories/5

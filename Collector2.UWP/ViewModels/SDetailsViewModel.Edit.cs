@@ -100,6 +100,7 @@ namespace Collector2.UWP.ViewModels
             AllFormats = new ObservableCollection<Format>();
             Categories = new ObservableCollection<Category>();
             HardwareSpecs = new ObservableCollection<HardwareSpec>();
+
             await GenericDbAccess.GetAllObjectsAsync(AllFormats, "Formats");
             await GenericDbAccess.GetAllObjectsAsync(Categories, "Categories");
             await GenericDbAccess.GetAllObjectsAsync(HardwareSpecs, "HardwareSpecs");
@@ -132,8 +133,13 @@ namespace Collector2.UWP.ViewModels
                     var repository = new SoftwareRepository();
                     await repository.UpdateAsync(software);
 
-                    StatusBarHelper.Instance.StatusBarMessage = software.CategoryId.ToString();
-
+                    if(repository.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        StatusBarHelper.Instance.StatusBarMessage = "Changes has been saved.";
+                        IsInEditMode = false;
+                        RefreshHelper.Instance.NeedRefresh = true;
+                        Current.HasChanged = false;
+                    }
                 });
             }
         }

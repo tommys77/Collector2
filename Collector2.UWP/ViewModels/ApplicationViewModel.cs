@@ -22,7 +22,7 @@ namespace Collector2.UWP.ViewModels
         {
             Root = CollectorConfig.ApiRoot;
             _navigationService = navigationService;
-           CheckIfUnattachedExistsAsync();
+            CheckIfUnattachedExistsAsync();
         }
 
         public async void CheckIfUnattachedExistsAsync()
@@ -36,7 +36,7 @@ namespace Collector2.UWP.ViewModels
                     UnattachedImagesExists = !UnattachedImagesExists;
                     _navigationService.NavigateTo("UnattachedImagesPage");
                 }
-                else _navigationService.NavigateTo("SoftwarePage"); 
+                else _navigationService.NavigateTo("SoftwarePage");
             }
         }
 
@@ -112,6 +112,17 @@ namespace Collector2.UWP.ViewModels
                 return navigateCommand = new RelayCommand(() =>
                 {
                     _navigationService.NavigateTo("UnattachedImagesPage");
+                });
+            }
+        }
+
+        public RelayCommand GoBack
+        {
+            get
+            {
+                return navigateCommand = new RelayCommand(() =>
+                {
+                    _navigationService.GoBack();
                 });
             }
         }

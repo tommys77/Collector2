@@ -46,7 +46,7 @@ namespace Collector2.DataService.Controllers
                          };
 
 
-            return result;
+            return result.OrderBy(s => s.Title);
         }
 
         [HttpGet]

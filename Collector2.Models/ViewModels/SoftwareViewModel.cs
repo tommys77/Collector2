@@ -131,7 +131,7 @@ namespace Collector2.Models.ViewModels
         }
 
 
-       
+
 
         private HardwareSpec _hardwareSpec;
         public HardwareSpec HardwareSpec
@@ -140,7 +140,10 @@ namespace Collector2.Models.ViewModels
             set
             {
                 _hardwareSpec = value;
-                HardwareSpecId = value.HardwareSpecId;
+                if (value != null)
+                {
+                    HardwareSpecId = value.HardwareSpecId;
+                }
                 HasChanged = true;
                 NotifyPropertyChanged(nameof(HardwareSpec));
             }
@@ -153,7 +156,10 @@ namespace Collector2.Models.ViewModels
             set
             {
                 _category = value;
-                CategoryId = value.CategoryId;
+                if (value != null)
+                {
+                    CategoryId = value.CategoryId;
+                }
                 HasChanged = true;
                 NotifyPropertyChanged(nameof(Category));
             }
@@ -166,7 +172,10 @@ namespace Collector2.Models.ViewModels
             set
             {
                 _format = value;
-                FormatId = value.FormatId;
+                if (value != null)
+                {
+                    FormatId = value.FormatId;
+                }
                 HasChanged = true;
                 NotifyPropertyChanged(nameof(Format));
             }
@@ -176,7 +185,7 @@ namespace Collector2.Models.ViewModels
         public bool HasChanged
         {
             get { return _hasChanged; }
-            private set
+            set
             {
                 _hasChanged = value;
                 NotifyPropertyChanged(nameof(HasChanged));

@@ -72,6 +72,7 @@ namespace Collector2.UWP.ViewModels
         public SDetailsViewModel()
         {
             IsInViewMode = true;
+            
             if (IsInDesignMode)
             {
 
@@ -80,6 +81,7 @@ namespace Collector2.UWP.ViewModels
 
         public void Activate(object parameter)
         {
+            GoBackHelper.Instance.CanGoBack = true;
             if (ItemSelectionHelper.GetCurrentSoftware() != null)
             {
                 Current = new SoftwareViewModel(ItemSelectionHelper.GetCurrentSoftware());

@@ -25,6 +25,9 @@ namespace Collector2.UWP.ViewModels
         private ObservableCollection<SoftwareViewModel> _softwareList;
         public ObservableCollection<ItemImage> MainImages { get; set; }
 
+        private ItemImage _selectedImage;
+
+
         private RelayCommand _getSoftwareList;
 
         private readonly INavigationService _navigationService;
@@ -34,6 +37,14 @@ namespace Collector2.UWP.ViewModels
         {
             Root = CollectorConfig.ApiRoot;
             _navigationService = navigationService;
+            ShowListView = true;
+
+            if (GetSoftwareList.CanExecute(SoftwareList))
+            {
+                StatusBarHelper.Instance.StatusBarMessage = "Please wait, loading collection from database...";
+                GetSoftwareList.Execute(SoftwareList);
+            }
+
 
             if (this.IsInDesignMode)
             {
@@ -63,19 +74,30 @@ namespace Collector2.UWP.ViewModels
             {
                 SoftwareList = new ObservableCollection<SoftwareViewModel>();
                 MainImages = new ObservableCollection<ItemImage>();
+                
                 return _getSoftwareList = new RelayCommand(async () =>
                 {
                     SoftwareList = await _softwareRepository.GetAllAsync();
+
                     foreach (var s in SoftwareList)
                     {
-                        foreach (var i in s.ItemImages)
+                        if (s.Title.StartsWith("The "))
                         {
-                            if (i.IsMainImage)
-                            {
-                                MainImages.Add(i);
-                            }
+                            s.Title = s.Title.Substring(4) + ", The";
                         }
                     }
+
+                    var mainImages = from s in SoftwareList
+                                     from i in s.ItemImages
+                                     where i.IsMainImage == true
+                                     orderby s.Title ascending
+                                     select i;
+
+                    foreach (var i in mainImages)
+                    {
+                        MainImages.Add(i);
+                    }
+                    StatusBarHelper.Instance.StatusBarMessage = $"You have {MainImages.Count()} software items in your collection";
                 });
             }
         }
@@ -90,6 +112,26 @@ namespace Collector2.UWP.ViewModels
                 _selectedSoftware = value;
                 RaisePropertyChanged(nameof(SelectedSoftware));
             }
+        }
+
+        public ItemImage SelectedImage
+        {
+            get { return _selectedImage; }
+            set
+            {
+                _selectedImage = value;
+                RaisePropertyChanged(nameof(SelectedImage));
+            }
+        }
+
+        private void FindAndSetSelectedSoftware(int imgId)
+        {
+            var query = from s in SoftwareList
+                        from i in s.ItemImages
+                        where i.ItemImageId == imgId
+                        select s;
+
+            SelectedSoftware = query.First();
         }
 
         private bool _showGridView;
@@ -133,23 +175,32 @@ namespace Collector2.UWP.ViewModels
             {
                 return (new RelayCommand(() =>
                 {
-                    if (SelectedSoftware != null)
+                    if (SelectedImage != null)
                     {
+                        FindAndSetSelectedSoftware(SelectedImage.ItemImageId);
                         ItemSelectionHelper.SetCurrentSoftware(SelectedSoftware);
                         _navigationService.NavigateTo("SoftwareDetailsPage");
                     }
+                    //if (SelectedSoftware != null)
+                    //{
+                    //    ItemSelectionHelper.SetCurrentSoftware(SelectedSoftware);
+                    //    _navigationService.NavigateTo("SoftwareDetailsPage");
+                    //} 
                 }));
             }
         }
 
+
         public void Activate(object parameter)
         {
-            ShowListView = true;
-            if (GetSoftwareList.CanExecute(SoftwareList))
+            GoBackHelper.Instance.CanGoBack = false;
+            if(RefreshHelper.Instance.NeedRefresh)
             {
+                StatusBarHelper.Instance.StatusBarMessage = "Collection has changed, reloading...";
                 GetSoftwareList.Execute(SoftwareList);
+                RefreshHelper.Instance.NeedRefresh = false;
+                
             }
-
         }
 
         public void Deactivate(object parameter)

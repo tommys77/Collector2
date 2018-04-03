@@ -16,7 +16,7 @@ namespace Collector2.DataService.Controllers
         // GET: api/Formats
         public IQueryable<Format> GetFormat()
         {
-            return db.Format;
+            return db.Format.OrderBy(f => f.FormatName);
         }
 
         // GET: api/Formats/5

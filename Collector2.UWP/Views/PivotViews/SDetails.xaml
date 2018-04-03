@@ -25,19 +25,26 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <StackPanel BorderBrush="Black" BorderThickness="2" 
+        <StackPanel
+                    x:Name="imagePanel"
+                    MaxWidth="{x:Bind img_main.Width}"
+                    MaxHeight="{x:Bind img_main.Height}"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
                     Grid.Column="0"
-                    Grid.Row="0">
+                    Grid.Row="0"
+                    Margin="0, 0, 0, 10">
             <Image x:Name="img_main" 
                    Width="370" 
                    Height="470"
+                   Stretch="Fill"
                    VerticalAlignment="Center" 
                    HorizontalAlignment="Center" 
                    Source="{Binding SelectedImage.ImageBase64, Converter={StaticResource BytesToImage},
@@ -47,17 +54,17 @@
             <StackPanel BorderThickness="2" BorderBrush="Black" Resources="{Binding Current}">
                 <StackPanel Orientation="Horizontal" BorderBrush="Black" BorderThickness="1">
                     <TextBlock Text="Title:" Height="32" FontStyle="Italic" Width="200"></TextBlock>
-                    <TextBox Text="{Binding Current.Title, Mode=TwoWay}" BorderThickness="0" IsReadOnly="{Binding IsInViewMode}" Height="32" Width="300"></TextBox>
+                    <TextBox Text="{Binding Current.Title, Mode=TwoWay}" BorderThickness="0" IsReadOnly="{Binding IsInViewMode}" Height="32" Width="400"></TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" BorderBrush="Black" BorderThickness="1">
                     <TextBlock Text="Year of Release:" Height="32" FontStyle="Italic" Width="200"></TextBlock>
-                    <TextBox Text="{Binding Current.YearOfRelease, Mode=TwoWay}" BorderThickness="0" IsReadOnly="{Binding IsInViewMode, Mode=TwoWay}" Width="300" Height="32"></TextBox>
+                    <TextBox Text="{Binding Current.YearOfRelease, Mode=TwoWay}" BorderThickness="0" IsReadOnly="{Binding IsInViewMode, Mode=TwoWay}" Width="400" Height="32"></TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" BorderBrush="Black" BorderThickness="1">
                     <TextBlock Text="Category: " FontStyle="Italic" Width="200" Height="32"></TextBlock>
                     <StackPanel Orientation="Vertical">
-                        <TextBox Text="{Binding Current.Category.CategoryName}" Width="300" IsReadOnly="True" BorderThickness="0" Visibility="{Binding IsInViewMode, Mode=TwoWay, FallbackValue=true}" Height="32"></TextBox>
-                        <ComboBox Visibility="{Binding IsInEditMode, Mode=TwoWay, FallbackValue=false}" ItemsSource="{Binding Path=Categories}" SelectedItem="{Binding Current.Category, Mode=TwoWay}" Width="300">
+                        <TextBox x:Name="txt_category" Text="{Binding Current.Category.CategoryName}" Width="400" IsReadOnly="True" BorderThickness="0" Visibility="{Binding IsInViewMode, Mode=TwoWay, FallbackValue=true}" Height="32"></TextBox>
+                        <ComboBox Visibility="{Binding IsInEditMode, Mode=TwoWay, FallbackValue=false}" ItemsSource="{Binding Path=Categories}" SelectedItem="{Binding Current.Category, Mode=TwoWay}" Width="400">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Path=CategoryName}"></TextBlock>
@@ -69,8 +76,8 @@
                 <StackPanel Orientation="Horizontal" BorderBrush="Black" BorderThickness="1">
                     <TextBlock Text="SoftwareType:" FontStyle="Italic" TextAlignment="Left" Width="200" Height="32"></TextBlock>
                     <StackPanel>
-                        <TextBox Text="{Binding Current.SoftwareType, Mode=TwoWay}" IsReadOnly="True" BorderThickness="0" Visibility="{Binding IsInViewMode, Mode=TwoWay, FallbackValue=true}" Width="300" Height="32"></TextBox>
-                        <ComboBox Visibility="{Binding IsInEditMode, Mode=TwoWay, FallbackValue=false}" Width="300" SelectedValue="{Binding Current.SoftwareType, Mode=TwoWay}" SelectedValuePath="Content">
+                        <TextBox Text="{Binding Current.SoftwareType, Mode=TwoWay}" IsReadOnly="True" BorderThickness="0" Visibility="{Binding IsInViewMode, Mode=TwoWay, FallbackValue=true}" Width="400" Height="32"></TextBox>
+                        <ComboBox Visibility="{Binding IsInEditMode, Mode=TwoWay, FallbackValue=false}" Width="400" SelectedValue="{Binding Current.SoftwareType, Mode=TwoWay}" SelectedValuePath="Content">
                             <ComboBoxItem Content="Game"/>
                             <ComboBoxItem Content="Application"/>
                         </ComboBox>
@@ -79,9 +86,9 @@
                 <StackPanel Orientation="Horizontal" BorderBrush="Black" BorderThickness="1">
                     <TextBlock Text="Format:" FontStyle="Italic" Width="200" Height="32"></TextBlock>
                     <StackPanel Orientation="Vertical">
-                        <TextBox x:Name="tb_format" Text="{Binding Current.Format.FormatName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="300" Height="32" BorderThickness="0" IsReadOnly="True" Visibility="{Binding IsInViewMode, Mode=TwoWay}">
+                        <TextBox x:Name="tb_format" Text="{Binding Current.Format.FormatName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="400" Height="32" BorderThickness="0" IsReadOnly="True" Visibility="{Binding IsInViewMode, Mode=TwoWay}">
                         </TextBox>
-                        <ComboBox Visibility="{Binding IsInEditMode, Mode=TwoWay, FallbackValue=false}" Width="300" ItemsSource="{Binding AllFormats}" SelectedItem="{Binding Current.Format, Mode=TwoWay}">
+                        <ComboBox Visibility="{Binding IsInEditMode, Mode=TwoWay, FallbackValue=false}" Width="400" ItemsSource="{Binding AllFormats}" SelectedItem="{Binding Current.Format, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Path=FormatName}"></TextBlock>
@@ -92,17 +99,17 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" BorderBrush="Black" BorderThickness="1">
                     <TextBlock Text="Condition:" FontStyle="Italic" Width="200" Height="32"></TextBlock>
-                    <TextBox Text="{Binding Current.Condition, Mode=TwoWay}" BorderThickness="0" IsReadOnly="{Binding IsInViewMode}" Width="300" Height="32"></TextBox>
+                    <TextBox Text="{Binding Current.Condition, Mode=TwoWay}" BorderThickness="0" IsReadOnly="{Binding IsInViewMode}" Width="400" Height="32"></TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" BorderBrush="Black" BorderThickness="1">
                     <TextBlock Text="Number of disks/CDs/etc:" FontStyle="Italic" Width="200" Height="32"></TextBlock>
-                    <TextBox Text="{Binding Current.FormatCount, Mode=TwoWay}" BorderThickness="0" IsReadOnly="{Binding IsInViewMode}" Width="300" Height="32"></TextBox>
+                    <TextBox Text="{Binding Current.FormatCount, Mode=TwoWay}" BorderThickness="0" IsReadOnly="{Binding IsInViewMode}" Width="400" Height="32"></TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" BorderBrush="Black" BorderThickness="1">
                     <TextBlock Text="Hardware:" FontStyle="Italic" Width="200"></TextBlock>
                     <StackPanel>
-                        <TextBox Text="{Binding Current.HardwareSpec.HardwareSpecName, Mode=TwoWay}" Width="300" Height="32" IsReadOnly="True" BorderThickness="0" Visibility="{Binding IsInViewMode, Mode=TwoWay, FallbackValue=true}"></TextBox>
-                        <ComboBox  Visibility="{Binding IsInEditMode, Mode=TwoWay, FallbackValue=false}" Width="300" ItemsSource="{Binding Path=HardwareSpecs}" SelectedItem="{Binding Current.HardwareSpec, Mode=TwoWay}">
+                        <TextBox Text="{Binding Current.HardwareSpec.HardwareSpecName, Mode=TwoWay}" Width="400" Height="32" IsReadOnly="True" BorderThickness="0" Visibility="{Binding IsInViewMode, Mode=TwoWay, FallbackValue=true}"></TextBox>
+                        <ComboBox  Visibility="{Binding IsInEditMode, Mode=TwoWay, FallbackValue=false}" Width="400" ItemsSource="{Binding Path=HardwareSpecs}" SelectedItem="{Binding Current.HardwareSpec, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Path=HardwareSpecName}"></TextBlock>
@@ -112,15 +119,15 @@
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" BorderBrush="Black" BorderThickness="1">
-                    <TextBlock Text="Requirements:" FontStyle="Italic" Width="200" Height="32"></TextBlock>
-                    <TextBox Text="{Binding Current.Requirements, Mode=TwoWay}" BorderThickness="0" IsReadOnly="{Binding IsInViewMode}" Width="300" Height="32"/>
+                    <TextBlock Text="Requirements:" FontStyle="Italic" Width="200" Height="32" VerticalAlignment="Center"></TextBlock>
+                    <TextBox Text="{Binding Current.Requirements, Mode=TwoWay}" BorderThickness="0" IsReadOnly="{Binding IsInViewMode}" Width="400" Height="32"/>
                 </StackPanel>
             </StackPanel>
-            <RelativePanel Width="500">
+            <RelativePanel Width="600">
                 <HyperlinkButton Content="Cancel" Margin="10" RelativePanel.AlignLeftWithPanel="True" Command="{Binding CancelChanges}" Visibility="{Binding Current.HasChanged, FallbackValue=False}"></HyperlinkButton>
                 <HyperlinkButton Content="Edit mode On/Off" Margin="10" RelativePanel.AlignRightWithPanel="True" Command="{Binding EditModeCommand}"></HyperlinkButton>
             </RelativePanel>
-            <Button Content="Save" Margin="10, 0" Visibility="{Binding Current.HasChanged}" Command="{Binding SaveChangesToDatabase}"></Button>
+            <Button Content="Save" Margin="10, 0" Visibility="{Binding Current.HasChanged}" Command="{Binding SaveChangesToDatabase}" />
         </StackPanel>
         <ListView VerticalAlignment="Top" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Width="Auto" ItemsSource="{Binding Current.ItemImages}" SelectedItem="{Binding Path=SelectedImage, Mode=TwoWay}" Margin="0, 10" >
             <ListView.ItemsPanel>
@@ -131,8 +138,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Image Width="74" Height="94" Source="{Binding Path=ImageBase64, Converter={StaticResource BytesToImage}, TargetNullValue=Assets/Turrican2.jpg}" Margin="0, 10"></Image>
-                        <TextBlock Text="{Binding Path=Description}"></TextBlock>
+                        <Image x:Name="imgList" Width="74" Height="94" Source="{Binding Path=ImageBase64, Converter={StaticResource BytesToImage}, TargetNullValue=Assets/Turrican2.jpg}" Margin="0, 10"></Image>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

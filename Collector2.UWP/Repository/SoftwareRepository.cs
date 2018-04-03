@@ -22,9 +22,7 @@ namespace Collector2.UWP.Repository
 
         private const string Root = "https://collectorv2.azurewebsites.net/api/";
 
-        public SoftwareRepository()
-        {
-        }
+        public SoftwareRepository() { }
 
         public async Task<ObservableCollection<SoftwareViewModel>> GetAllAsync()
         {

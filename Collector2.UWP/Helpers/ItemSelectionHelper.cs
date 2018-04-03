@@ -1,4 +1,5 @@
-﻿using Collector2.Models;
+﻿using AutoMapper;
+using Collector2.Models;
 using Collector2.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,14 @@ namespace Collector2.UWP.Helpers
 
         public static void SetCurrentSoftware(SoftwareViewModel software)
         {
-            _currentSoftware = software;
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<SoftwareViewModel, SoftwareViewModel>();
+            });
+
+            var mapper = config.CreateMapper();
+
+            _currentSoftware = mapper.Map<SoftwareViewModel, SoftwareViewModel>(software);
+            
         }
 
         public static SoftwareViewModel GetCurrentSoftware()
