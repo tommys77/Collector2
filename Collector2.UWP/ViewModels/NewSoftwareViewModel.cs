@@ -355,10 +355,10 @@ namespace Collector2.UWP.ViewModels
 
                     if (repository.StatusCode == System.Net.HttpStatusCode.Created)
                     {
+                        RefreshHelper.Instance.NeedRefresh = true;
                         _navigationService.NavigateTo("UnattachedImagesPage");
                     }
-
-                    StatusBarHelper.Instance.StatusBarMessage = repository.StatusCode.ToString();
+                    else StatusBarHelper.Instance.StatusBarMessage = repository.StatusCode.ToString();
                 });
             }
         }

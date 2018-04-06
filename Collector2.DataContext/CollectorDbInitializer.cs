@@ -17,8 +17,9 @@ namespace Collector2.DataContext
             {
                 new Category { CategoryName = "Action Adventure" },
                 new Category { CategoryName = "Role Playing Game" },
-                new Category { CategoryName = "Strategy" },
-                new Category { CategoryName = "Point'n'Click" },
+                new Category { CategoryName = "Strategy (Real time)" },
+                new Category { CategoryName = "Strategy (Turn based)" },
+                new Category { CategoryName = "Point'n'Click Adventure" },
                 new Category { CategoryName = "Sports - Football" },
                 new Category { CategoryName = "Sports - Olympics" },
                 new Category { CategoryName = "Sports - Futuristic" },

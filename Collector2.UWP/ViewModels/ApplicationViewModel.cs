@@ -93,15 +93,14 @@ namespace Collector2.UWP.ViewModels
         {
             get
             {
-                return navigateCommand
-                    ?? (navigateCommand = new RelayCommand(() =>
+                return navigateCommand = new RelayCommand(() =>
                     {
                         if (IsPaneOpen)
                         {
                             IsPaneOpen = !IsPaneOpen;
                         }
                         _navigationService.NavigateTo("SoftwarePage");
-                    }));
+                    });
             }
         }
 

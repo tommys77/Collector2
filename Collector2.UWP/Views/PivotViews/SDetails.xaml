@@ -48,7 +48,7 @@
                    VerticalAlignment="Center" 
                    HorizontalAlignment="Center" 
                    Source="{Binding SelectedImage.ImageBase64, Converter={StaticResource BytesToImage},
-                    TargetNullValue=Assets/Turrican2.jpg, Mode=TwoWay}" />
+                    FallbackValue=Assets/Turrican2.jpg, Mode=TwoWay}" />
         </StackPanel>
         <StackPanel Margin="10, 0"  Width="Auto"  HorizontalAlignment="Left" Grid.Column="1"  Grid.Row="0">
             <StackPanel BorderThickness="2" BorderBrush="Black" Resources="{Binding Current}">

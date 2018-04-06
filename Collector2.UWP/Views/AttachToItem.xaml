@@ -20,7 +20,6 @@
         <StackPanel>
             <ComboBox x:Name="selectTypeCB"
                   Margin="0,30"
-                  Grid.Row="0"
                   Width="300"
                   ItemsSource="{Binding TypeSelections, Mode=OneTime}"
                   SelectedItem="{Binding TypeSelected, Mode=TwoWay}">
@@ -32,7 +31,6 @@
             </ComboBox>
             <Frame
             x:Name="FormFrame"
-            Grid.Row="1"
             SourcePageType="{Binding ListPage, Mode=TwoWay}"
             Margin="15, 0"
             VerticalAlignment="Stretch">

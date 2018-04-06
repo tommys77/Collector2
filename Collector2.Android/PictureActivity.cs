@@ -38,7 +38,7 @@ namespace Collector2.Android
 
             path = Intent.GetStringExtra("path");
 
-            picture = path.LoadAndResizeBitmap(600, 800);
+            picture = path.LoadAndResizeBitmap(370, 470);
             mPicture.SetImageBitmap(path.ExifRotateBitmap(picture));
         }
 

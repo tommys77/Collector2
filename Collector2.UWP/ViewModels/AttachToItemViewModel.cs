@@ -1,4 +1,5 @@
 ﻿using Collector2.Models;
+using Collector2.Models.ViewModels;
 using Collector2.UWP.Config;
 using Collector2.UWP.Helpers;
 using Collector2.UWP.Repository;
@@ -22,6 +23,8 @@ namespace Collector2.UWP.ViewModels
         private const string SOFTWARE = "Software";
         private const string HARDWARE = "Hardware";
 
+        private SoftwareRepository _softwareRepository = new SoftwareRepository();
+
         private static string Root;
 
         INavigationService _navigationService;
@@ -33,12 +36,25 @@ namespace Collector2.UWP.ViewModels
 
             Root = CollectorConfig.ApiRoot;
 
-            Softwares = new ObservableCollection<Software>();
+            Softwares = new ObservableCollection<SoftwareViewModel>();
             Hardwares = new ObservableCollection<Hardware>();
 
             if (IsInDesignMode)
             {
                 TypeSelected = SOFTWARE;
+
+                for (var i = 0; i < 10; i++)
+                {
+                    Softwares.Add(
+                       new SoftwareViewModel
+                       {
+                           Title = "Title " + i,
+                           HardwareSpec = new HardwareSpec
+                           {
+                               HardwareSpecName = "Commodore Amiga 500"
+                           }
+                       });
+                }
             }
         }
 
@@ -83,7 +99,7 @@ namespace Collector2.UWP.ViewModels
                     {
                         case SOFTWARE:
                             Softwares.Clear();
-                            await GenericDbAccess.GetAllObjectsAsync(Softwares, "Softwares");
+                            Softwares = await _softwareRepository.GetAllAsync();
                             ListPage = typeof(AttachToSoftwareListPage);
                             break;
                         case HARDWARE:
@@ -96,9 +112,9 @@ namespace Collector2.UWP.ViewModels
             }
         }
 
-        private Software _software;
+        private SoftwareViewModel _software;
 
-        public Software Software
+        public SoftwareViewModel Software
         {
             get
             {
@@ -147,9 +163,9 @@ namespace Collector2.UWP.ViewModels
         }
 
 
-        private ObservableCollection<Software> _softwares;
+        private ObservableCollection<SoftwareViewModel> _softwares;
 
-        public ObservableCollection<Software> Softwares
+        public ObservableCollection<SoftwareViewModel> Softwares
         {
             get
             {
