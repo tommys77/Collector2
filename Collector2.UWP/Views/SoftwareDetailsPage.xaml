@@ -1,0 +1,33 @@
+﻿<common:BindablePage
+    x:Class="Collector2.UWP.Views.SoftwareDetailsPage"
+    xmlns:common="using:Collector2.UWP.Common"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Collector2.UWP.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    DataContext="{Binding SoftwareDetailsViewInstance, Source={StaticResource Locator}}">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Pivot Grid.ColumnSpan="3">
+            <PivotItem Header="Details">
+                <Frame SourcePageType="{Binding Details, Mode=TwoWay}"></Frame>
+            </PivotItem>
+            <PivotItem Header="Reviews">
+                <Frame SourcePageType="{Binding Reviews, Mode=TwoWay}"></Frame>
+            </PivotItem>
+            <PivotItem Header="Comments">
+                <Frame SourcePageType="{Binding Comments, Mode=TwoWay}"></Frame>
+            </PivotItem>
+            <!--<PivotItem Header="Images">
+                <Frame SourcePageType="{Binding Images, Mode=TwoWay}"></Frame>
+            </PivotItem>-->
+        </Pivot>
+    </Grid>
+</common:BindablePage>

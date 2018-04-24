@@ -1,0 +1,148 @@
+﻿<common:BindablePage
+    x:Class="Collector2.UWP.Views.PivotViews.SDetails"
+    xmlns:common="using:Collector2.UWP.Common"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Collector2.UWP.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:converter="using:Collector2.UWP.Converters"
+    mc:Ignorable="d"
+    DataContext="{Binding Path=SDetailsViewInstance, Source={StaticResource Locator}}" >
+
+    <interactivity:Interaction.Behaviors>
+        <core:EventTriggerBehavior EventName="Loaded">
+            <core:InvokeCommandAction Command="{Binding SetupEditMode}"></core:InvokeCommandAction>
+        </core:EventTriggerBehavior>
+    </interactivity:Interaction.Behaviors>
+
+    <common:BindablePage.Resources>
+        <converter:ByteArrayToImageConverter x:Key="BytesToImage" />
+        <converter:BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </common:BindablePage.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <StackPanel
+                    x:Name="imagePanel"
+                    MaxWidth="{x:Bind img_main.Width}"
+                    MaxHeight="{x:Bind img_main.Height}"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    Margin="0, 0, 0, 10">
+            <Image x:Name="img_main" 
+                   Width="370" 
+                   Height="470"
+                   Stretch="Fill"
+                   VerticalAlignment="Center" 
+                   HorizontalAlignment="Center" 
+                   Source="{Binding SelectedImage.ImageBase64, Converter={StaticResource BytesToImage},
+                    FallbackValue=Assets/Turrican2.jpg, Mode=TwoWay}" />
+        </StackPanel>
+        <StackPanel Margin="10, 0"  Width="Auto"  HorizontalAlignment="Left" Grid.Column="1"  Grid.Row="0">
+            <StackPanel BorderThickness="2" BorderBrush="Black" Resources="{Binding Current}">
+                <StackPanel Orientation="Horizontal" BorderBrush="Black" BorderThickness="1">
+                    <TextBlock Text="Title:" Height="32" FontStyle="Italic" Width="200"></TextBlock>
+                    <TextBox Text="{Binding Current.Title, Mode=TwoWay}" BorderThickness="0" IsReadOnly="{Binding IsInViewMode}" Height="32" Width="400"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" BorderBrush="Black" BorderThickness="1">
+                    <TextBlock Text="Year of Release:" Height="32" FontStyle="Italic" Width="200"></TextBlock>
+                    <TextBox Text="{Binding Current.YearOfRelease, Mode=TwoWay}" BorderThickness="0" IsReadOnly="{Binding IsInViewMode, Mode=TwoWay}" Width="400" Height="32"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" BorderBrush="Black" BorderThickness="1">
+                    <TextBlock Text="Category: " FontStyle="Italic" Width="200" Height="32"></TextBlock>
+                    <StackPanel Orientation="Vertical">
+                        <TextBox x:Name="txt_category" Text="{Binding Current.Category.CategoryName}" Width="400" IsReadOnly="True" BorderThickness="0" Visibility="{Binding IsInViewMode, Mode=TwoWay, FallbackValue=true}" Height="32"></TextBox>
+                        <ComboBox Visibility="{Binding IsInEditMode, Mode=TwoWay, FallbackValue=false}" ItemsSource="{Binding Path=Categories}" SelectedItem="{Binding Current.Category, Mode=TwoWay}" Width="400">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=CategoryName}"></TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" BorderBrush="Black" BorderThickness="1">
+                    <TextBlock Text="SoftwareType:" FontStyle="Italic" TextAlignment="Left" Width="200" Height="32"></TextBlock>
+                    <StackPanel>
+                        <TextBox Text="{Binding Current.SoftwareType, Mode=TwoWay}" IsReadOnly="True" BorderThickness="0" Visibility="{Binding IsInViewMode, Mode=TwoWay, FallbackValue=true}" Width="400" Height="32"></TextBox>
+                        <ComboBox Visibility="{Binding IsInEditMode, Mode=TwoWay, FallbackValue=false}" Width="400" SelectedValue="{Binding Current.SoftwareType, Mode=TwoWay}" SelectedValuePath="Content">
+                            <ComboBoxItem Content="Game"/>
+                            <ComboBoxItem Content="Application"/>
+                        </ComboBox>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" BorderBrush="Black" BorderThickness="1">
+                    <TextBlock Text="Format:" FontStyle="Italic" Width="200" Height="32"></TextBlock>
+                    <StackPanel Orientation="Vertical">
+                        <TextBox x:Name="tb_format" Text="{Binding Current.Format.FormatName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="400" Height="32" BorderThickness="0" IsReadOnly="True" Visibility="{Binding IsInViewMode, Mode=TwoWay}">
+                        </TextBox>
+                        <ComboBox Visibility="{Binding IsInEditMode, Mode=TwoWay, FallbackValue=false}" Width="400" ItemsSource="{Binding AllFormats}" SelectedItem="{Binding Current.Format, Mode=TwoWay}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=FormatName}"></TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel> 
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" BorderBrush="Black" BorderThickness="1">
+                    <TextBlock Text="Condition:" FontStyle="Italic" Width="200" Height="32"></TextBlock>
+                    <TextBox Text="{Binding Current.Condition, Mode=TwoWay}" BorderThickness="0" IsReadOnly="{Binding IsInViewMode}" Width="400" MinHeight="32" Height="Auto" TextWrapping="Wrap"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" BorderBrush="Black" BorderThickness="1">
+                    <TextBlock Text="Number of disks/CDs/etc:" FontStyle="Italic" Width="200" Height="32"></TextBlock>
+                    <TextBox Text="{Binding Current.FormatCount, Mode=TwoWay}" BorderThickness="0" IsReadOnly="{Binding IsInViewMode}" Width="400" Height="32"></TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" BorderBrush="Black" BorderThickness="1">
+                    <TextBlock Text="Hardware:" FontStyle="Italic" Width="200"></TextBlock>
+                    <StackPanel>
+                        <TextBox Text="{Binding Current.HardwareSpec.HardwareSpecName, Mode=TwoWay}" Width="400" Height="32" IsReadOnly="True" BorderThickness="0" Visibility="{Binding IsInViewMode, Mode=TwoWay, FallbackValue=true}"></TextBox>
+                        <ComboBox  Visibility="{Binding IsInEditMode, Mode=TwoWay, FallbackValue=false}" Width="400" ItemsSource="{Binding Path=HardwareSpecs}" SelectedItem="{Binding Current.HardwareSpec, Mode=TwoWay}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=HardwareSpecName}"></TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" BorderBrush="Black" BorderThickness="1">
+                    <TextBlock Text="Requirements:" FontStyle="Italic" Width="200" Height="32" VerticalAlignment="Center"></TextBlock>
+                    <TextBox Text="{Binding Current.Requirements, Mode=TwoWay}" BorderThickness="0" IsReadOnly="{Binding IsInViewMode}" Width="400" MinHeight="32" Height="Auto" TextWrapping="Wrap"/>
+                </StackPanel>
+            </StackPanel>
+            <RelativePanel Width="600">
+                <HyperlinkButton Content="Cancel" Margin="10" RelativePanel.AlignLeftWithPanel="True" Command="{Binding CancelChanges}" Visibility="{Binding Current.HasChanged, FallbackValue=False}"></HyperlinkButton>
+                <HyperlinkButton Content="Edit mode On/Off" Margin="10" RelativePanel.AlignRightWithPanel="True" Command="{Binding EditModeCommand}"></HyperlinkButton>
+            </RelativePanel>
+            <Button Content="Save" Margin="10, 0" Visibility="{Binding Current.HasChanged}" Command="{Binding SaveChangesToDatabase}" />
+        </StackPanel>
+        <ListView VerticalAlignment="Top" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Width="Auto" ItemsSource="{Binding Current.ItemImages}" SelectedItem="{Binding Path=SelectedImage, Mode=TwoWay}" Margin="0, 10" >
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel BorderBrush="Black" BorderThickness="2" Orientation="Horizontal" HorizontalAlignment="Left"></StackPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Image x:Name="imgList" Width="74" Height="94" Source="{Binding Path=ImageBase64, Converter={StaticResource BytesToImage}, TargetNullValue=Assets/Turrican2.jpg}" Margin="0, 10">
+                        </Image>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</common:BindablePage>

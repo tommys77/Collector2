@@ -1,0 +1,96 @@
+﻿<common:BindablePage
+    x:Class="Collector2.UWP.Views.Shell"
+    xmlns:common="using:Collector2.UWP.Common"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:conv="using:Collector2.UWP.Converters"
+    xmlns:helper="using:Collector2.UWP.Helpers"
+    mc:Ignorable="d"
+    DataContext="{Binding Path=Application, Source={StaticResource Locator}}">
+
+    <common:BindablePage.Resources>
+        <conv:BooleanToVisibilityConverter x:Key="BoolToVisibility"></conv:BooleanToVisibilityConverter>
+        <helper:StatusBarHelper x:Key="StatusBarHelper" />
+        <helper:GoBackHelper x:Key="GoBackHelper"/>
+    </common:BindablePage.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <RelativePanel x:Name="TopPanel" Background="LightSkyBlue" BorderBrush="Blue">
+                <Border x:Name="menuBoarder" Width="75" Height="75">
+                    <Button x:Name="Main" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Width="50" Height="50" HorizontalAlignment="Center" Command="{Binding OpenPaneCommand}"/>
+                </Border>
+                <Border x:Name="titleBorder" BorderBrush="Blue" Height="75" Width="Auto" RelativePanel.RightOf="menuBoarder" Margin="15, 0, 0, 0">
+                    <TextBlock x:Name="Title" Text="Collector 2 - Gamer Edition"   VerticalAlignment="Center" FontSize="22" FontFamily="Arial Unicode MS" FontWeight="Normal"/>
+                </Border>
+                <Button FontFamily="Segoe MDL2 Assets" Content="&#xE72B;" Width="50" Height="50" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="10"
+                        Command="{Binding GoBack}" Visibility="{Binding Path=Instance.CanGoBack, Source={StaticResource ResourceKey=GoBackHelper}, Converter={StaticResource BoolToVisibility}, Mode=OneWay}"></Button>
+            </RelativePanel>
+        </StackPanel>
+        <SplitView 
+            x:Name="MySplitView"
+            HorizontalAlignment="Stretch" 
+            VerticalAlignment="Stretch"
+            DisplayMode="CompactOverlay" 
+            IsPaneOpen="{Binding IsPaneOpen, Mode=TwoWay}"
+            Grid.Row="1"
+            CompactPaneLength="75" 
+            OpenPaneLength="200">
+            <SplitView.Pane>
+                <Grid>
+                    <RelativePanel Background="LightSkyBlue" Grid.Row="0" Grid.RowSpan="2">
+                        <ListBox Background="LightSkyBlue" SelectionMode="Single">
+                            <ListBoxItem>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="Software" FontFamily="Arial" Content="SW" FontSize="18" Width="50" Height="50" ToolTipService.ToolTip="Software" Command="{Binding NavigateToSoftware}"/>
+                                    <TextBlock  x:Name="SoftwareLabel" Text="Software" FontSize="18" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Arial" />
+                                </StackPanel>
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="Hardware" FontFamily="Arial" Content="HW" FontSize="18"  Width="50" Height="50" ToolTipService.ToolTip="Hardware"/>
+                                    <TextBlock  x:Name="HardwareLabel" Text="Hardware" FontSize="18" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Arial" />
+                                </StackPanel>
+                            </ListBoxItem>
+                            <ListBoxItem x:Name="Undefined" Visibility="{ Binding UnattachedImagesExists, Converter={StaticResource BoolToVisibility} }" >
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="UndefinedBtn" FontFamily="Arial" Content="??" FontSize="18"  Width="50" Height="50" ToolTipService.ToolTip="Unattached images"
+                                    Command="{Binding NavigateToUnattachedImages}"/>
+                                    <TextBlock  x:Name="UndefinedLabel" Text="Undefined" FontSize="18" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Arial" />
+                                </StackPanel>
+                            </ListBoxItem>
+                        </ListBox>
+                    </RelativePanel>
+                    <RelativePanel Grid.Row="1">
+                        <ListBox Background="LightSkyBlue"  SelectionMode="Single" RelativePanel.AlignBottomWithPanel="True">
+                            <ListBoxItem VerticalAlignment="Bottom">
+                                <StackPanel Orientation="Horizontal">
+                                    <Button FontFamily="Segoe MDL2 Assets" FontSize="18" Content="&#xE713;" Height="50" Width="50"/>
+                                    <TextBlock Text="Settings" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontFamily="Arial"/>
+                                </StackPanel>
+                            </ListBoxItem>
+                        </ListBox>
+                    </RelativePanel>
+                </Grid>
+            </SplitView.Pane>
+            <SplitView.Content>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Frame 
+                        x:Name="contentFrame"
+                        Grid.Row="0" />
+                    <TextBlock  x:Name="tbStatusBar" Grid.Row="1" Text="{Binding Path=Instance.StatusBarMessage, Source={StaticResource ResourceKey=StatusBarHelper},  Mode=TwoWay}" HorizontalAlignment="Center" />
+                </Grid>
+            </SplitView.Content>
+        </SplitView>
+    </Grid>
+</common:BindablePage>
